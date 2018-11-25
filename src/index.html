@@ -14,7 +14,7 @@
 
     <div role="main" class="screen difficulty" v-if="!started">
       <h1>Scryfall Art Game</h1>
-      <p>Which format's cards should show up?</p>
+      <p>Which format should we show cards from?</p>
       
       <div class="difficulty-buttons">
         <button type="button" class="button-lg" @click="start('standard')" ref="standardBtn">Standard</button>
@@ -33,6 +33,14 @@
         <input type="text" ref="guessInput" class="guess" v-model="guess">
         <button type="submit" class="vh">Check</button>
       </form>
+
+      <div class="feedback" v-if="showFeedback">
+        <p>
+          {{ prevGuessCorrect ? 'Correct!' : 'Wrong,'}} that was
+          <a v-bind:href="prevCard.scryfall_uri" class="feedback-cardname">{{ prevCard.name }}</a>
+        </p>
+        <p v-if="!prevGuessCorrect">You guessed: {{ prevGuess }}</p>
+      </div>
     </div>
 
     <footer>

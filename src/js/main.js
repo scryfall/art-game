@@ -11,6 +11,13 @@
     'is:extra'
   ];
 
+  function naturalize(str) {
+    str = str.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+    str = str.toLowerCase();
+    str = str.replace(/[^\w\d]/gi, '');
+    return str;
+  }
+
   function get(url, resolve, reject) {
     const request = new XMLHttpRequest();
     request.open('GET', url, true);
@@ -55,6 +62,11 @@
       guess: '',
       darkTheme: true,
       card: { },
+      showFeedback: false,
+      prevCard: null,
+      prevGuess: null,
+      prevGuessCorrect: null,
+      score: 0,
     },
     computed: {
       artUrl: function () {
@@ -99,8 +111,14 @@
         }.bind(this));
       },
       check: function () {
+        const guessCorrect = naturalize(this.card.name) === naturalize(this.guess);
+        this.prevGuessCorrect = guessCorrect;
+        this.prevGuess = this.guess;
+        this.prevCard = this.card;
+        this.showFeedback = true;
         this.getNextCard();
         this.guess = '';
+        // todo disable input until load is complete
       }
     }
   });

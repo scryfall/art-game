@@ -42,7 +42,7 @@ body {
 }
 
 h1 {
-  margin: 0;
+  margin: 0 0 30px;
   font-size: 18px;
 
   @include bp-large() {
