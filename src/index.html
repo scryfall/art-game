@@ -23,8 +23,9 @@
       </div>
     </div>
 
-    <div role="main" class="screen game" v-if="started">
-      <img class="art" src="https://img.scryfall.com/cards/art_crop/front/9/b/9b1c7f07-8d39-425b-8ae9-b3ab317cc0fe.jpg?1538878130">
+    <div role="main" class="screen game" v-show="started">
+      <!-- todo: handle artUrl not yet available -->
+      <img class="art" v-bind:src="artUrl">
 
       <p>Which card is this?</p>
 
