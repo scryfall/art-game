@@ -5,6 +5,9 @@
       format: null,
       started: false,
     },
+    mounted: function() {
+      this.$refs.standardBtn.focus();
+    },
     methods: {
       start: function (format) {
         this.format = format;
