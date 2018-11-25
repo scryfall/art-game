@@ -1,0 +1,7 @@
+dist
+node_modules
+
+# VS Code config
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json

@@ -1,0 +1,19 @@
+{
+  "name": "scryfall-art-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "author": "spacemonaut",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "gulp"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.3",
+    "del": "^3.0.0",
+    "gulp-sass": "^4.0.2"
+  },
+  "dependencies": {
+    "gulp": "^3.9.1"
+  }
+}
