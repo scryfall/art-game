@@ -40,6 +40,7 @@
           <a v-bind:href="prevCard.scryfall_uri" class="feedback-cardname">{{ prevCard.name }}</a>
         </p>
         <p v-if="!prevGuessCorrect">You guessed: {{ prevGuess }}</p>
+        <p class="score">Score: {{ score }}</p>
       </div>
     </div>
 

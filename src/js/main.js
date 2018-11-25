@@ -79,7 +79,7 @@
     created: function () {
       const theme = localStorage.getItem(KEY_LOCAL_THEME);
       if (theme === THEME_LIGHT) { this.darkTheme = false; }
-      this.getNextCard();
+      this.getNextCard('standard');
     },
     mounted: function () {
       this.$refs.standardBtn.focus();
@@ -112,6 +112,9 @@
       },
       check: function () {
         const guessCorrect = naturalize(this.card.name) === naturalize(this.guess);
+        if (guessCorrect) {
+          this.score += 1;
+        }
         this.prevGuessCorrect = guessCorrect;
         this.prevGuess = this.guess;
         this.prevCard = this.card;
