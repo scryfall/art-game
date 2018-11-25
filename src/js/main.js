@@ -1,14 +1,22 @@
 (function () {
+  const KEY_LOCAL_THEME = 'theme';
+  const THEME_DARK = 'dark';
+  const THEME_LIGHT = 'light';
+
   const app = new Vue({
     el: '#app',
     data: {
       format: null,
       started: false,
-      guess: 'Lorem ipsum',
+      guess: '',
+      darkTheme: true,
       card: { },
-
     },
-    mounted: function() {
+    created: function () {
+      const theme = localStorage.getItem(KEY_LOCAL_THEME);
+      if (theme === THEME_LIGHT) { this.darkTheme = false; }
+    },
+    mounted: function () {
       this.$refs.standardBtn.focus();
     },
     methods: {
@@ -21,6 +29,10 @@
       },
       focusGuessInput: function () {
         this.$refs.guessInput.focus();
+      },
+      toggleTheme: function () {
+        this.darkTheme = !this.darkTheme;
+        localStorage.setItem(KEY_LOCAL_THEME, this.darkTheme ? THEME_DARK : THEME_LIGHT);
       }
     }
   });

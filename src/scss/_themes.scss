@@ -1,0 +1,29 @@
+.theme-dark {
+  background-color: $cExpanse;
+  color: $cWhite;
+
+  .button-lg,
+  .button-sm {
+    border-color: rgba(white, 0.6);
+    background-color: rgba(white,0.09)
+  }
+
+  .guess {
+    background-color: #242031;
+  }
+}
+
+.theme-light {
+  background-color: $cCodeWash;
+  color: $cBlack;
+
+  .button-lg,
+  .button-sm {
+    border-color: rgba($cGrape, 0.5);
+    background-color: #F9F7F5;
+  }
+
+  .guess {
+    background-color: $cWhite;
+  }
+}

@@ -2,6 +2,7 @@
 @import "responsive";
 
 @import "util";
+@import "themes";
 
 @import "screen/difficulty";
 @import "screen/game";
@@ -46,5 +47,47 @@ h1 {
 
   @include bp-large() {
     font-size: 24px;
+  }
+}
+
+button,
+input {
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+a:link,
+a:visited,
+a:active,
+a:active {
+  color: inherit;
+}
+
+.button-lg {
+  border: 1px solid;
+  border-radius: 3px;
+  height: 40px;
+}
+
+.button-sm {
+  border: 1px solid;
+  border-radius: 2px;
+  padding: 5px 10px;
+}
+
+footer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 10px;
+
+  .credit {
+    font-size: 12px;
+    font-style: italic;
+  }
+
+  .controls {
   }
 }

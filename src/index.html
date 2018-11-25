@@ -9,17 +9,17 @@
 </head>
 <body>
 
-  <div id="app">
+  <div id="app" v-bind:class="{ 'theme-dark': darkTheme, 'theme-light': !darkTheme }">
     <div class="spacer" aria-hidden="true"></div>
 
     <div role="main" class="screen difficulty" v-if="!started">
-      <h1>Art Game</h1>
+      <h1>Scryfall Art Game</h1>
       <p>Which format's cards should show up?</p>
       
       <div class="difficulty-buttons">
-        <button type="button" class="field-lg" @click="start('standard')" ref="standardBtn">Standard</button>
-        <button type="button" class="field-lg" @click="start('modern')">Modern</button>
-        <button type="button" class="field-lg" @click="start('vintage')">Vintage</button>
+        <button type="button" class="button-lg" @click="start('standard')" ref="standardBtn">Standard</button>
+        <button type="button" class="button-lg" @click="start('modern')">Modern</button>
+        <button type="button" class="button-lg" @click="start('vintage')">Vintage</button>
       </div>
     </div>
 
@@ -29,12 +29,22 @@
       <p>Which card is this?</p>
 
       <form @submit.prevent="check">
-        <input type="text" ref="guessInput" class="field-lg guess" v-model="guess">
+        <input type="text" ref="guessInput" class="guess" v-model="guess">
         <button type="submit" class="vh">Check</button>
       </form>
     </div>
 
-    <footer></footer>
+    <footer>
+      <div class="credit">
+        by <a href="https://github.com/spacemonaut" target="_blank">spacemonaut</a>, based on the MagicCards.info Art Game
+      </div>
+      <div class="controls">
+        <span>Theme:</span>
+        <button type="button" class="button-sm" @click="toggleTheme">
+          {{ darkTheme ? 'Dark' : 'Light' }}
+        </button>
+      </div>
+    </footer>
   </div>
   
   <script src="js/lib/vue.js"></script>
