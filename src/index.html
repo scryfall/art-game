@@ -12,19 +12,26 @@
   <div id="app">
     <div class="spacer" aria-hidden="true"></div>
 
-    <div role="main" class="difficulty" v-if="!started">
-      <h1>Choose your difficulty</h1>
+    <div role="main" class="screen difficulty" v-if="!started">
+      <h1>Art Game</h1>
       <p>Which format's cards should show up?</p>
       
       <div class="difficulty-buttons">
-        <button type="button" class="button-lg" @click="start('standard')" ref="standardBtn">Standard</button>
-        <button type="button" class="button-lg" @click="start('modern')">Modern</button>
-        <button type="button" class="button-lg" @click="start('vintage')">Vintage</button>
+        <button type="button" class="field-lg" @click="start('standard')" ref="standardBtn">Standard</button>
+        <button type="button" class="field-lg" @click="start('modern')">Modern</button>
+        <button type="button" class="field-lg" @click="start('vintage')">Vintage</button>
       </div>
     </div>
 
-    <div role="main" class="game" v-if="started">
-      {{ format }}
+    <div role="main" class="screen game" v-if="started">
+      <img class="art" src="https://img.scryfall.com/cards/art_crop/front/9/b/9b1c7f07-8d39-425b-8ae9-b3ab317cc0fe.jpg?1538878130">
+
+      <p>Which card is this?</p>
+
+      <form @submit.prevent="check">
+        <input type="text" rel="input" class="field-lg guess" v-model="guess">
+        <button type="submit" class="vh">Check</button>
+      </form>
     </div>
 
     <footer></footer>

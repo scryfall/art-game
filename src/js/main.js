@@ -4,6 +4,9 @@
     data: {
       format: null,
       started: false,
+      guess: 'Lorem ipsum',
+      card: { },
+
     },
     mounted: function() {
       this.$refs.standardBtn.focus();
@@ -15,4 +18,7 @@
       }
     }
   });
+
+  // dev purposes
+  app.start('standard');
 })();

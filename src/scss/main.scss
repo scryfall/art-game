@@ -1,7 +1,11 @@
-@import "vars";
+@import "colors";
 @import "responsive";
 
 @import "util";
+
+@import "screen/difficulty";
+@import "screen/game";
+
 
 html,
 body,
@@ -21,38 +25,26 @@ body {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  justify-content: space-between;
+  justify-content: flex-start;
+
+  .screen {
+    margin-top: 5vh;
+  }
+
+  @include bp-large() {
+    justify-content: space-between;
+
+    .screen {
+      margin-top: 0;
+    }
+  }
 }
 
 h1 {
   margin: 0;
-  font-size: 24px;
+  font-size: 18px;
 
   @include bp-large() {
-    font-size: 32px;
+    font-size: 24px;
   }
-}
-
-.difficulty {
-  text-align: center;
-}
-
-.difficulty-buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  margin: 0 auto;
-  max-width: 240px;
-
-  button {
-    margin-top: 16px;
-  }
-}
-
-.button-lg {
-  border: 1px solid;
-  border-radius: 3px;
-  font-family: inherit;
-  font-size: inherit;
-  height: 40px;
 }

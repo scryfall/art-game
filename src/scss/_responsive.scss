@@ -4,8 +4,10 @@
   }
 }
 
+// The point at which the art crop is <= 90% of the page
+// In other words, below bp-large, the art crop begins scaling down.
 @mixin bp-large() {
-  @include min-width(740px) {
+  @include min-width(696px) {
     @content;
   }
 }
