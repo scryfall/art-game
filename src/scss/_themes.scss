@@ -11,6 +11,10 @@
   .guess {
     background-color: #242031;
   }
+
+  .art {
+    border: 1px solid rgba($cVictory, 0.25);
+  }
 }
 
 .theme-light {
@@ -25,5 +29,9 @@
 
   .guess {
     background-color: $cWhite;
+  }
+
+  .art {
+    border: 1px solid rgba($cBlack, 0.5);    
   }
 }

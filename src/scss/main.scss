@@ -26,18 +26,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  justify-content: flex-start;
+  justify-content: space-between;
 
   .screen {
-    margin-top: 5vh;
-  }
-
-  @include bp-large() {
-    justify-content: space-between;
-
-    .screen {
-      margin-top: 0;
-    }
+    margin-top: 10vh;
   }
 }
 
@@ -78,16 +70,26 @@ a:active {
 
 footer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-end;
   justify-content: space-between;
   padding: 10px;
 
+  @include bp-large() {
+    flex-direction: row-reverse;
+  }
+
   .credit {
     font-size: 12px;
     font-style: italic;
+    opacity: 0.75;
+
+    @include bp-small() {
+      margin-top: 20px;
+    }
   }
 
-  .controls {
+  .controls span {
+    padding-right: 10px;
   }
 }
