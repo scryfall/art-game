@@ -6,10 +6,31 @@
   <title>Scryfall Art Game</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" media="screen" href="css/main.css">
-  <script src="js/lib/vue.js"></script>
-  <script src="js/main.js"></script>
 </head>
 <body>
+
+  <div id="app">
+    <div class="spacer" aria-hidden="true"></div>
+
+    <div role="main" class="difficulty" v-if="!started">
+      <h1>Choose your difficulty</h1>
+      <p>Which format's cards should show up?</p>
+      
+      <div class="difficulty-buttons">
+        <button type="button" class="button-lg" @click="start('standard')">Standard</button>
+        <button type="button" class="button-lg" @click="start('modern')">Modern</button>
+        <button type="button" class="button-lg" @click="start('vintage')">Vintage</button>
+      </div>
+    </div>
+
+    <div role="main" class="game" v-if="started">
+      {{ format }}
+    </div>
+
+    <footer></footer>
+  </div>
   
+  <script src="js/lib/vue.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

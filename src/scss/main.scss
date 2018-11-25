@@ -1,3 +1,58 @@
+@import "vars";
+@import "responsive";
+
+@import "util";
+
+html,
+body,
+#app {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
 body {
   font-family: "Helvetica Neue", "HelveticaNeueWF", Arial, Helvetica, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+h1 {
+  margin: 0;
+  font-size: 24px;
+
+  @include bp-large() {
+    font-size: 32px;
+  }
+}
+
+.difficulty {
+  text-align: center;
+}
+
+.difficulty-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 0 auto;
+  max-width: 240px;
+
+  button {
+    margin-top: 16px;
+  }
+}
+
+.button-lg {
+  border: 1px solid;
+  border-radius: 3px;
+  font-family: inherit;
+  font-size: inherit;
+  height: 40px;
 }
