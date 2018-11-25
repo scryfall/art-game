@@ -7,6 +7,11 @@
 @import "screen/difficulty";
 @import "screen/game";
 
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
 
 html,
 body,
@@ -14,7 +19,10 @@ body,
   margin: 0;
   padding: 0;
   height: 100%;
-  width: 100%;
+}
+
+#app {
+  min-height: 100%;
 }
 
 body {

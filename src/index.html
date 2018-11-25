@@ -23,7 +23,14 @@
 
     <div role="main" class="screen game" v-show="started">
       <!-- todo: handle artUrl not yet available -->
-      <img class="art" v-bind:src="artUrl">
+      <div class="art-frame">
+        <div class="filler" v-if="!artUrl"></div>
+        <img class="art" v-bind:src="artUrl">
+        <div v-if="errorLoading" class="error-loading">
+          <p>There was an error loading the next card.</p>
+          <button type="button" class="button-lg" @click="retry">&#8635; Retry</button>
+        </div>
+      </div>
 
       <p>Which card is this?</p>
 

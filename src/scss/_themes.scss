@@ -15,6 +15,10 @@
   .art {
     border: 1px solid rgba($cVictory, 0.25);
   }
+
+  .error-loading {
+    background-color: rgba($cPlum, 0.75);
+  }
 }
 
 .theme-light {
@@ -33,5 +37,12 @@
 
   .art {
     border: 1px solid rgba($cBlack, 0.5);    
+  }
+
+  .error-loading {
+    background-color: rgba($cPlum, 0.75);
+    p {
+      color: white;
+    }
   }
 }

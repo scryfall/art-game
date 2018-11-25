@@ -50,7 +50,6 @@
     const queryFormat = 'f:' + format;
     const query = queryFormat + ' ' + queryExcludes;
     const url = endpoint + '?q=' + query;
-
     return get(url, resolve, reject);
   }
 
@@ -62,6 +61,7 @@
       guess: '',
       darkTheme: true,
       card: { },
+      errorLoading: false,
       showFeedback: false,
       prevCard: null,
       prevGuess: null,
@@ -104,10 +104,11 @@
           format = this.format;
         }
         getRandomCard(format, function(card) {
+          this.errorLoading = false;
           this.card = card;
         }.bind(this),
         function (error) {
-          // todo
+          this.errorLoading = true;
         }.bind(this));
       },
       check: function () {
@@ -122,6 +123,9 @@
         this.getNextCard();
         this.guess = '';
         // todo disable input until load is complete
+      },
+      retry: function() {
+        this.getNextCard();
       }
     }
   });
