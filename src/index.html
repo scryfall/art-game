@@ -29,7 +29,7 @@
       <p>Which card is this?</p>
 
       <form @submit.prevent="check">
-        <input type="text" rel="input" class="field-lg guess" v-model="guess">
+        <input type="text" ref="guessInput" class="field-lg guess" v-model="guess">
         <button type="submit" class="vh">Check</button>
       </form>
     </div>

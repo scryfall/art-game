@@ -15,10 +15,16 @@
       start: function (format) {
         this.format = format;
         this.started = true;
+        this.$nextTick(function() {
+          this.focusGuessInput();
+        });
+      },
+      focusGuessInput: function () {
+        this.$refs.guessInput.focus();
       }
     }
   });
 
   // dev purposes
-  app.start('standard');
+  // app.start('standard');
 })();
