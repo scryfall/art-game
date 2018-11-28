@@ -12,7 +12,7 @@
   ];
 
   function naturalize(str) {
-    str = str.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+    str = str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     str = str.toLowerCase();
     str = str.replace(/[^\w\d]/gi, '');
     return str;
@@ -70,7 +70,7 @@
     },
     computed: {
       artUrl: function () {
-        if (!this.card['image_uris']) {
+        if (typeof this.card.image_uris === 'undefined') {
           return false;
         }
         return this.card.image_uris.art_crop;

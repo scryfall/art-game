@@ -1,7 +1,8 @@
-var gulp = require('gulp');
-var del = require('del');
-var browserSync = require('browser-sync').create();
-var sass = require('gulp-sass');
+const gulp = require('gulp');
+const del = require('del');
+const browserSync = require('browser-sync').create();
+const sass = require('gulp-sass');
+const jshint = require('gulp-jshint');
 
 // Static Server + watching scss/html files
 gulp.task('serve', ['sass', 'js', 'html'], function() {
@@ -15,7 +16,16 @@ gulp.task('serve', ['sass', 'js', 'html'], function() {
   gulp.watch('src/*.html', ['html']).on('change', browserSync.reload);
 });
 
-gulp.task('js', function() {
+gulp.task('lint', function() {
+  return gulp.src('src/js/main.js')
+    .pipe(jshint({
+      "esversion": 6
+    }))
+    .pipe(jshint.reporter('default'))
+    .pipe(jshint.reporter('fail'));
+});
+
+gulp.task('js', ['lint'], function() {
   return gulp.src('src/js/**/*.js')
     .pipe(gulp.dest('dist/js'))
     .pipe(browserSync.stream());
