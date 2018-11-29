@@ -48,7 +48,9 @@ gulp.task('js', gulp.series('lint', function jsInner () {
   var source = gulp.src(config.scripts)
     .pipe(concat('main.js'))
   if (config.compressJs) {
-    source = source.pipe(terser());
+    source = source.pipe(terser({
+      'ecma': 6
+    }));
   }
   return source.pipe(gulp.dest('dist/js'))
     .pipe(browserSync.stream());
