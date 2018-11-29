@@ -35,6 +35,11 @@
     @include bp-large() {
       font-size: 24px;
     }
+
+    &:disabled,
+    &:not(:focus) {
+      opacity: 0.6;
+    }
   }
 
   .error-loading {
