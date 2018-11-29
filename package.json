@@ -11,10 +11,10 @@
   "devDependencies": {
     "browser-sync": "^2.26.3",
     "del": "^3.0.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-jshint": "^2.1.0",
     "gulp-sass": "^4.0.2",
-    "gulp-uglify": "^3.0.1",
+    "gulp-terser": "^1.1.5",
     "jshint": "^2.9.6"
   }
 }

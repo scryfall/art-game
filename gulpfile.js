@@ -3,16 +3,24 @@ const del = require('del');
 const browserSync = require('browser-sync').create();
 const sass = require('gulp-sass');
 const jshint = require('gulp-jshint');
-const uglify = require('gulp-uglify');
+const terser = require('gulp-terser');
 
 const devConfig = {
-  scripts: ['vue.js', 'unorm.js', 'main.js'],
+  scripts: [
+    'src/js/lib/vue.js',
+    'src/js/lib/unorm.js',
+    'src/js/main.js'
+  ],
   compressJs: false,
   sassConfig: null
 };
 
 const prodConfig = {
-  scripts: ['vue.min.js', 'unorm.js', 'main.js'],
+  scripts: [
+    'src/js/lib/vue.min.js',
+    'src/js/lib/unorm.js',
+    'src/js/main.js'
+  ],
   compressJs: true,
   sassConfig: {
     'outputStyle': 'compressed'
@@ -21,23 +29,12 @@ const prodConfig = {
 
 var config = devConfig;
 
-gulp.task('set-prod', function() {
+gulp.task('setProd', function setProdInner (done) {
   config = prodConfig;
+  done();
 });
 
-// Static Server + watching scss/html files
-gulp.task('serve', ['sass', 'js', 'html'], function() {
-
-  browserSync.init({
-    server: './dist'
-  });
-
-  gulp.watch('src/scss/**/*.scss', ['sass']);
-  gulp.watch('src/js/*.js', ['js']);
-  gulp.watch('src/*.html', ['html']).on('change', browserSync.reload);
-});
-
-gulp.task('lint', function() {
+gulp.task('lint', function lintInner () {
   return gulp.src('src/js/main.js')
     .pipe(jshint({
       "esversion": 6
@@ -46,27 +43,40 @@ gulp.task('lint', function() {
     .pipe(jshint.reporter('fail'));
 });
 
-gulp.task('js', ['lint'], function() {
+gulp.task('js', gulp.series('lint', function jsInner () {
   var source = gulp.src(config.scripts)
   if (config.compressJs) {
-    source = source.pipe(uglify());
+    source = source.pipe(terser());
   }
   return source.pipe(gulp.dest('dist/js'))
     .pipe(browserSync.stream());
-});
+}));
 
-gulp.task('html', function() {
+gulp.task('html', function htmlInner () {
   return gulp.src('src/*.html')
     .pipe(gulp.dest('dist'))
     .pipe(browserSync.stream());
 });
 
 // Compile sass into CSS & auto-inject into browsers
-gulp.task('sass', function() {
+gulp.task('sass', function sassInner () {
   return gulp.src('src/scss/*.scss')
     .pipe(sass(config.sassConfig))
     .pipe(gulp.dest('dist/css'))
     .pipe(browserSync.stream());
 });
 
-gulp.task('default', ['serve']);
+
+// Static Server + watching scss/html files
+gulp.task('serve', gulp.series('sass', 'js', 'html', function serveInner () {
+  browserSync.init({
+    server: './dist'
+  });
+
+  gulp.watch('src/scss/**/*.scss', gulp.series('sass'));
+  gulp.watch('src/js/*.js', gulp.series('js'));
+  gulp.watch('src/*.html', gulp.series('html')).on('change', browserSync.reload);
+}));
+
+gulp.task('default', gulp.series('serve'));
+gulp.task('serve-prod', gulp.series('setProd', 'serve'));
