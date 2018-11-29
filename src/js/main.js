@@ -60,6 +60,7 @@
       started: false,
       guess: '',
       darkTheme: true,
+      loadingNextCard: false,
       card: { },
       errorLoading: false,
       showFeedback: false,
@@ -103,6 +104,7 @@
         if (typeof format === 'undefined') {
           format = this.format;
         }
+        this.loadingNextCard = true;
         getRandomCard(format, function(card) {
           this.errorLoading = false;
           this.card = card;
@@ -110,6 +112,9 @@
         function (error) {
           this.errorLoading = true;
         }.bind(this));
+      },
+      imageFinishedLoading: function () {
+        this.loadingNextCard = false;
       },
       check: function () {
         const guessCorrect = naturalize(this.card.name) === naturalize(this.guess);
@@ -122,7 +127,6 @@
         this.showFeedback = true;
         this.getNextCard();
         this.guess = '';
-        // todo disable input until load is complete
       },
       retry: function() {
         this.getNextCard();
