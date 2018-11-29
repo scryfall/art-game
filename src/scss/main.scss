@@ -16,6 +16,7 @@ body {
 
 #app {
   min-height: 100%;
+  padding: 0 16px;
 }
 
 body {
@@ -57,9 +58,17 @@ a:active {
   color: inherit;
 }
 
+.button-lg,
+.button-sm {
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
+}
+
 .button-lg {
   border: 1px solid;
   border-radius: 3px;
+  line-height: 40px;
   height: 40px;
 }
 
@@ -71,27 +80,28 @@ a:active {
 
 footer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row-reverse;
   align-items: flex-end;
   justify-content: space-between;
-  padding: 10px;
   margin-top: 50px;
-
+  margin-bottom: 30px;
+  
   @include bp-large() {
-    flex-direction: row-reverse;
+    margin-bottom: 10px;
   }
 
   .credit {
     font-size: 12px;
     font-style: italic;
-    opacity: 0.75;
+    opacity: 0.6;
 
     @include bp-small() {
       margin-top: 20px;
     }
   }
 
-  .controls span {
-    padding-right: 10px;
+  .controls {
+    flex-shrink: 0;
+    margin-left: 10px;
   }
 }

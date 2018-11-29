@@ -15,9 +15,9 @@
       <p>Which format should we show cards from?</p>
       
       <div class="difficulty-buttons">
-        <button type="button" class="button-lg" @click="start('standard')" ref="standardBtn">Standard</button>
-        <button type="button" class="button-lg" @click="start('modern')">Modern</button>
-        <button type="button" class="button-lg" @click="start('vintage')">Vintage</button>
+        <a role="button" class="button-lg" @click="start('standard')" ref="standardBtn">Standard</a>
+        <a role="button" class="button-lg" @click="start('modern')">Modern</a>
+        <a role="button" class="button-lg" @click="start('vintage')">Vintage</a>
       </div>
     </div>
 
@@ -28,7 +28,7 @@
         <img class="art" v-bind:src="artUrl" @loadend="imageFinishedLoading">
         <div v-if="errorLoading" class="error-loading">
           <p>There was an error loading the next card.</p>
-          <button type="button" class="button-lg" @click="retry">&#8635; Retry</button>
+          <a role="button" class="button-lg" @click="retry">&#8635; Retry</a>
         </div>
       </div>
 
@@ -36,7 +36,7 @@
 
       <form @submit.prevent="check">
         <input type="text" ref="guessInput" class="guess" v-model="guess" v-bind:disabled="loadingNextCard">
-        <button type="submit" class="vh">Check</button>
+        <button type="submit" class="vh" tabindex="-1">Check</button>
       </form>
 
       <div class="feedback" v-if="showFeedback">
@@ -52,9 +52,9 @@
 
     <footer>
       <div class="controls">
-        <button type="button" class="button-sm" @click="toggleTheme">
+        <a role="button" class="button-sm" @click="toggleTheme">
           {{ darkTheme ? 'Dark' : 'Light' }} theme
-        </button>
+        </a>
       </div>
       <div class="credit">
         by <a href="https://github.com/spacemonaut" target="_blank">spacemonaut</a> based on the MagicCards.info Art Game
