@@ -4,6 +4,7 @@ const browserSync = require('browser-sync').create();
 const sass = require('gulp-sass');
 const jshint = require('gulp-jshint');
 const terser = require('gulp-terser');
+const concat = require('gulp-concat');
 
 const devConfig = {
   scripts: [
@@ -45,6 +46,7 @@ gulp.task('lint', function lintInner () {
 
 gulp.task('js', gulp.series('lint', function jsInner () {
   var source = gulp.src(config.scripts)
+    .pipe(concat('main.js'))
   if (config.compressJs) {
     source = source.pipe(terser());
   }
@@ -66,9 +68,14 @@ gulp.task('sass', function sassInner () {
     .pipe(browserSync.stream());
 });
 
+gulp.task('clean', function cleanInner() {
+  return del('dist');
+});
+
+gulp.task('build', gulp.series('clean', 'html', 'sass', 'js'));
 
 // Static Server + watching scss/html files
-gulp.task('serve', gulp.series('sass', 'js', 'html', function serveInner () {
+gulp.task('serve', gulp.series('build', function serveInner () {
   browserSync.init({
     server: './dist'
   });
@@ -79,4 +86,5 @@ gulp.task('serve', gulp.series('sass', 'js', 'html', function serveInner () {
 }));
 
 gulp.task('default', gulp.series('serve'));
+gulp.task('build-prod', gulp.series('setProd', 'build'));
 gulp.task('serve-prod', gulp.series('setProd', 'serve'));
