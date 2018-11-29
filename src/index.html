@@ -25,7 +25,7 @@
       <!-- todo: handle artUrl not yet available -->
       <div class="art-frame">
         <div class="filler" v-if="!artUrl"></div>
-        <img class="art" v-bind:src="artUrl" @loadend="imageFinishedLoading">
+        <img class="art" v-bind:src="artUrl" @load="imageFinishedLoading">
         <div v-if="errorLoading" class="error-loading">
           <p>There was an error loading the next card.</p>
           <a role="button" class="button-lg" @click="retry">&#8635; Retry</a>
@@ -35,7 +35,7 @@
       <p>Which card is this?</p>
 
       <form @submit.prevent="check">
-        <input type="text" ref="guessInput" class="guess" v-model="guess" v-bind:disabled="loadingNextCard">
+        <input type="text" ref="guessInput" class="guess" v-model="guess" v-bind:disabled="loadingNextCard" autocomplete="off">
         <button type="submit" class="vh" tabindex="-1">Check</button>
       </form>
 
@@ -57,7 +57,7 @@
         </a>
       </div>
       <div class="credit">
-        by <a href="https://github.com/spacemonaut" target="_blank">spacemonaut</a> based on the MagicCards.info Art Game
+        by <a href="https://spacemonaut.github.io/" target="_blank">spacemonaut</a> based on the MagicCards.info Art Game
       </div>
     </footer>
   </div>
