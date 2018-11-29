@@ -3,6 +3,27 @@ const del = require('del');
 const browserSync = require('browser-sync').create();
 const sass = require('gulp-sass');
 const jshint = require('gulp-jshint');
+const uglify = require('gulp-uglify');
+
+const devConfig = {
+  scripts: ['vue.js', 'unorm.js', 'main.js'],
+  compressJs: false,
+  sassConfig: null
+};
+
+const prodConfig = {
+  scripts: ['vue.min.js', 'unorm.js', 'main.js'],
+  compressJs: true,
+  sassConfig: {
+    'outputStyle': 'compressed'
+  }
+}
+
+var config = devConfig;
+
+gulp.task('set-prod', function() {
+  config = prodConfig;
+});
 
 // Static Server + watching scss/html files
 gulp.task('serve', ['sass', 'js', 'html'], function() {
@@ -26,8 +47,11 @@ gulp.task('lint', function() {
 });
 
 gulp.task('js', ['lint'], function() {
-  return gulp.src('src/js/**/*.js')
-    .pipe(gulp.dest('dist/js'))
+  var source = gulp.src(config.scripts)
+  if (config.compressJs) {
+    source = source.pipe(uglify());
+  }
+  return source.pipe(gulp.dest('dist/js'))
     .pipe(browserSync.stream());
 });
 
@@ -40,7 +64,7 @@ gulp.task('html', function() {
 // Compile sass into CSS & auto-inject into browsers
 gulp.task('sass', function() {
   return gulp.src('src/scss/*.scss')
-    .pipe(sass())
+    .pipe(sass(config.sassConfig))
     .pipe(gulp.dest('dist/css'))
     .pipe(browserSync.stream());
 });
