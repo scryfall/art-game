@@ -7,6 +7,7 @@
     't:basic',
     't:saga',
     'is:split',
+    'is:transform',
     'is:fullart',
     'is:extra'
   ];
