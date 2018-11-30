@@ -34,10 +34,6 @@ body {
 }
 
 header {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
   text-align: center;
   padding: 10px 0;
 
@@ -45,14 +41,20 @@ header {
     padding-bottom: 50px;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   .logo {
     height: 32px;
+    vertical-align: middle;
   }
 
   h1 {
     display: inline-block;
     font-size: inherit;
     margin: 0 10px;
+    line-height: 32px;
   }
 }
 

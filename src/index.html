@@ -11,8 +11,10 @@
 
   <div id="app" v-bind:class="{ 'theme-dark': darkTheme, 'theme-light': !darkTheme }">
     <header>
-      <img class="logo" src="assets/header-logo.svg" alt="">
-      <h1>Scryfall Art Game</h1>
+      <a href="/">
+        <img class="logo" src="assets/header-logo.svg" alt="Scryfall">
+        <h1>Art Game</h1>
+      </a>
     </header>
         
     <div role="main" class="screen difficulty" v-if="!started">
