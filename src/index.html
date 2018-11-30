@@ -76,7 +76,12 @@
 
       <img class="loader" style="display: none;" v-bind:src="artToLoad" @load="imageFinishedLoading">
 
-      <p>Which card is this?</p>
+      <p>
+        Which card is this?
+        <span class="skip">
+          (<a role="button" href="#" tabindex="0" @click.prevent="skip" @keypress.enter="skip">skip</a>)
+        </span>
+      </p>
 
       <form @submit.prevent="check">
         <input type="text" required ref="guessInput" class="guess" v-model="guess" v-bind:disabled="loadingNextCard" autocomplete="off">
@@ -84,16 +89,19 @@
       </form>
 
       <div class="score-container">
-        <span class="score">Score: {{ score }}</span>
-        <a role="button" tabindex="0" class="skip button-sm" @click="skip" @keypress.enter="skip">Skip</a>
+        
       </div>
 
-      <p class="feedback" v-if="showFeedback">
-        {{ prevGuessCorrect ? 'Correct!' : 'Incorrect.'}}
-        That was
-        <a v-bind:href="prevCard.scryfall_uri" class="feedback-cardname">{{ prevCard.name }}</a>.
-        <span v-if="!prevGuessCorrect">You guessed: {{ prevGuess }}</span>
-      </p>
+      <div class="feedback" v-if="showFeedback">
+        <p class="score">Score: {{ score }}</p>
+
+        <p>
+          {{ prevGuessCorrect ? 'Correct!' : 'Incorrect.'}}
+          That was
+          <a v-bind:href="prevCard.scryfall_uri" class="feedback-cardname">{{ prevCard.name }}</a>.
+          <span v-if="!prevGuessCorrect">You guessed: {{ prevGuess }}</span>
+        </p>
+      </div>
     </div>
 
     <footer>
