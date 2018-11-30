@@ -62,7 +62,12 @@ gulp.task('html', function htmlInner () {
     .pipe(browserSync.stream());
 });
 
-// Compile sass into CSS & auto-inject into browsers
+gulp.task('assets', function assetsInner () {
+  return gulp.src('src/assets/**/*')
+    .pipe(gulp.dest('dist/assets'))
+    .pipe(browserSync.stream());
+});
+
 gulp.task('sass', function sassInner () {
   return gulp.src('src/scss/*.scss')
     .pipe(sass(config.sassConfig))
@@ -74,7 +79,7 @@ gulp.task('clean', function cleanInner() {
   return del('dist');
 });
 
-gulp.task('build', gulp.series('clean', 'html', 'sass', 'js'));
+gulp.task('build', gulp.series('clean', gulp.parallel('html', 'assets', 'sass', 'js')));
 
 // Static Server + watching scss/html files
 gulp.task('serve', gulp.series('build', function serveInner () {
@@ -85,6 +90,7 @@ gulp.task('serve', gulp.series('build', function serveInner () {
   gulp.watch('src/scss/**/*.scss', gulp.series('sass'));
   gulp.watch('src/js/*.js', gulp.series('js'));
   gulp.watch('src/*.html', gulp.series('html')).on('change', browserSync.reload);
+  gulp.watch('src/assets/**/*', gulp.series('assets')).on('change', browserSync.reload);
 }));
 
 gulp.task('default', gulp.series('serve'));

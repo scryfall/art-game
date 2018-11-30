@@ -10,8 +10,12 @@
 <body>
 
   <div id="app" v-bind:class="{ 'theme-dark': darkTheme, 'theme-light': !darkTheme }">
-    <div role="main" class="screen difficulty" v-if="!started">
+    <header>
+      <img class="logo" src="assets/header-logo.svg" alt="">
       <h1>Scryfall Art Game</h1>
+    </header>
+        
+    <div role="main" class="screen difficulty" v-if="!started">
       <p>Which format should we show cards from?</p>
       
       <div class="difficulty-buttons">

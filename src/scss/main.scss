@@ -14,29 +14,49 @@ body {
   height: 100%;
 }
 
-#app {
-  min-height: 100%;
-  padding: 0 16px;
-}
-
 body {
   font-family: "Helvetica Neue", "HelveticaNeueWF", Arial, Helvetica, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
 }
 
 #app {
+  min-height: 100vh;
+  padding: 0 16px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  justify-content: space-between;
+  justify-content: flex-start;
 
   .screen {
-    margin-top: 10vh;
+    flex: auto;
+    flex-shrink: 0;
+  }
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px 0;
+
+  @include bp-large {
+    padding-bottom: 50px;
+  }
+
+  .logo {
+    height: 32px;
+  }
+
+  h1 {
+    display: inline-block;
+    font-size: inherit;
+    margin: 0 10px;
   }
 }
 
 h1 {
-  margin: 0 0 30px;
   font-size: 18px;
 
   @include bp-large() {
