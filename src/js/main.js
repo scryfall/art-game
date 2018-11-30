@@ -63,20 +63,14 @@
       darkTheme: true,
       loadingNextCard: false,
       card: { },
+      artUrl: null,
+      artToLoad: null,
       errorLoading: false,
       showFeedback: false,
       prevCard: null,
       prevGuess: null,
       prevGuessCorrect: null,
       score: 0,
-    },
-    computed: {
-      artUrl: function () {
-        if (typeof this.card.image_uris === 'undefined') {
-          return false;
-        }
-        return this.card.image_uris.art_crop;
-      }
     },
     created: function () {
       const theme = localStorage.getItem(KEY_LOCAL_THEME);
@@ -109,12 +103,14 @@
         getRandomCard(format, function(card) {
           this.errorLoading = false;
           this.card = card;
+          this.artToLoad = this.card.image_uris.art_crop;
         }.bind(this),
         function (error) {
           this.errorLoading = true;
         }.bind(this));
       },
       imageFinishedLoading: function () {
+        this.artUrl = this.artToLoad;
         this.loadingNextCard = false;
       },
       check: function () {
