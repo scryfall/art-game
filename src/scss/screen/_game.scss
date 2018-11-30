@@ -22,6 +22,12 @@
     max-height: 60vh;
   }
 
+  .guess,
+  .score-container {
+    width: 400px;
+    max-width: 100%;
+  }
+
   .guess {
     border: 1px solid;
     border-radius: 3px;
@@ -30,8 +36,6 @@
     font-size: 18px;
     margin: 0 auto;
     padding: 10px;
-    width: 400px;
-    max-width: 100%;
 
     @include bp-large() {
       font-size: 24px;
@@ -41,6 +45,14 @@
     &:not(:focus) {
       opacity: 0.6;
     }
+  }
+
+  .score-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px auto;
   }
 
   .error-loading {

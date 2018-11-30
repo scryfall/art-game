@@ -131,6 +131,9 @@
       },
       retry: function() {
         this.getNextCard();
+      },
+      skip: function() {
+        this.getNextCard();
       }
     }
   });
