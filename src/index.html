@@ -32,9 +32,34 @@
       <p>Which format should we show cards from?</p>
       
       <div class="difficulty-buttons">
-        <a role="button" class="button-lg" @click="start('standard')" ref="standardBtn">Standard</a>
-        <a role="button" class="button-lg" @click="start('modern')">Modern</a>
-        <a role="button" class="button-lg" @click="start('vintage')">Vintage</a>
+        <a
+          role="button"
+          tabindex="0"
+          class="button-lg"
+          @click="start('standard')"
+          @keypress.enter="start('standard')"
+          ref="standardBtn"
+        >
+          Standard
+        </a>
+        <a
+          role="button"
+          tabindex="0"
+          class="button-lg"
+          @click="start('modern')"
+          @keypress.enter="start('modern')"
+        >
+          Modern
+        </a>
+        <a
+          role="button"
+          tabindex="0"
+          class="button-lg"
+          @click="start('vintage')"
+          @keypress.enter="start('vintage')"
+        >
+          Vintage
+        </a>
       </div>
     </div>
 
@@ -60,7 +85,7 @@
 
       <div class="score-container">
         <span class="score">Score: {{ score }}</span>
-        <a role="button" tabindex="0" class="skip button-sm" @click="skip">Skip</a>
+        <a role="button" tabindex="0" class="skip button-sm" @click="skip" @keypress.enter="skip">Skip</a>
       </div>
 
       <p class="feedback" v-if="showFeedback">
@@ -73,7 +98,7 @@
 
     <footer>
       <div class="controls">
-        <a role="button" class="button-sm" @click="toggleTheme">
+        <a role="button" tabindex="0" class="button-sm" @click="toggleTheme" @keypress.enter="toggleTheme">
           {{ darkTheme ? 'Dark' : 'Light' }} theme
         </a>
       </div>
