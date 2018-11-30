@@ -54,13 +54,13 @@
       <p>Which card is this?</p>
 
       <form @submit.prevent="check">
-        <input type="text" ref="guessInput" class="guess" v-model="guess" v-bind:disabled="loadingNextCard" autocomplete="off">
+        <input type="text" required ref="guessInput" class="guess" v-model="guess" v-bind:disabled="loadingNextCard" autocomplete="off">
         <button type="submit" class="vh" tabindex="-1">Check</button>
       </form>
 
       <div class="score-container">
         <span class="score">Score: {{ score }}</span>
-        <a role="button" class="skip button-sm" @click="skip">Skip</a>
+        <a role="button" tabindex="0" class="skip button-sm" @click="skip">Skip</a>
       </div>
 
       <p class="feedback" v-if="showFeedback">
