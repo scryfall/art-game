@@ -5,6 +5,9 @@
   "main": "gulpfile.js",
   "author": "spacemonaut",
   "license": "UNLICENSED",
+  "engines": {
+    "node": "10.14.1"
+  },
   "scripts": {
     "start": "gulp"
   },
