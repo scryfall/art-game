@@ -9,7 +9,7 @@
     "node": "10.14.1"
   },
   "scripts": {
-    "prestart": "gulp build-prod",
+    "build": "gulp build-prod",
     "start": "node index.js"
   },
   "devDependencies": {
