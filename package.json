@@ -9,7 +9,8 @@
     "node": "10.14.1"
   },
   "scripts": {
-    "start": "gulp"
+    "prestart": "gulp build-prod",
+    "start": "node index.js"
   },
   "devDependencies": {
     "browser-sync": "^2.26.3",
@@ -20,5 +21,8 @@
     "gulp-sass": "^4.0.2",
     "gulp-terser": "^1.1.5",
     "jshint": "^2.9.6"
+  },
+  "dependencies": {
+    "express": "^4.16.4"
   }
 }
