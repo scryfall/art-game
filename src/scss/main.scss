@@ -105,10 +105,11 @@ footer {
   flex-direction: row-reverse;
   align-items: flex-end;
   justify-content: space-between;
-  margin-top: 50px;
+  margin-top: 20px;
   margin-bottom: 30px;
   
   @include bp-large() {
+    margin-top: 50px;
     margin-bottom: 10px;
   }
 
