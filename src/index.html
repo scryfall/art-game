@@ -79,7 +79,7 @@
       <p>Which card is this?</p>
 
       <form @submit.prevent="check">
-        <input type="text" required ref="guessInput" class="guess" v-model="guess" v-bind:disabled="loadingNextCard" autocomplete="off">
+        <input type="text" ref="guessInput" class="guess" v-model="guess" v-bind:disabled="loadingNextCard" autocomplete="off">
         <button type="submit" class="vh" tabindex="-1">Check</button>
       </form>
 
