@@ -9,7 +9,7 @@
     "node": "10.14.1"
   },
   "scripts": {
-    "build": "gulp build-prod",
+    "postinstall": "gulp build-prod",
     "start": "node index.js"
   },
   "devDependencies": {

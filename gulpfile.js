@@ -6,6 +6,11 @@ const jshint = require('gulp-jshint');
 const terser = require('gulp-terser');
 const concat = require('gulp-concat');
 
+const baseConfig = {
+  outputDir: 'app',
+  ecmaVersion: 6
+}
+
 const devConfig = {
   scripts: [
     'src/js/lib/vue.js',
@@ -28,17 +33,17 @@ const prodConfig = {
   }
 }
 
-var config = devConfig;
+var config = Object.assign({}, baseConfig, devConfig);
 
 gulp.task('setProd', function setProdInner (done) {
-  config = prodConfig;
+  config = Object.assign({}, baseConfig, prodConfig);
   done();
 });
 
 gulp.task('lint', function lintInner () {
   return gulp.src('src/js/main.js')
     .pipe(jshint({
-      "esversion": 6
+      "esversion": config.ecmaVersion
     }))
     .pipe(jshint.reporter('default'))
     .pipe(jshint.reporter('fail'));
@@ -49,34 +54,34 @@ gulp.task('js', gulp.series('lint', function jsInner () {
     .pipe(concat('main.js'))
   if (config.compressJs) {
     source = source.pipe(terser({
-      'ecma': 6
+      'ecma': config.ecmaVersion
     }));
   }
-  return source.pipe(gulp.dest('dist/js'))
+  return source.pipe(gulp.dest(`${config.outputDir}/js`))
     .pipe(browserSync.stream());
 }));
 
 gulp.task('html', function htmlInner () {
   return gulp.src('src/*.html')
-    .pipe(gulp.dest('dist'))
+    .pipe(gulp.dest(`${config.outputDir}`))
     .pipe(browserSync.stream());
 });
 
 gulp.task('assets', function assetsInner () {
   return gulp.src('src/assets/**/*')
-    .pipe(gulp.dest('dist/assets'))
+    .pipe(gulp.dest(`${config.outputDir}/assets`))
     .pipe(browserSync.stream());
 });
 
 gulp.task('sass', function sassInner () {
   return gulp.src('src/scss/*.scss')
     .pipe(sass(config.sassConfig))
-    .pipe(gulp.dest('dist/css'))
+    .pipe(gulp.dest(`${config.outputDir}/css`))
     .pipe(browserSync.stream());
 });
 
 gulp.task('clean', function cleanInner() {
-  return del('dist');
+  return del(`${config.outputDir}`);
 });
 
 gulp.task('build', gulp.series('clean', gulp.parallel('html', 'assets', 'sass', 'js')));
@@ -84,7 +89,7 @@ gulp.task('build', gulp.series('clean', gulp.parallel('html', 'assets', 'sass', 
 // Static Server + watching scss/html files
 gulp.task('serve', gulp.series('build', function serveInner () {
   browserSync.init({
-    server: './dist'
+    server: `./${config.outputDir}`
   });
 
   gulp.watch('src/scss/**/*.scss', gulp.series('sass'));
