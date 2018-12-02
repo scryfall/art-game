@@ -4,4 +4,4 @@ const PORT = process.env.PORT || 3000;
 
 express()
   .use(express.static(__dirname))
-  .listen(PORT, () => console.log(`Listening on port ${PORT}`));
+  .listen(PORT, () => console.log(`Listening on port ${PORT} at directory ${__dirname}`));
