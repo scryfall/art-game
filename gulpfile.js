@@ -7,7 +7,7 @@ const terser = require('gulp-terser');
 const concat = require('gulp-concat');
 
 const baseConfig = {
-  outputDir: 'app',
+  outputDir: 'dist',
   ecmaVersion: 6
 }
 
