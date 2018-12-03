@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 3000;
 express()
   .use(express.static(path.join(__dirname, 'dist'), {
     setHeaders: (res, path, stat) => {
-      res.set('Content-Security-Policy', "default-src 'self' *.scryfall.com")
+      res.set('Content-Security-Policy', "default-src 'self' *.scryfall.com scryfall-art-game.herokuapp.com")
       res.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
       res.set('Referrer-Policy', 'strict-origin-when-cross-origin');
       res.set('X-Frame-Options', 'DENY');
