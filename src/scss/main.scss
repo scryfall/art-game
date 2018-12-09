@@ -27,9 +27,15 @@ body {
   align-items: stretch;
   justify-content: flex-start;
 
-  .screen {
-    flex: auto;
-    flex-shrink: 0;
+  @include bp-small {
+    .screen {
+      flex: auto;
+      flex-shrink: 0;
+    }
+  }
+
+  @include bp-large {
+    justify-content: space-between;
   }
 }
 
