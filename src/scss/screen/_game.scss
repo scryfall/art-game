@@ -47,6 +47,10 @@
     }
   }
 
+  .loader {
+    display: none;
+  }
+
   .error-loading {
     position: absolute;
     top: 0;

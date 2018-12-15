@@ -2,10 +2,9 @@ const express = require('express');
 const path = require('path');
 const PORT = process.env.PORT || 3000;
 const ENV_DEV = 'development'
-const ENV_PROD = 'production';
 const ENV = process.env.NODE_ENV || ENV_DEV;
 
-const CONTENT_SECURITY_POLICY = [
+let contentSecurityPolicy = [
   "default-src *.scryfall.com",
   "script-src *.scryfall.com 'unsafe-eval'",
   "style-src *.scryfall.com",
@@ -16,11 +15,10 @@ const CONTENT_SECURITY_POLICY = [
 express()
   .use(express.static(path.join(__dirname, 'dist'), {
     setHeaders: (res, path, stat) => {
-      let policyHeader = 'Content-Security-Policy';
       if (ENV === ENV_DEV) {
-        policyHeader = 'Content-Security-Policy-Report-Only';
+        contentSecurityPolicy = contentSecurityPolicy.replace(/'\*\.scryfall\.com'/g, 'localhost *.scryfall.com');
       }
-      res.set(policyHeader, CONTENT_SECURITY_POLICY)
+      res.set('Content-Security-Policy', contentSecurityPolicy)
       res.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
       res.set('Referrer-Policy', 'strict-origin-when-cross-origin');
       res.set('X-Frame-Options', 'DENY');
