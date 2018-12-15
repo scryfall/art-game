@@ -7,9 +7,9 @@ const ENV = process.env.NODE_ENV || ENV_DEV;
 
 const CONTENT_SECURITY_POLICY = [
   "default-src *.scryfall.com",
-  "script-src *.scryfall.com 'unsafe-eval' 'unsafe-inline'",
-  "style-src *.scryfall.com 'unsafe-inline'",
-  "img-src *.scryfall.com 'unsafe-inline' data:",
+  "script-src *.scryfall.com 'unsafe-eval'",
+  "style-src *.scryfall.com",
+  "img-src *.scryfall.com data:",
   "block-all-mixed-content"
 ].join('; ');
 
