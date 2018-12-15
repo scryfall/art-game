@@ -86,7 +86,17 @@
       </p>
 
       <form @submit.prevent="check">
-        <input type="text" ref="guessInput" class="guess" v-model="guess" v-bind:disabled="loadingNextCard" autocomplete="off">
+        <input
+          type="text"
+          ref="guessInput"
+          class="guess"
+          v-model="guess"
+          v-bind:disabled="loadingNextCard"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+        >
         <button type="submit" class="vh" tabindex="-1">Check</button>
       </form>
 
