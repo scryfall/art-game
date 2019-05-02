@@ -14,14 +14,15 @@
     "start": "node index.js"
   },
   "devDependencies": {
-    "browser-sync": "^2.26.3",
+    "browser-sync": "^2.26.5",
     "del": "^3.0.0",
     "gulp": "^4.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-jshint": "^2.1.0",
     "gulp-sass": "^4.0.2",
     "gulp-terser": "^1.1.5",
-    "jshint": "^2.9.6"
+    "jshint": "^2.9.6",
+    "tar": ">=4.4.2"
   },
   "dependencies": {
     "express": "^4.16.4"
