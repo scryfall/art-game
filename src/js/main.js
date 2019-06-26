@@ -89,7 +89,8 @@
         });
       },
       focusGuessInput: function () {
-        this.$refs.guessInput.focus();
+        const guessInput = this.$refs.guessInput;
+        setTimeout(function(){guessInput.focus();}, 1);
       },
       toggleTheme: function () {
         this.darkTheme = !this.darkTheme;
@@ -112,6 +113,7 @@
       imageFinishedLoading: function () {
         this.artUrl = this.artToLoad;
         this.loadingNextCard = false;
+        this.focusGuessInput();
       },
       check: function () {
         const guessCorrect = naturalize(this.card.name) === naturalize(this.guess);
