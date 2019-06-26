@@ -79,7 +79,7 @@
       <img class="loader" v-bind:src="artToLoad" @load="imageFinishedLoading">
 
       <p>
-        Which card is this?
+        {{ cardnameGame ? 'Which card is this?' : 'Who illustrated this card?'}}
         <span class="skip">
           (<a role="button" href="#" tabindex="0" @click.prevent="skip" @keypress.enter="skip">skip</a>)
         </span>
@@ -110,14 +110,21 @@
         <p>
           {{ prevGuessCorrect ? 'Correct!' : 'Incorrect.'}}
           That was
-          <a v-if="prevCard" v-bind:href="prevCard.scryfall_uri" class="feedback-cardname" target="_blank">{{ prevCard.name }}</a>.
+          <a v-if="prevCard" v-bind:href="prevCard.scryfall_uri" class="feedback-cardname" target="_blank">{{ cardnameGame ? prevCard.name : prevCard.artist }}</a>.
           <span v-if="prevGuessCorrect === false">You guessed: {{ prevGuess }}</span>
+        </p>
+
+        <p v-if="showArtistHint === true">
+          <span class="hint">Note: a first or last name is sufficient.</span>
         </p>
       </div>
     </div>
 
     <footer>
       <div class="controls">
+        <a role="button" tabindex="0" class="button-sm" @click="toggleGame" @keypress.enter="toggleGame">
+          {{ cardnameGame ? 'Guess artists' : 'Guess cards' }}
+        </a>
         <a role="button" tabindex="0" class="button-sm" @click="toggleTheme" @keypress.enter="toggleTheme">
           {{ darkTheme ? 'Dark' : 'Light' }} theme
         </a>

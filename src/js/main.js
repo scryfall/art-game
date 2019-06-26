@@ -1,4 +1,8 @@
 (function () {
+  const KEY_LOCAL_GAME = 'game';
+  const GAME_CARDNAME = 'cardname';
+  const GAME_ILLUSTRATOR = 'illustrator';
+
   const KEY_LOCAL_THEME = 'theme';
   const THEME_DARK = 'dark';
   const THEME_LIGHT = 'light';
@@ -17,6 +21,17 @@
     str = str.toLowerCase();
     str = str.replace(/[^\w\d]/gi, '');
     return str;
+  }
+
+  function nameMatches(name, guess) {
+    name = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    name = name.toLowerCase();
+    guess = guess.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    guess = guess.toLowerCase();
+    var allMatched = guess.split(/\s+/).every(function(val) {
+      return name.split(/\s+/).indexOf(val) >= 0;
+    });
+    return allMatched;
   }
 
   function get(url, resolve, reject) {
@@ -60,6 +75,7 @@
       format: null,
       started: false,
       guess: '',
+      cardnameGame: true,
       darkTheme: true,
       loadingNextCard: false,
       card: { },
@@ -67,12 +83,15 @@
       artToLoad: null,
       errorLoading: false,
       showFeedback: false,
+      showArtistHint: false,
       prevCard: null,
       prevGuess: null,
       prevGuessCorrect: null,
       score: 0,
     },
     created: function () {
+      const game = localStorage.getItem(KEY_LOCAL_GAME);
+      if (game === GAME_ILLUSTRATOR) { this.cardnameGame = false; }
       const theme = localStorage.getItem(KEY_LOCAL_THEME);
       if (theme === THEME_LIGHT) { this.darkTheme = false; }
       this.getNextCard('standard');
@@ -91,6 +110,13 @@
       focusGuessInput: function () {
         const guessInput = this.$refs.guessInput;
         setTimeout(function(){guessInput.focus();}, 1);
+      },
+      toggleGame: function () {
+        this.cardnameGame = !this.cardnameGame;
+        localStorage.setItem(KEY_LOCAL_GAME, this.cardnameGame ? GAME_CARDNAME : GAME_ILLUSTRATOR);
+        this.showFeedback = false;
+        this.showArtistHint = false;
+        this.getNextCard();
       },
       toggleTheme: function () {
         this.darkTheme = !this.darkTheme;
@@ -116,7 +142,13 @@
         this.focusGuessInput();
       },
       check: function () {
-        const guessCorrect = naturalize(this.card.name) === naturalize(this.guess);
+        var guessCorrect = '';
+        if (this.cardnameGame) {
+          guessCorrect = naturalize(this.card.name) === naturalize(this.guess);
+        } else {
+          guessCorrect = nameMatches(this.card.artist, this.guess);
+          this.showArtistHint = this.guess.indexOf(' ') >= 0;
+        }
         if (guessCorrect) {
           this.score += 1;
         }
