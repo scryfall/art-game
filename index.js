@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const PORT = process.env.PORT || 3000;
-const ENV_DEV = 'development'
+const ENV_DEV = 'development';
 const ENV = process.env.NODE_ENV || ENV_DEV;
 
 let contentSecurityPolicy = [
@@ -18,7 +18,7 @@ express()
       if (ENV === ENV_DEV) {
         contentSecurityPolicy = contentSecurityPolicy.replace(/'\*\.scryfall\.com'/g, 'localhost *.scryfall.com');
       }
-      res.set('Content-Security-Policy', contentSecurityPolicy)
+      res.set('Content-Security-Policy', contentSecurityPolicy);
       res.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
       res.set('Referrer-Policy', 'strict-origin-when-cross-origin');
       res.set('X-Frame-Options', 'DENY');

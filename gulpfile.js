@@ -9,7 +9,7 @@ const concat = require('gulp-concat');
 const baseConfig = {
   outputDir: 'dist',
   ecmaVersion: 6
-}
+};
 
 const devConfig = {
   scripts: [
@@ -31,7 +31,7 @@ const prodConfig = {
   sassConfig: {
     'outputStyle': 'compressed'
   }
-}
+};
 
 var config = Object.assign({}, baseConfig, devConfig);
 
@@ -41,7 +41,10 @@ gulp.task('setProd', function setProdInner (done) {
 });
 
 gulp.task('lint', function lintInner () {
-  return gulp.src('src/js/main.js')
+  return gulp.src([
+    '*.js',
+    'src/js/*.js'
+  ])
     .pipe(jshint({
       "esversion": config.ecmaVersion
     }))
@@ -51,7 +54,8 @@ gulp.task('lint', function lintInner () {
 
 gulp.task('js', gulp.series('lint', function jsInner () {
   var source = gulp.src(config.scripts)
-    .pipe(concat('main.js'))
+    .pipe(concat('main.js'));
+
   if (config.compressJs) {
     source = source.pipe(terser({
       'ecma': config.ecmaVersion
