@@ -15,10 +15,9 @@ let contentSecurityPolicy = [
 express()
   .use(express.static(path.join(__dirname, 'dist'), {
     setHeaders: (res, path, stat) => {
-      if (ENV === ENV_DEV) {
-        contentSecurityPolicy = contentSecurityPolicy.replace(/'\*\.scryfall\.com'/g, 'localhost *.scryfall.com');
+      if (ENV !== ENV_DEV) {
+        res.set('Content-Security-Policy', contentSecurityPolicy);
       }
-      res.set('Content-Security-Policy', contentSecurityPolicy)
       res.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
       res.set('Referrer-Policy', 'strict-origin-when-cross-origin');
       res.set('X-Frame-Options', 'DENY');
