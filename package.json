@@ -11,6 +11,7 @@
   "scripts": {
     "postinstall": "gulp build-prod",
     "build": "gulp build-prod",
+    "lint": "gulp lint",
     "start": "node index.js"
   },
   "devDependencies": {
