@@ -22,39 +22,16 @@ import Vue from 'vue';
     return str;
   }
 
-  function get(url, resolve, reject) {
-    const request = new XMLHttpRequest();
-    request.open('GET', url, true);
-
-    request.onload = function() {
-      if (request.status >= 200 && request.status < 400) {
-        var data = JSON.parse(request.responseText);
-        resolve(data);
-      } else {
-        reject(request.responseText);
-      }
-    };
-
-    request.onerror = function() {
-      reject(request.statusText);
-    };
-
-    request.send();
-  }
-
   /**
    * Get a random card from the Random API.
    * @param {string} format The format to pick from: 'standard', 'modern', or 'vintage'
    */
-  function getRandomCard(format, resolve, reject) {
+  async function getRandomCard(format) {
     const endpoint = 'https://api.scryfall.com/cards/random';
-    const queryExcludes = EXCLUDES.map(function (str) {
-      return '-' + str;
-    }).join(' ');
-    const queryFormat = 'f:' + format;
-    const query = queryFormat + ' ' + queryExcludes;
-    const url = endpoint + '?q=' + query;
-    return get(url, resolve, reject);
+    const exclusions = EXCLUDES.map(str => `-${str}`).join(' ');
+    const response = await fetch(`${endpoint}?q=f:${format} ${exclusions}`);
+    const card = await response.json();
+    return card;
   }
 
   const app = new Vue({
@@ -99,19 +76,19 @@ import Vue from 'vue';
         this.darkTheme = !this.darkTheme;
         localStorage.setItem(KEY_LOCAL_THEME, this.darkTheme ? THEME_DARK : THEME_LIGHT);
       },
-      getNextCard: function (format) {
+      getNextCard: async function (format) {
         if (typeof format === 'undefined') {
           format = this.format;
         }
         this.loadingNextCard = true;
-        getRandomCard(format, function(card) {
+        try {
+          this.card = await getRandomCard(format);
           this.errorLoading = false;
-          this.card = card;
           this.artToLoad = this.card.image_uris.art_crop;
-        }.bind(this),
-        function (error) {
+        } catch (e) {
+          console.error(`Failed to load a card for format ${format}`, e);
           this.errorLoading = true;
-        }.bind(this));
+        }
       },
       imageFinishedLoading: function () {
         this.artUrl = this.artToLoad;
