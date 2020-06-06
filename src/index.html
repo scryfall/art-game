@@ -21,7 +21,7 @@
 </head>
 <body>
 
-  <div id="app" v-bind:class="{ 'theme-dark': darkTheme, 'theme-light': !darkTheme }">
+  <div id="app" :class="[themeClass]">
     <header>
       <a href="/">
         <h1>
@@ -120,7 +120,7 @@
     <footer>
       <div class="controls">
         <a role="button" tabindex="0" class="button-sm" @click="toggleTheme" @keypress.enter="toggleTheme">
-          {{ darkTheme ? 'Dark' : 'Light' }} theme
+          {{ theme === 'dark' ? 'Dark' : 'Light' }} theme
         </a>
       </div>
       <div class="credit">

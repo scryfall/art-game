@@ -18,7 +18,7 @@ new Vue({
     format: null,
     started: false,
     guess: '',
-    darkTheme: true,
+    theme: Theme.Dark,
     loadingNextCard: false,
     card: { },
     artUrl: null,
@@ -30,13 +30,10 @@ new Vue({
     prevGuessCorrect: null,
     score: 0,
   },
-  created() {
-    const theme = localStorage.getItem(StorageKey.Theme);
-    if (theme === Theme.Light) { this.darkTheme = false; }
-    this.getNextCard('standard');
-  },
-  mounted() {
-    this.$refs.standardBtn.focus();
+  computed: {
+    themeClass() {
+      return `theme--${this.theme}`;
+    }
   },
   methods: {
     start(format) {
@@ -51,8 +48,8 @@ new Vue({
       setTimeout(() => guessInput.focus(), 1);
     },
     toggleTheme() {
-      this.darkTheme = !this.darkTheme;
-      localStorage.setItem(StorageKey.Theme, this.darkTheme ? Theme.Dark : Theme.Light);
+      this.theme = this.theme === Theme.Dark ? Theme.Light : Theme.Dark;
+      localStorage.setItem(StorageKey.Theme, this.theme);
     },
     async getNextCard() {
       this.loadingNextCard = true;
@@ -88,5 +85,13 @@ new Vue({
     skip() {
       this.getNextCard();
     }
-  }
+  },
+  created() {
+    const storedTheme = localStorage.getItem(StorageKey.Theme);
+    if (storedTheme) this.theme = storedTheme;
+    this.getNextCard('standard');
+  },
+  mounted() {
+    this.$refs.standardBtn.focus();
+  },
 });
