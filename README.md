@@ -40,4 +40,11 @@ Deploy this project via Heroku.
 
 This is a Vue 2 SPA.
 
-**Browser targets:** IE11+, edge Chrome, Firefox, Safari (incl. iOS)
+Baseline requirements:
+
+* Browser targets: IE11+, edge Chrome, Firefox, Safari (incl. iOS)
+* A static site powered fully by JS and the public API at https://scryfall.com/docs/api/cards/random
+* Minimise usage of cookies or localstorage.
+* Responsive down to 320px.
+* No CDNs beside this project's own asset CDN and img.scryfall.com
+* Keep within Scryfall brand colors (defind in [`_colors.scss`](src/scss/_colors.scss))

@@ -3,5 +3,6 @@
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.rulers": [100],
-  "files.insertFinalNewline": true
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true
 }
