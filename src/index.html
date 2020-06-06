@@ -101,9 +101,9 @@
 
     <footer>
       <div class="controls">
-        <a role="button" tabindex="0" class="button-sm" @click="toggleTheme" @keypress.enter="toggleTheme">
-          {{ theme === 'dark' ? 'Dark' : 'Light' }} theme
-        </a>
+        <button type="button" class="button-sm" @click="toggleTheme" @keypress.enter="toggleTheme">
+          {{ theme | capitalize }} theme
+        </button>
       </div>
       <div class="credit">
         by <a href="https://spacemonaut.github.io/" target="_blank">spacemonaut</a> based on the MagicCards.info Art Game
