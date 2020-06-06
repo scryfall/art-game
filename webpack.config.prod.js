@@ -13,5 +13,6 @@ config.optimization = {
     }),
   ],
 };
+config.resolve.alias.vue = 'vue/dist/vue.min.js';
 
 module.exports = config;
