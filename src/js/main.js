@@ -54,7 +54,9 @@ new Vue({
     async getNextCard() {
       this.loadingNextCard = true;
       try {
-        this.card = await scryfall.getRandomCard(this.format, UniversalExcludes);
+        const criteria = [].concat(UniversalExcludes);
+        if (this.prevCard) criteria.push(`-!"${this.prevCard.name}"`);
+        this.card = await scryfall.getRandomCard(this.format, criteria);
         this.errorLoading = false;
         this.artToLoad = this.card.image_uris.art_crop;
       } catch (e) {
