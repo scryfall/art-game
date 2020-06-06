@@ -1,7 +1,7 @@
 import unorm from 'unorm';
 import Vue from 'vue';
 import { Scryfall } from './scryfall';
-import { StorageKey, Theme, UniversalExcludes } from './config';
+import { StorageKey, Theme, UniversalCriteria } from './config';
 import levenshtein from 'js-levenshtein';
 
 const scryfall = new Scryfall();
@@ -64,7 +64,7 @@ new Vue({
       if (!format) format = this.format;
       this.loadingNextCard = true;
       try {
-        const criteria = [].concat(UniversalExcludes);
+        const criteria = [].concat(UniversalCriteria);
         if (this.prevCard) criteria.push(`-!"${this.prevCard.name}"`);
         this.card = await scryfall.getRandomCard(format, criteria);
         this.errorLoading = false;
@@ -84,7 +84,7 @@ new Vue({
       const actual = naturalize(this.card.name);
       const correct = levenshtein(guess, actual) <= 3;
       if (correct) this.score += 1;
-      this.prevGuessCorrect = guessCorrect;
+      this.prevGuessCorrect = correct;
       this.prevGuess = this.guess;
       this.prevCard = this.card;
       this.showFeedback = true;
