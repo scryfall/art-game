@@ -42,31 +42,31 @@ new Vue({
     prevGuessCorrect: null,
     score: 0,
   },
-  created: function () {
+  created() {
     const theme = localStorage.getItem(KEY_LOCAL_THEME);
     if (theme === THEME_LIGHT) { this.darkTheme = false; }
     this.getNextCard('standard');
   },
-  mounted: function () {
+  mounted() {
     this.$refs.standardBtn.focus();
   },
   methods: {
-    start: function (format) {
+    start(format) {
       this.format = format;
       this.started = true;
-      this.$nextTick(function() {
+      this.$nextTick(() => {
         this.focusGuessInput();
       });
     },
-    focusGuessInput: function () {
+    focusGuessInput() {
       const guessInput = this.$refs.guessInput;
-      setTimeout(function(){guessInput.focus();}, 1);
+      setTimeout(() => guessInput.focus(), 1);
     },
-    toggleTheme: function () {
+    toggleTheme() {
       this.darkTheme = !this.darkTheme;
       localStorage.setItem(KEY_LOCAL_THEME, this.darkTheme ? THEME_DARK : THEME_LIGHT);
     },
-    getNextCard: async function (format) {
+    async getNextCard(format) {
       if (typeof format === 'undefined') {
         format = this.format;
       }
@@ -80,12 +80,12 @@ new Vue({
         this.errorLoading = true;
       }
     },
-    imageFinishedLoading: function () {
+    imageFinishedLoading() {
       this.artUrl = this.artToLoad;
       this.loadingNextCard = false;
       this.focusGuessInput();
     },
-    check: function () {
+    check() {
       const guessCorrect = naturalize(this.card.name) === naturalize(this.guess);
       if (guessCorrect) {
         this.score += 1;
@@ -97,10 +97,10 @@ new Vue({
       this.getNextCard();
       this.guess = '';
     },
-    retry: function() {
+    retry() {
       this.getNextCard();
     },
-    skip: function() {
+    skip() {
       this.getNextCard();
     }
   }
