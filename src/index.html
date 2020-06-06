@@ -30,43 +30,25 @@
         </h1>
       </a>
     </header>
-        
-    <div role="main" class="screen difficulty" v-if="!started">
+       
+    <div role="main" class="screen screen--format" v-if="!started">
       <p>Which format should we show cards from?</p>
       
-      <div class="difficulty-buttons">
-        <a
-          role="button"
-          tabindex="0"
+      <div class="format-buttons" ref="formatButtons">
+        <button
+          v-for="(format, index) in supportedFormats"
+          :key="index"
+          type="button"
           class="button-lg"
-          @click="start('standard')"
-          @keypress.enter="start('standard')"
-          ref="standardBtn"
+          @click="start(format)"
+          @keypress.enter="start(format)"
         >
-          Standard
-        </a>
-        <a
-          role="button"
-          tabindex="0"
-          class="button-lg"
-          @click="start('modern')"
-          @keypress.enter="start('modern')"
-        >
-          Modern
-        </a>
-        <a
-          role="button"
-          tabindex="0"
-          class="button-lg"
-          @click="start('vintage')"
-          @keypress.enter="start('vintage')"
-        >
-          Vintage
-        </a>
+          {{ format | capitalize }}
+        </button>
       </div>
     </div>
 
-    <div role="main" class="screen game" v-show="started">
+    <div role="main" class="screen screen--game" v-show="started">
       <!-- todo: handle artUrl not yet available -->
       <div class="art-frame">
         <div class="filler" v-if="!artUrl"></div>

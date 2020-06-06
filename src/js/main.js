@@ -12,9 +12,17 @@ function naturalize(str) {
   return str;
 }
 
+const supportedFormats = [
+  'standard',
+  'pioneer',
+  'modern',
+  'vintage'
+];
+
 new Vue({
   el: '#app',
   data: {
+    supportedFormats,
     format: null,
     started: false,
     guess: '',
@@ -95,6 +103,13 @@ new Vue({
     this.getNextCard('standard');
   },
   mounted() {
-    this.$refs.standardBtn.focus();
+    this.$refs.formatButtons.firstElementChild.focus();
   },
+  filters: {
+    capitalize(value) {
+      if (!value) return '';
+      value = value.toString();
+      return value[0].toUpperCase() + value.slice(1);
+    }
+  }
 });

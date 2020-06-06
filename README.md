@@ -47,4 +47,4 @@ Baseline requirements:
 * Minimise usage of cookies or localstorage.
 * Responsive down to 320px.
 * No CDNs beside this project's own asset CDN and img.scryfall.com
-* Keep within Scryfall brand colors (defind in [`_colors.scss`](src/scss/_colors.scss))
+* Keep within Scryfall brand colors (defined in [`_colors.scss`](src/scss/_colors.scss))

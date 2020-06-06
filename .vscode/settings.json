@@ -3,6 +3,10 @@
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.rulers": [100],
+  "files.exclude": {
+    "dist/": true,
+    "node_modules/": true
+  },
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true
 }
