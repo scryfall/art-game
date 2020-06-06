@@ -15,10 +15,9 @@ new Vue({
   el: '#app',
   data: {
     supportedFormats,
-    format: null,
-    started: false,
-    guess: '',
     theme: Theme.Dark,
+    format: null,
+    guess: '',
     loadingNextCard: false,
     card: { },
     artUrl: null,
@@ -33,12 +32,14 @@ new Vue({
   computed: {
     themeClass() {
       return `theme--${this.theme}`;
+    },
+    started() {
+      return !!this.format;
     }
   },
   methods: {
     start(format) {
       this.format = format;
-      this.started = true;
       this.$nextTick(() => {
         this.focusGuessInput();
       });
