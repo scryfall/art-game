@@ -7,5 +7,6 @@
     "dist/": true,
     "node_modules/": true
   },
-  "files.insertFinalNewline": true
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true
 }
