@@ -54,17 +54,14 @@ new Vue({
       this.darkTheme = !this.darkTheme;
       localStorage.setItem(StorageKey.Theme, this.darkTheme ? Theme.Dark : Theme.Light);
     },
-    async getNextCard(format) {
-      if (typeof format === 'undefined') {
-        format = this.format;
-      }
+    async getNextCard() {
       this.loadingNextCard = true;
       try {
-        this.card = await scryfall.getRandomCard(format, UniversalExcludes);
+        this.card = await scryfall.getRandomCard(this.format, UniversalExcludes);
         this.errorLoading = false;
         this.artToLoad = this.card.image_uris.art_crop;
       } catch (e) {
-        console.error(`Failed to load a card for format ${format}`, e);
+        console.error(`Failed to load a card for format ${this.format}`, e);
         this.errorLoading = true;
       }
     },
