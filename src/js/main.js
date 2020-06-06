@@ -68,7 +68,7 @@ new Vue({
         if (this.prevCard) criteria.push(`-!"${this.prevCard.name}"`);
         this.card = await scryfall.getRandomCard(format, criteria);
         this.errorLoading = false;
-        this.artToLoad = this.card.image_uris.art_crop;
+        this.artToLoad = this.card.artCropUri;
       } catch (e) {
         console.error(`Failed to load a card for format ${format}`, e);
         this.errorLoading = true;
