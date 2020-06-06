@@ -1,36 +1,27 @@
 import unorm from 'unorm';
 import Vue from 'vue';
+import { Scryfall } from './scryfall';
 
 const KEY_LOCAL_THEME = 'theme';
 const THEME_DARK = 'dark';
 const THEME_LIGHT = 'light';
 
 const EXCLUDES = [
-  't:basic',
-  't:saga',
-  'is:split',
-  'is:transform',
-  'is:fullart',
-  'is:extra'
+  '-t:basic',
+  '-t:saga',
+  '-is:split',
+  '-is:transform',
+  '-is:fullart',
+  '-is:extra'
 ];
+
+const scryfall = new Scryfall();
 
 function naturalize(str) {
   str = unorm.nfd(str).replace(/[\u0300-\u036f]/g, '');
   str = str.toLowerCase();
   str = str.replace(/[^\w\d]/gi, '');
   return str;
-}
-
-/**
- * Get a random card from the Random API.
- * @param {string} format The format to pick from: 'standard', 'modern', or 'vintage'
- */
-async function getRandomCard(format) {
-  const endpoint = 'https://api.scryfall.com/cards/random';
-  const exclusions = EXCLUDES.map(str => `-${str}`).join(' ');
-  const response = await fetch(`${endpoint}?q=f:${format} ${exclusions}`);
-  const card = await response.json();
-  return card;
 }
 
 new Vue({
@@ -81,7 +72,7 @@ new Vue({
       }
       this.loadingNextCard = true;
       try {
-        this.card = await getRandomCard(format);
+        this.card = await scryfall.getRandomCard(format, EXCLUDES);
         this.errorLoading = false;
         this.artToLoad = this.card.image_uris.art_crop;
       } catch (e) {
