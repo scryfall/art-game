@@ -1,0 +1,26 @@
+.theme--dark {
+  background-color: $cExpanse;
+  color: $cWhite;
+
+  .button-lg,
+  .button-sm {
+    background-color: rgba(white,0.09);
+    border-color: rgba(white, 0.6);
+
+    &:not(:focus) {
+      opacity: 0.8;
+    }
+  }
+
+  input {
+    background-color: #242031;
+  }
+
+  .art-border {
+    border: 1px solid rgba($cVictory, 0.25);
+  }
+
+  .error-loading {
+    background-color: rgba($cPlum, 0.75);
+  }
+}

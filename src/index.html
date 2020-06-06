@@ -31,7 +31,7 @@
       </a>
     </header>
        
-    <div role="main" class="screen screen--format" v-if="!started">
+    <div role="main" class="screen screen--startup" v-if="!started">
       <p>Which format should we show cards from?</p>
       
       <div class="format-buttons" ref="formatButtons">
@@ -52,14 +52,14 @@
       <!-- todo: handle artUrl not yet available -->
       <div class="art-frame">
         <div class="filler" v-if="!artUrl"></div>
-        <img class="art" :src="artUrl">
+        <img class="art art-border" :src="artUrl">
         <div v-if="errorLoading" class="error-loading">
           <p>There was an error loading the next card.</p>
           <a role="button" class="button-lg" @click="retry">&#8635; Retry</a>
         </div>
       </div>
 
-      <img class="loader" :src="artToLoad" @load="imageFinishedLoading">
+      <img class="preloader" :src="artToLoad" @load="imageFinishedLoading">
 
       <p>
         Which card is this?
