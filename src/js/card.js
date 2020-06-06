@@ -1,3 +1,6 @@
+import { naturalize } from "./utils";
+import levenshtein from "js-levenshtein";
+
 /**
  * A helper class for handling Magic cards from the Scryfall API.
  */
@@ -52,5 +55,22 @@ export class Card {
     } else {
       return [this.card.name];
     }
+  }
+
+  /**
+   * Check if a guess at this card's name is correct.
+   * @param {string} guess A guess at the name
+   * @returns {boolean} Whether the guess was approximately correct
+   */
+  guessName(guess) {
+    guess = naturalize(guess);
+
+    const goodGuess = this.allNames.reduce((acc, cur) => {
+      const actual = naturalize(cur);
+      const correct = levenshtein(guess, actual) <= 3;
+      return acc || correct;
+    }, false);
+
+    return goodGuess;
   }
 }

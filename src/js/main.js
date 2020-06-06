@@ -1,17 +1,8 @@
-import unorm from 'unorm';
 import Vue from 'vue';
 import { Scryfall } from './scryfall';
 import { StorageKey, Theme, UniversalCriteria } from './config';
-import levenshtein from 'js-levenshtein';
 
 const scryfall = new Scryfall();
-
-function naturalize(str) {
-  str = unorm.nfd(str).replace(/[\u0300-\u036f]/g, '');
-  str = str.toLowerCase();
-  str = str.replace(/[^\w\d]/gi, '');
-  return str;
-}
 
 const supportedFormats = [
   'standard',
@@ -80,9 +71,7 @@ new Vue({
       this.focusGuessInput();
     },
     check() {
-      const guess = naturalize(this.guess);
-      const actual = naturalize(this.card.name);
-      const correct = levenshtein(guess, actual) <= 3;
+      const correct = this.card.guessName(this.guess);
       if (correct) this.score += 1;
       this.prevGuessCorrect = correct;
       this.prevGuess = this.guess;
