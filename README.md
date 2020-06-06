@@ -11,13 +11,32 @@ A game for guessing card names based on their art.
 
 Install Gulp CLI globally if you're interested in developing (`npm i -g gulp-cli`)
 
-* Dev server: `gulp` (or `gulp serve`)
-* Dev build: `gulp build`
+* Run a local development server: `gulp` (or `gulp serve`)
+* Create a development build: `gulp build`
 * Lint: `gulp lint`
 
-Run a production build or server by appending the `--prod` argument.
+The development server uses [browsersync](https://www.browsersync.io/) to show any code changes live, reloading the page as needed. It will automatically create a build as part of starting.
 
-This project includes a lightweight [Express](https://expressjs.com/) server at `index.js` which is used in production. You can also run this server locally using `npm start`.
+Create a production build, or run the local server with production code, by appending the `--prod` argument to the above commands.
+
+If linting fails, the build fails.
+
+## Using the Express server
+
+This project includes a lightweight [Express](https://expressjs.com/) server at [`index.js`](index.js) which serves the project in production.
+
+You can run this server locally using `npm start`.
+
+This server depends on already having a build generated. As part of installing the project, a production build will already be present in this directory, so you can run this immediately. Otherwise you can generate a build as follows:
+
+* Development build: `gulp build`
+* Production build: `npm build` or `gulp build --prod`
+
+## Deployment
+
+Deploy this project via Heroku.
+
+## Other project info 
 
 This is a Vue 2 SPA.
 
