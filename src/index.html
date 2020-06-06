@@ -91,10 +91,12 @@
         <p class="score">Score: {{ score }}</p>
 
         <p>
-          {{ prevGuessCorrect ? 'Correct!' : 'Incorrect.'}}
+          <span v-if="prevOutcome === Outcome.Correct">Correct!</span>
+          <span v-else-if="prevOutcome === Outcome.Incorrect">Incorrect.</span>
+          <span v-else-if="prevOutcome === Outcome.Skip">Skipped.</span>
           That was
           <a v-if="prevCard" v-bind:href="prevCard.scryfallUri" class="feedback-cardname" target="_blank">{{ prevCard.name }}</a>.
-          <span v-if="prevGuessCorrect === false">You guessed: {{ prevGuess }}</span>
+          <span v-if="prevOutcome === Outcome.Incorrect">You guessed: {{ prevGuess }}</span>
         </p>
       </div>
     </div>

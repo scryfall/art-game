@@ -1,20 +1,13 @@
 import Vue from 'vue';
 import { Scryfall } from './scryfall';
-import { StorageKey, Theme, UniversalCriteria } from './config';
+import { StorageKey, Theme, UniversalCriteria, SupportedFormats, Outcome } from './config';
 
 const scryfall = new Scryfall();
-
-const supportedFormats = [
-  'standard',
-  'pioneer',
-  'modern',
-  'vintage'
-];
 
 new Vue({
   el: '#app',
   data: {
-    supportedFormats,
+    supportedFormats: SupportedFormats,
     theme: Theme.Dark,
     format: null,
     guess: '',
@@ -23,11 +16,12 @@ new Vue({
     artUrl: null,
     artToLoad: null,
     errorLoading: false,
-    showFeedback: false,
     prevCard: null,
     prevGuess: null,
-    prevGuessCorrect: null,
+    prevOutcome: null,
     score: 0,
+
+    Outcome,
   },
   computed: {
     themeClass() {
@@ -35,6 +29,9 @@ new Vue({
     },
     started() {
       return !!this.format;
+    },
+    showFeedback() {
+      return !!this.prevCard;
     }
   },
   methods: {
@@ -74,10 +71,9 @@ new Vue({
     check() {
       const correct = this.card.guessName(this.guess);
       if (correct) this.score += 1;
-      this.prevGuessCorrect = correct;
+      this.prevOutcome = correct ? Outcome.Correct : Outcome.Incorrect;
       this.prevGuess = this.guess;
       this.prevCard = this.card;
-      this.showFeedback = true;
       this.getNextCard();
       this.guess = '';
     },
@@ -85,6 +81,9 @@ new Vue({
       this.getNextCard();
     },
     skip() {
+      this.prevOutcome = Outcome.Skip;
+      this.prevGuess = '';
+      this.prevCard = this.card;
       this.getNextCard();
     }
   },
