@@ -1,19 +1,7 @@
 import unorm from 'unorm';
 import Vue from 'vue';
 import { Scryfall } from './scryfall';
-
-const KEY_LOCAL_THEME = 'theme';
-const THEME_DARK = 'dark';
-const THEME_LIGHT = 'light';
-
-const EXCLUDES = [
-  '-t:basic',
-  '-t:saga',
-  '-is:split',
-  '-is:transform',
-  '-is:fullart',
-  '-is:extra'
-];
+import { StorageKey, Theme, UniversalExcludes } from './config';
 
 const scryfall = new Scryfall();
 
@@ -43,8 +31,8 @@ new Vue({
     score: 0,
   },
   created() {
-    const theme = localStorage.getItem(KEY_LOCAL_THEME);
-    if (theme === THEME_LIGHT) { this.darkTheme = false; }
+    const theme = localStorage.getItem(StorageKey.Theme);
+    if (theme === Theme.Light) { this.darkTheme = false; }
     this.getNextCard('standard');
   },
   mounted() {
@@ -64,7 +52,7 @@ new Vue({
     },
     toggleTheme() {
       this.darkTheme = !this.darkTheme;
-      localStorage.setItem(KEY_LOCAL_THEME, this.darkTheme ? THEME_DARK : THEME_LIGHT);
+      localStorage.setItem(StorageKey.Theme, this.darkTheme ? Theme.Dark : Theme.Light);
     },
     async getNextCard(format) {
       if (typeof format === 'undefined') {
@@ -72,7 +60,7 @@ new Vue({
       }
       this.loadingNextCard = true;
       try {
-        this.card = await scryfall.getRandomCard(format, EXCLUDES);
+        this.card = await scryfall.getRandomCard(format, UniversalExcludes);
         this.errorLoading = false;
         this.artToLoad = this.card.image_uris.art_crop;
       } catch (e) {
