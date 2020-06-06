@@ -14,13 +14,13 @@
     "start": "node index.js"
   },
   "devDependencies": {
-    "browser-sync": "^2.26.5",
+    "browser-sync": "^2.26.7",
     "del": "^3.0.0",
     "eslint": "^7.2.0",
-    "gulp": "^4.0.0",
+    "gulp": "^4.0.2",
     "gulp-eslint": "^6.0.0",
-    "gulp-sass": "^4.0.2",
-    "tar": ">=4.4.2",
+    "gulp-sass": "^4.1.0",
+    "tar": "^6.0.2",
     "terser-webpack-plugin": "^3.0.3",
     "unorm": "^1.6.0",
     "vue": "^2.6.11",
