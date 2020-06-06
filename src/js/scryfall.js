@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export class Scryfall {
   /**
    * Get a random card from the Random API.
@@ -7,8 +9,7 @@ export class Scryfall {
    */
   async getRandomCard(format, additionalCriteria) {
     const endpoint = 'https://api.scryfall.com/cards/random';
-    const response = await fetch(`${endpoint}?q=f:${format} ${additionalCriteria.join(' ')}`);
-    const card = await response.json();
-    return card;
+    const response = await axios.get(`${endpoint}?q=f:${format} ${additionalCriteria.join(' ')}`);
+    return response.data;
   }
 }
