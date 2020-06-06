@@ -2,6 +2,7 @@ import unorm from 'unorm';
 import Vue from 'vue';
 import { Scryfall } from './scryfall';
 import { StorageKey, Theme, UniversalExcludes } from './config';
+import levenshtein from 'js-levenshtein';
 
 const scryfall = new Scryfall();
 
@@ -79,10 +80,10 @@ new Vue({
       this.focusGuessInput();
     },
     check() {
-      const guessCorrect = naturalize(this.card.name) === naturalize(this.guess);
-      if (guessCorrect) {
-        this.score += 1;
-      }
+      const guess = naturalize(this.guess);
+      const actual = naturalize(this.card.name);
+      const correct = levenshtein(guess, actual) <= 3;
+      if (correct) this.score += 1;
       this.prevGuessCorrect = guessCorrect;
       this.prevGuess = this.guess;
       this.prevCard = this.card;
