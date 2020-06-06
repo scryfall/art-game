@@ -8,4 +8,6 @@ To run this project:
 2. Run `npm install`
 3. Start with `gulp` (if you have gulp installed globally) or `npm start`
 
-This is a Vue v2.5.17 SPA.
+This is a Vue 2 SPA.
+
+**Browser targets:** IE11+, edge Chrome, Firefox, Safari (incl. iOS)
