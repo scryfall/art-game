@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Art Game &middot; Scryfall</title>
+  <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="og:title" content="Scryfall Art Game">
   <meta name="og:type" content="website">
@@ -20,7 +21,7 @@
 </head>
 <body>
 
-  <div id="app" v-bind:class="{ 'theme-dark': darkTheme, 'theme-light': !darkTheme }">
+  <div id="app" :class="[themeClass]">
     <header>
       <a href="/">
         <h1>
@@ -119,7 +120,7 @@
     <footer>
       <div class="controls">
         <a role="button" tabindex="0" class="button-sm" @click="toggleTheme" @keypress.enter="toggleTheme">
-          {{ darkTheme ? 'Dark' : 'Light' }} theme
+          {{ theme === 'dark' ? 'Dark' : 'Light' }} theme
         </a>
       </div>
       <div class="credit">

@@ -9,9 +9,8 @@
     "node": "10.14.1"
   },
   "scripts": {
-    "postinstall": "gulp build-prod",
-    "build": "gulp build-prod",
-    "lint": "gulp lint",
+    "postinstall": "gulp build --prod",
+    "build": "gulp build --prod",
     "start": "node index.js"
   },
   "devDependencies": {
@@ -20,10 +19,16 @@
     "eslint": "^7.2.0",
     "gulp": "^4.0.0",
     "gulp-concat": "^2.6.1",
+    "gulp-eslint": "^6.0.0",
     "gulp-jshint": "^2.1.0",
     "gulp-sass": "^4.0.2",
     "gulp-terser": "^1.1.5",
-    "tar": ">=4.4.2"
+    "tar": ">=4.4.2",
+    "terser-webpack-plugin": "^3.0.3",
+    "unorm": "^1.6.0",
+    "vue": "^2.6.11",
+    "webpack-stream": "^5.2.1",
+    "yargs": "^15.3.1"
   },
   "dependencies": {
     "axios": "^0.19.0",
