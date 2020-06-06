@@ -17,7 +17,7 @@ export const Theme = Object.freeze({
   Light: 'light',
 });
 
-export const UniversalExcludes = [
+export const UniversalCriteria = [
   '-t:basic',
   '-t:saga',
   '-is:split',

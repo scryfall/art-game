@@ -1,16 +1,8 @@
-import unorm from 'unorm';
 import Vue from 'vue';
 import { Scryfall } from './scryfall';
-import { StorageKey, Theme, UniversalExcludes } from './config';
+import { StorageKey, Theme, UniversalCriteria } from './config';
 
 const scryfall = new Scryfall();
-
-function naturalize(str) {
-  str = unorm.nfd(str).replace(/[\u0300-\u036f]/g, '');
-  str = str.toLowerCase();
-  str = str.replace(/[^\w\d]/gi, '');
-  return str;
-}
 
 const supportedFormats = [
   'standard',
@@ -63,11 +55,11 @@ new Vue({
       if (!format) format = this.format;
       this.loadingNextCard = true;
       try {
-        const criteria = [].concat(UniversalExcludes);
+        const criteria = [].concat(UniversalCriteria);
         if (this.prevCard) criteria.push(`-!"${this.prevCard.name}"`);
         this.card = await scryfall.getRandomCard(format, criteria);
         this.errorLoading = false;
-        this.artToLoad = this.card.image_uris.art_crop;
+        this.artToLoad = this.card.artCropUri;
       } catch (e) {
         console.error(`Failed to load a card for format ${format}`, e);
         this.errorLoading = true;
@@ -79,11 +71,9 @@ new Vue({
       this.focusGuessInput();
     },
     check() {
-      const guessCorrect = naturalize(this.card.name) === naturalize(this.guess);
-      if (guessCorrect) {
-        this.score += 1;
-      }
-      this.prevGuessCorrect = guessCorrect;
+      const correct = this.card.guessName(this.guess);
+      if (correct) this.score += 1;
+      this.prevGuessCorrect = correct;
       this.prevGuess = this.guess;
       this.prevCard = this.card;
       this.showFeedback = true;
