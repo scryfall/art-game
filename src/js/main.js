@@ -1,3 +1,6 @@
+import unorm from 'unorm';
+import Vue from 'vue';
+
 (function () {
   const KEY_LOCAL_THEME = 'theme';
   const THEME_DARK = 'dark';
@@ -13,7 +16,7 @@
   ];
 
   function naturalize(str) {
-    str = str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    str = unorm.nfd(str).replace(/[\u0300-\u036f]/g, '');
     str = str.toLowerCase();
     str = str.replace(/[^\w\d]/gi, '');
     return str;
