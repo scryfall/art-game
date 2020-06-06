@@ -2,11 +2,19 @@
 
 A game for guessing card names based on their art.
 
-To run this project:
+Setup:
 
 1. Install [Node](https://nodejs.org/en/) and [npm](https://www.npmjs.com/get-npm) latest
 2. Run `npm install`
-3. Start with `gulp` (if you have gulp installed globally) or `npm start`
+
+Install Gulp CLI globally if you're interested in developing (`npm i -g gulp-cli`)
+
+Dev commands:
+
+* Dev server: `gulp serve`
+* Dev build: `gulp build`
+* Lint: `gulp lint`
+* Test production with `gulp serve --prod` or `npm start`
 
 This is a Vue 2 SPA.
 
