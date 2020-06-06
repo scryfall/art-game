@@ -2,13 +2,14 @@ const gulp = require('gulp');
 const del = require('del');
 const browserSync = require('browser-sync').create();
 const sass = require('gulp-sass');
-const jshint = require('gulp-jshint');
+const eslint = require('gulp-eslint');
+const argv = require('yargs').argv;
 const terser = require('gulp-terser');
 const concat = require('gulp-concat');
 
 const baseConfig = {
   outputDir: 'dist',
-  ecmaVersion: 6
+  outputEcmaVersion: 6
 };
 
 const devConfig = {
@@ -33,23 +34,16 @@ const prodConfig = {
   }
 };
 
-var config = Object.assign({}, baseConfig, devConfig);
-
-gulp.task('setProd', function setProdInner (done) {
-  config = Object.assign({}, baseConfig, prodConfig);
-  done();
-});
+let config = Object.assign({}, baseConfig, argv.prod ? prodConfig : devConfig);
 
 gulp.task('lint', function lintInner () {
   return gulp.src([
     '*.js',
-    'src/js/*.js'
+    'src/**/*.js',
+    '!src/js/lib/*.js'
   ])
-    .pipe(jshint({
-      "esversion": config.ecmaVersion
-    }))
-    .pipe(jshint.reporter('default'))
-    .pipe(jshint.reporter('fail'));
+    .pipe(eslint())
+    .pipe(eslint.failOnError());
 });
 
 gulp.task('js', gulp.series('lint', function jsInner () {
@@ -58,7 +52,7 @@ gulp.task('js', gulp.series('lint', function jsInner () {
 
   if (config.compressJs) {
     source = source.pipe(terser({
-      'ecma': config.ecmaVersion
+      'ecma': config.outputEcmaVersion
     }));
   }
   return source.pipe(gulp.dest(`${config.outputDir}/js`))
@@ -103,5 +97,3 @@ gulp.task('serve', gulp.series('build', function serveInner () {
 }));
 
 gulp.task('default', gulp.series('serve'));
-gulp.task('build-prod', gulp.series('setProd', 'build'));
-gulp.task('serve-prod', gulp.series('setProd', 'serve'));

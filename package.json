@@ -9,8 +9,8 @@
     "node": "10.14.1"
   },
   "scripts": {
-    "postinstall": "gulp build-prod",
-    "build": "gulp build-prod",
+    "postinstall": "gulp build --prod",
+    "build": "gulp build --prod",
     "lint": "gulp lint",
     "start": "node index.js"
   },
@@ -20,10 +20,12 @@
     "eslint": "^7.2.0",
     "gulp": "^4.0.0",
     "gulp-concat": "^2.6.1",
+    "gulp-eslint": "^6.0.0",
     "gulp-jshint": "^2.1.0",
     "gulp-sass": "^4.0.2",
     "gulp-terser": "^1.1.5",
-    "tar": ">=4.4.2"
+    "tar": ">=4.4.2",
+    "yargs": "^15.3.1"
   },
   "dependencies": {
     "axios": "^0.19.0",
