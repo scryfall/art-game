@@ -1,4 +1,4 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it, jest } from '@jest/globals';
 import { Card } from './card';
 
 describe('Card', () => {
@@ -56,5 +56,77 @@ describe('Card', () => {
 
       expect(card.getAllNames()).toEqual(names);
     });
+
+    it('flattens lists of names from getNamesForFace', () => {
+      const names0 = ['a', 'b', 'c'];
+      const names1 = ['d'];
+      const card = new Card({
+        card_faces: [
+          { name: '', mock_names: names0 },
+          { name: '', mock_names: names1 },
+        ]
+      });
+      card.getNamesForFace = jest.fn(face => face.mock_names);
+
+      const allNames = names0.concat(names1);
+      expect(card.getAllNames()).toEqual(allNames);
+    });
+  });
+
+  describe('getNamesForFace', () => {
+    let card = new Card();
+
+    beforeEach(() => {
+      card = new Card();
+    });
+
+    [
+      'Monastery Swiftspear',
+      'Tamanoa',
+      'Acolyte of the Inferno', // 'the'
+      'Duskmantle, House of Shadow', // comma
+    ].forEach(name => {
+      it(`returns one name for nonlegendary faces (${name})`, () => {
+        const face = { name };
+        expect(card.getNamesForFace(face)).toEqual([name]);
+      });
+    });
+
+    [
+      'Admiral Beckett Brass',
+      'Academy Ruins',
+      'Baron Von Count',
+    ].forEach(name => {
+      it(`returns one name for legendaries that have no shortname (${name})`, () => {
+        const face = { name, type_line: 'Legendary' };
+        expect(card.getNamesForFace(face)).toEqual([name]);
+      });
+    });
+
+    [
+      {
+        name: 'Vraska, Golgari Queen',
+        variants: ['Vraska', 'Golgari Queen', 'the Golgari Queen']
+      },
+      {
+        name: 'Saskia the Unyielding',
+        variants: ['Saskia', 'Unyielding', 'the Unyielding']
+      },
+      {
+        name: 'Daxos, Blessed by the Sun',
+        variants: ['Daxos', 'Blessed by the Sun', 'the Blessed by the Sun']
+      },
+    ].forEach(scenario => {
+      it(`returns full name, short name, and titles for legends with a shortname (${scenario.name})`, () => {
+        const face = { name: scenario.name, type_line: 'Legendary' };
+
+        const expected = [scenario.name].concat(scenario.variants);
+        expect(card.getNamesForFace(face)).toEqual(expected);
+      });
+    });
+  });
+
+  describe('guess', () => {
+    // guess full name of a split card, i.e. 'Alive // Well'
   });
 });
