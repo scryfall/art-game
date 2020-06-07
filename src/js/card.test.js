@@ -37,12 +37,12 @@ describe('Card', () => {
     });
   });
 
-  describe('allNames', () => {
+  describe('getAllnames', () => {
     it('returns one name for ordinary cards', () => {
       const name = "Wight of Precinct Six";
       const card = new Card({ name });
 
-      expect(card.allNames).toEqual([name]);
+      expect(card.getAllNames()).toEqual([name]);
     });
 
     it('returns two names for multiface cards', () => {
@@ -54,7 +54,7 @@ describe('Card', () => {
         ]
       });
 
-      expect(card.allNames).toEqual(names);
+      expect(card.getAllNames()).toEqual(names);
     });
   });
 });

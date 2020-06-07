@@ -90,12 +90,13 @@ export class Card {
    * Because of our friend Daxos, we can't just split on commas and "the",
    * or else we get Daxos, Blessed by, Sun. Alas.
    *
+   * @private
    * @param {object} face A face of a card
    * @returns {string[]} The face's names
    */
   getNamesForFace(face) {
     const names = [face.name];
-    const legendary = face.type_line.toLowerCase().includes('legendary');
+    const legendary = face.type_line && face.type_line.toLowerCase().includes('legendary');
     if (!legendary) return names;
 
     const comma = ', ';
