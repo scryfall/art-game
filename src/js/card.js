@@ -76,19 +76,19 @@ export class Card {
 
   /**
    * Get all names belonging to a face of a card.
-   * 
+   *
    * If the face is legendary, this will include the face's proper name and title.
    * Their title will be specified with and without "the", regardless of whether it was present.
    * This is to anticipate variants in how users will guess at the name.
-   * 
+   *
    * Examples:
    *    ["Vraska, Golgari Queen", "Vraska", "Golgari Queen", "the Golgari Queen"]
    *    ["Saskia the Unyielding", "Saskia", "Unyielding", "the Unyielding"]
    *    ["Daxos, Blessed by the Sun", "Daxos", "Blessed by the Sun", "the Blessed by the Sun"]
-   * 
+   *
    * Because of our friend Daxos, we can't just split on commas and "the",
    * or else we get Daxos, Blessed by, Sun. Alas.
-   * 
+   *
    * @param {object} face A face of a card
    * @returns {string[]} The face's names
    */
@@ -101,7 +101,7 @@ export class Card {
     const the = ' the ';
     const pComma = face.name.indexOf(comma);
     const pThe = face.name.indexOf(the);
-    if (pComma > 0) {
+    if (pComma > -1) {
       const properName = face.name.slice(0, pComma);
       const title = face.name.slice(pComma + comma.length).trim();
       names.push(properName, title, `the ${title}`);
