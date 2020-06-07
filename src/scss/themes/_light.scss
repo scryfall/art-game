@@ -1,0 +1,25 @@
+.theme--light {
+  background-color: $cCodeWash;
+  color: $cBlack;
+
+  .button--lg,
+  .button--sm {
+    background-color: #F9F7F5;
+    border-color: rgba($cGrape, 0.5);
+  }
+
+  input {
+    background-color: $cWhite;
+  }
+
+  .art-frame {
+    border: 1px solid rgba($cBlack, 0.5);
+  }
+
+  .error-loading {
+    background-color: rgba($cPlum, 0.75);
+    p {
+      color: white;
+    }
+  }
+}
