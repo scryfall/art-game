@@ -2,6 +2,7 @@
   "name": "scryfall-art-game",
   "version": "1.0.0",
   "description": "",
+  "private": true,
   "main": "index.js",
   "author": "spacemonaut",
   "license": "UNLICENSED",
