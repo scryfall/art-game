@@ -12,7 +12,7 @@ A game for guessing card names based on their art.
 Various NPM scripts are available which call out to [Gulp](https://gulpjs.com/) commands. Alternatively, you can install the Gulp CLI globally (`npm i -g gulp-cli`) and call them directly.
 
 * Run a local development server: `npm run dev` or `gulp` (alias for `gulp serve`)
-* Create a development build: `npm run build:dev` of `gulp build`
+* Create a development build: `npm run build:dev` or `gulp build`
 * Lint: `npm run lint` or `gulp lint`
 * Run unit tests: `npm test`
 
