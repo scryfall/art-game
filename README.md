@@ -14,6 +14,7 @@ Install Gulp CLI globally if you're interested in developing (`npm i -g gulp-cli
 * Run a local development server: `gulp` (or `gulp serve`)
 * Create a development build: `gulp build`
 * Lint: `gulp lint`
+* Run unit tests: `npm test`
 
 The development server uses [browsersync](https://www.browsersync.io/) to show any code changes live, reloading the page as needed. It will automatically create a build as part of starting.
 
@@ -36,9 +37,11 @@ This server depends on already having a build generated. As part of installing t
 
 Deploy this project via Heroku.
 
-## Other project info 
+## Other project info
 
 This is a Vue 2 SPA.
+
+We use Jest for unit testing. You'll see we import the jest globals we use: this is optional but it adds intellisense information.
 
 Baseline requirements:
 

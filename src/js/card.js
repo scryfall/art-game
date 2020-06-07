@@ -38,10 +38,11 @@ export class Card {
   }
 
   /**
-   * Is this card a split card?
-   * @returns {boolean} Whether the card is a split card
+   * Is this card a multiface card?
+   * E.g. split, flip, transform, adventure, etc.
+   * @returns {boolean} Whether the card is a multiface card
    */
-  get isSplit() {
+  get isMultiface() {
     return !!this.card.card_faces;
   }
 
@@ -50,7 +51,7 @@ export class Card {
    * @returns {string[]} The card's names
    */
   get allNames() {
-    if (this.isSplit) {
+    if (this.isMultiface) {
       return this.card.card_faces.map(face => face.name);
     } else {
       return [this.card.name];
