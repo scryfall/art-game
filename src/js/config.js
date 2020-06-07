@@ -17,6 +17,9 @@ export const Theme = Object.freeze({
   Light: 'light',
 });
 
+/**
+ * Criteria to use for every random fetch.
+ */
 export const UniversalCriteria = [
   '-t:basic',
   '-t:saga',
@@ -25,3 +28,25 @@ export const UniversalCriteria = [
   '-is:fullart',
   '-is:extra'
 ];
+
+/**
+ * The supported formats in the art game.
+ * This is the order they'll show up on the front page, too.
+ */
+export const SupportedFormats = [
+  'standard',
+  'pioneer',
+  'modern',
+  'vintage'
+];
+
+/**
+ * Outcomes of a user's action (guessing or skipping).
+ * @readonly
+ * @enum {string}
+ */
+export const Outcome = Object.freeze({
+  Correct: 'correct',
+  Incorrect: 'incorrect',
+  Skip: 'skip',
+});

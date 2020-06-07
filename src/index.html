@@ -30,16 +30,16 @@
         </h1>
       </a>
     </header>
-       
-    <div role="main" class="screen screen--format" v-if="!started">
+
+    <div role="main" class="screen screen--startup" v-if="!started">
       <p>Which format should we show cards from?</p>
-      
+
       <div class="format-buttons" ref="formatButtons">
         <button
           v-for="(format, index) in supportedFormats"
           :key="index"
           type="button"
-          class="button-lg"
+          class="button--lg"
           @click="start(format)"
           @keypress.enter="start(format)"
         >
@@ -49,22 +49,24 @@
     </div>
 
     <div role="main" class="screen screen--game" v-show="started">
-      <!-- todo: handle artUrl not yet available -->
-      <div class="art-frame">
-        <div class="filler" v-if="!artUrl"></div>
-        <img class="art" v-bind:src="artUrl">
+      <div class="card-art">
+        <div class="art-frame">
+          <div class="art-frame__placeholder" v-if="!artUrl"></div>
+          <img class="art-frame__image" :src="artUrl">
+        </div>
+
         <div v-if="errorLoading" class="error-loading">
           <p>There was an error loading the next card.</p>
-          <a role="button" class="button-lg" @click="retry">&#8635; Retry</a>
+          <a role="button" class="button--lg" @click="retry">&#8635; Retry</a>
         </div>
       </div>
 
-      <img class="loader" v-bind:src="artToLoad" @load="imageFinishedLoading">
+      <img class="art-preloader" :src="artToLoad" @load="imageFinishedLoading">
 
       <p>
         Which card is this?
         <span class="skip">
-          (<a role="button" href="#" tabindex="0" @click.prevent="skip" @keypress.enter="skip">skip</a>)
+          (<button type="button" class="button--skip" @click.prevent="skip" @keypress.enter="skip">skip</button>)
         </span>
       </p>
 
@@ -74,7 +76,7 @@
           ref="guessInput"
           class="guess"
           v-model="guess"
-          v-bind:disabled="loadingNextCard"
+          :disabled="loadingNextCard"
           autocomplete="off"
           autocorrect="off"
           autocapitalize="off"
@@ -83,34 +85,43 @@
         <button type="submit" class="vh" tabindex="-1">Check</button>
       </form>
 
-      <div class="score-container">
-        
-      </div>
-
-      <div class="feedback" v-bind:style="{ visibility: (showFeedback ? 'visible' : 'hidden') }">
+      <div class="feedback" v-if="showFeedback">
         <p class="score">Score: {{ score }}</p>
 
-        <p>
-          {{ prevGuessCorrect ? 'Correct!' : 'Incorrect.'}}
-          That was
-          <a v-if="prevCard" v-bind:href="prevCard.scryfallUri" class="feedback-cardname" target="_blank">{{ prevCard.name }}</a>.
-          <span v-if="prevGuessCorrect === false">You guessed: {{ prevGuess }}</span>
-        </p>
+        <div class="retrospective">
+          <div class="figure">
+            <div class="art-frame art-frame--small">
+              <img class="art-frame__image" :src="prevCard.artCropUri">
+            </div>
+          </div>
+
+          <div class="outcome">
+            <p>
+              <span v-if="prevOutcome === Outcome.Correct">Correct!</span>
+              <span v-else-if="prevOutcome === Outcome.Incorrect">Incorrect.</span>
+              <span v-else-if="prevOutcome === Outcome.Skip">Skipped.</span>
+              That was
+              <a :href="prevCard.scryfallUri" class="feedback-cardname" target="_blank">{{ prevCard.name }}</a>.
+            </p>
+            <p v-if="prevOutcome === Outcome.Incorrect">You guessed: {{ prevGuess }}</p>
+          </div>
+        </div>
+
       </div>
     </div>
 
     <footer>
       <div class="controls">
-        <a role="button" tabindex="0" class="button-sm" @click="toggleTheme" @keypress.enter="toggleTheme">
-          {{ theme === 'dark' ? 'Dark' : 'Light' }} theme
-        </a>
+        <button type="button" class="button--sm" @click="toggleTheme" @keypress.enter="toggleTheme">
+          {{ theme | capitalize }} theme
+        </button>
       </div>
       <div class="credit">
         by <a href="https://spacemonaut.github.io/" target="_blank">spacemonaut</a> based on the MagicCards.info Art Game
       </div>
     </footer>
   </div>
-  
+
   <script src="js/main.js"></script>
 </body>
 </html>
