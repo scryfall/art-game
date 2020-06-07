@@ -5,15 +5,13 @@
   "main": "index.js",
   "author": "spacemonaut",
   "license": "UNLICENSED",
-  "type": "module",
   "engines": {
     "node": "10.14.1"
   },
   "scripts": {
     "postinstall": "gulp build --prod",
     "build": "gulp build --prod",
-    "start": "node index.js",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "start": "node index.js"
   },
   "devDependencies": {
     "browser-sync": "^2.26.7",
@@ -22,12 +20,9 @@
     "gulp": "^4.0.2",
     "gulp-eslint": "^6.0.0",
     "gulp-sass": "^4.1.0",
-    "jest": "^26.0.1",
-    "jest-environment-jsdom-sixteen": "^1.0.3",
     "js-levenshtein": "^1.1.6",
     "tar": "^6.0.2",
     "terser-webpack-plugin": "^3.0.3",
-    "ts-jest": "^26.1.0",
     "unorm": "^1.6.0",
     "vue": "^2.6.11",
     "webpack-stream": "^5.2.1",
