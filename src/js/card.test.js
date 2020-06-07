@@ -37,6 +37,90 @@ describe('Card', () => {
     });
   });
 
+  describe('guessName', () => {
+    it('can guess card names', () => {
+      const name = 'Lightning Bolt';
+      const card = new Card({ name });
+
+      expect(card.guessName(name)).toBe(true);
+    });
+
+    it('is case insensitive', () => {
+      const name = 'Lightning Bolt';
+      const card = new Card({ name });
+
+      expect(card.guessName(name.toLowerCase())).toBe(true);
+      expect(card.guessName(name.toUpperCase())).toBe(true);
+      expect(card.guessName('LiGhTnInG bOlT')).toBe(true);
+    });
+
+    it('can omit spaces', () => {
+      const name = 'Lightning Bolt';
+      const card = new Card({ name });
+
+      expect(card.guessName('lightningbolt')).toBe(true);
+    });
+
+    it('can add spaces', () => {
+      const name = 'Lightning Bolt';
+      const card = new Card({ name });
+
+      expect(card.guessName(' l i g h t n i n g b o l t ')).toBe(true);
+    });
+
+    it('can guess either or both halves of a split card', () => {
+      const names = ['Alive', 'Well'];
+      const fullname = names.join(' // ');
+      const card = new Card({
+        name: fullname,
+        card_faces: [
+          { name: names[0] },
+          { name: names[1] },
+        ]
+      });
+
+      expect(card.guessName(fullname)).toBe(true);
+      expect(card.guessName(names[0])).toBe(true);
+      expect(card.guessName(names[1])).toBe(true);
+    });
+
+    it('has levenshtein tolerance of 3', () => {
+      const card = new Card({ name: 'Arcbond' });
+
+      // levenshtein 1
+      expect(card.guessName('Acbond')).toBe(true);
+      expect(card.guessName('Artbond')).toBe(true);
+      expect(card.guessName('rcbond')).toBe(true);
+      expect(card.guessName('Arcbon')).toBe(true);
+      expect(card.guessName('Arcbond1')).toBe(true);
+
+      // levenshtein 2
+      expect(card.guessName('Abond')).toBe(true);
+      expect(card.guessName('Actbond')).toBe(true);
+      expect(card.guessName('Arcbomb')).toBe(true);
+      expect(card.guessName('cbond')).toBe(true);
+      expect(card.guessName('Arcbo')).toBe(true);
+      expect(card.guessName('Arcbond12')).toBe(true);
+
+      // levenshtein 3
+      expect(card.guessName('Aond')).toBe(true);
+      expect(card.guessName('Actfond')).toBe(true);
+      expect(card.guessName('Arctomb')).toBe(true);
+      expect(card.guessName('bond')).toBe(true);
+      expect(card.guessName('Arcb')).toBe(true);
+      expect(card.guessName('Arcbond123')).toBe(true);
+
+      // levenshtein ≥4
+      expect(card.guessName('And')).toBe(false);
+      expect(card.guessName('Octfond')).toBe(false);
+      expect(card.guessName('Arftomb')).toBe(false);
+      expect(card.guessName('ond')).toBe(false);
+      expect(card.guessName('Arc')).toBe(false);
+      expect(card.guessName('')).toBe(false);
+      expect(card.guessName('Arcbond1234')).toBe(false);
+    });
+  });
+
   describe('getAllnames', () => {
     it('returns one name for ordinary cards', () => {
       const name = "Wight of Precinct Six";
@@ -153,9 +237,5 @@ describe('Card', () => {
         expect(card.getNamesForFace(face)).toEqual(expected);
       });
     });
-  });
-
-  describe('guess', () => {
-    // guess full name of a split card, i.e. 'Alive // Well'
   });
 });
