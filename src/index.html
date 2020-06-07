@@ -39,7 +39,7 @@
           v-for="(format, index) in supportedFormats"
           :key="index"
           type="button"
-          class="button-lg"
+          class="button--lg"
           @click="start(format)"
           @keypress.enter="start(format)"
         >
@@ -49,13 +49,15 @@
     </div>
 
     <div role="main" class="screen screen--game" v-show="started">
-      <!-- todo: handle artUrl not yet available -->
-      <div class="art-frame">
-        <div class="filler" v-if="!artUrl"></div>
-        <img class="art art-border" :src="artUrl">
+      <div class="card-art">
+        <div class="art-frame">
+          <div class="art-placeholder" v-if="!artUrl"></div>
+          <img class="art-image" :src="artUrl">
+        </div>
+
         <div v-if="errorLoading" class="error-loading">
           <p>There was an error loading the next card.</p>
-          <a role="button" class="button-lg" @click="retry">&#8635; Retry</a>
+          <a role="button" class="button--lg" @click="retry">&#8635; Retry</a>
         </div>
       </div>
 
@@ -64,7 +66,7 @@
       <p>
         Which card is this?
         <span class="skip">
-          (<a role="button" href="#" tabindex="0" @click.prevent="skip" @keypress.enter="skip">skip</a>)
+          (<button type="button" class="button--skip" @click.prevent="skip" @keypress.enter="skip">skip</button>)
         </span>
       </p>
 
@@ -103,7 +105,7 @@
 
     <footer>
       <div class="controls">
-        <button type="button" class="button-sm" @click="toggleTheme" @keypress.enter="toggleTheme">
+        <button type="button" class="button--sm" @click="toggleTheme" @keypress.enter="toggleTheme">
           {{ theme | capitalize }} theme
         </button>
       </div>

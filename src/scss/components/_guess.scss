@@ -1,0 +1,20 @@
+.guess {
+  border: 1px solid;
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: block;
+  font-size: 18px;
+  margin: 0 auto;
+  padding: 10px;
+  width: 400px;
+  max-width: 100%;
+
+  @include bp-large() {
+    font-size: 24px;
+  }
+
+  &:disabled,
+  &:not(:focus) {
+    opacity: 0.6;
+  }
+}

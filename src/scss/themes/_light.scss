@@ -2,8 +2,8 @@
   background-color: $cCodeWash;
   color: $cBlack;
 
-  .button-lg,
-  .button-sm {
+  .button--lg,
+  .button--sm {
     border-color: rgba($cGrape, 0.5);
     background-color: #F9F7F5;
   }
@@ -12,7 +12,7 @@
     background-color: $cWhite;
   }
 
-  .art-border {
+  .art-frame {
     border: 1px solid rgba($cBlack, 0.5);    
   }
 
