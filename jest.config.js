@@ -2,8 +2,6 @@
 // https://jestjs.io/docs/en/configuration.html
 
 export default {
-  preset: undefined,
-  maxWorkers: "50%",
   moduleDirectories: [
     "node_modules"
   ],
@@ -17,7 +15,5 @@ export default {
     "<rootDir>/src/js"
   ],
   testEnvironment: "jest-environment-jsdom-sixteen",
-  // testEnvironment: "jsdom",
-  // timers: "fake",
   transform: {},
 };
