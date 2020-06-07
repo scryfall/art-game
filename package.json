@@ -9,9 +9,14 @@
     "node": "10.14.1"
   },
   "scripts": {
-    "postinstall": "gulp build --prod",
+    "postinstall": "npm run build",
     "build": "gulp build --prod",
-    "start": "node index.js"
+    "build:dev": "gulp build",
+    "dev": "gulp serve",
+    "lint": "gulp lint",
+    "start": "node index.js",
+    "test": "echo 'TODO Find a unit testing framework'",
+    "posttest": "npm run lint"
   },
   "devDependencies": {
     "browser-sync": "^2.26.7",

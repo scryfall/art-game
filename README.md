@@ -9,11 +9,11 @@ A game for guessing card names based on their art.
 
 ## Development
 
-Install Gulp CLI globally if you're interested in developing (`npm i -g gulp-cli`)
+Various NPM scripts are available which call out to [Gulp](https://gulpjs.com/) commands. Alternatively, you can install the Gulp CLI globally (`npm i -g gulp-cli`) and call them directly.
 
-* Run a local development server: `gulp` (or `gulp serve`)
-* Create a development build: `gulp build`
-* Lint: `gulp lint`
+* Run a local development server: `npm run dev` or `gulp` (alias for `gulp serve`)
+* Create a development build: `npm run build:dev` or `gulp build`
+* Lint: `npm run lint` or `gulp lint`
 * Run unit tests: `npm test`
 
 The development server uses [browsersync](https://www.browsersync.io/) to show any code changes live, reloading the page as needed. It will automatically create a build as part of starting.
@@ -30,8 +30,8 @@ You can run this server locally using `npm start`.
 
 This server depends on already having a build generated. As part of installing the project, a production build will already be present in this directory, so you can run this immediately. Otherwise you can generate a build as follows:
 
-* Development build: `gulp build`
-* Production build: `npm build` or `gulp build --prod`
+* Development build: `npm run build:dev` or `gulp build`
+* Production build: `npm run build` or `gulp build --prod`
 
 ## Deployment
 
