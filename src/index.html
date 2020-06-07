@@ -89,23 +89,21 @@
         <p class="score">Score: {{ score }}</p>
 
         <div class="retrospective">
-          <div class="media">
-            <div class="media__figure figure">
-              <div class="art-frame art-frame--small">
-                <img class="art-frame__image" :src="prevCard.artCropUri">
-              </div>
+          <div class="figure">
+            <div class="art-frame art-frame--small">
+              <img class="art-frame__image" :src="prevCard.artCropUri">
             </div>
+          </div>
 
-            <div class="media__body outcome">
-              <p>
-                <span v-if="prevOutcome === Outcome.Correct">Correct!</span>
-                <span v-else-if="prevOutcome === Outcome.Incorrect">Incorrect.</span>
-                <span v-else-if="prevOutcome === Outcome.Skip">Skipped.</span>
-                That was
-                <a :href="prevCard.scryfallUri" class="feedback-cardname" target="_blank">{{ prevCard.name }}</a>.
-              </p>
-              <p v-if="prevOutcome === Outcome.Incorrect">You guessed: {{ prevGuess }}</p>
-            </div>
+          <div class="outcome">
+            <p>
+              <span v-if="prevOutcome === Outcome.Correct">Correct!</span>
+              <span v-else-if="prevOutcome === Outcome.Incorrect">Incorrect.</span>
+              <span v-else-if="prevOutcome === Outcome.Skip">Skipped.</span>
+              That was
+              <a :href="prevCard.scryfallUri" class="feedback-cardname" target="_blank">{{ prevCard.name }}</a>.
+            </p>
+            <p v-if="prevOutcome === Outcome.Incorrect">You guessed: {{ prevGuess }}</p>
           </div>
         </div>
 

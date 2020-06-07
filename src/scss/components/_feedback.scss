@@ -1,14 +1,13 @@
 .retrospective {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   margin: 0 auto;
 
-  .media {
-    align-items: center;
-  }
-
   .figure {
-    margin-right: 20px;
+    flex-shrink: 0.5;
     height: 120px;
+    margin-right: 20px;
+
     display: flex;
     align-items: center;
     justify-content: center;
