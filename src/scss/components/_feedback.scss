@@ -1,0 +1,28 @@
+.retrospective {
+  display: inline-block;
+  margin: 0 auto;
+
+  .media {
+    align-items: center;
+  }
+
+  .figure {
+    margin-right: 20px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .outcome {
+    text-align: left;
+  }
+
+  p:first-child {
+    margin-top: 0;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}

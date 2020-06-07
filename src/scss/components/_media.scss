@@ -1,0 +1,11 @@
+.media {
+  display: flex;
+}
+
+.media__figure {
+  flex-shrink: 0.5;
+}
+
+.media__body {
+  flex: 1;
+}

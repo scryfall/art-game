@@ -30,10 +30,10 @@
         </h1>
       </a>
     </header>
-       
+
     <div role="main" class="screen screen--startup" v-if="!started">
       <p>Which format should we show cards from?</p>
-      
+
       <div class="format-buttons" ref="formatButtons">
         <button
           v-for="(format, index) in supportedFormats"
@@ -51,8 +51,8 @@
     <div role="main" class="screen screen--game" v-show="started">
       <div class="card-art">
         <div class="art-frame">
-          <div class="art-placeholder" v-if="!artUrl"></div>
-          <img class="art-image" :src="artUrl">
+          <div class="art-frame__placeholder" v-if="!artUrl"></div>
+          <img class="art-frame__image" :src="artUrl">
         </div>
 
         <div v-if="errorLoading" class="error-loading">
@@ -85,21 +85,30 @@
         <button type="submit" class="vh" tabindex="-1">Check</button>
       </form>
 
-      <div class="score-container">
-        
-      </div>
-
-      <div class="feedback" :style="{ visibility: (showFeedback ? 'visible' : 'hidden') }">
+      <div class="feedback" v-if="showFeedback">
         <p class="score">Score: {{ score }}</p>
 
-        <p>
-          <span v-if="prevOutcome === Outcome.Correct">Correct!</span>
-          <span v-else-if="prevOutcome === Outcome.Incorrect">Incorrect.</span>
-          <span v-else-if="prevOutcome === Outcome.Skip">Skipped.</span>
-          That was
-          <a v-if="prevCard" :href="prevCard.scryfallUri" class="feedback-cardname" target="_blank">{{ prevCard.name }}</a>.
-          <span v-if="prevOutcome === Outcome.Incorrect">You guessed: {{ prevGuess }}</span>
-        </p>
+        <div class="retrospective">
+          <div class="media">
+            <div class="media__figure figure">
+              <div class="art-frame art-frame--small">
+                <img class="art-frame__image" :src="prevCard.artCropUri">
+              </div>
+            </div>
+
+            <div class="media__body outcome">
+              <p>
+                <span v-if="prevOutcome === Outcome.Correct">Correct!</span>
+                <span v-else-if="prevOutcome === Outcome.Incorrect">Incorrect.</span>
+                <span v-else-if="prevOutcome === Outcome.Skip">Skipped.</span>
+                That was
+                <a :href="prevCard.scryfallUri" class="feedback-cardname" target="_blank">{{ prevCard.name }}</a>.
+              </p>
+              <p v-if="prevOutcome === Outcome.Incorrect">You guessed: {{ prevGuess }}</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -114,7 +123,7 @@
       </div>
     </footer>
   </div>
-  
+
   <script src="js/main.js"></script>
 </body>
 </html>

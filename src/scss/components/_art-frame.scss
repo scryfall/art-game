@@ -2,9 +2,16 @@ $default-art-height: 456px;
 $default-art-width: 626px;
 
 .art-frame {
+  border: 1px solid;
   box-sizing: border-box;
   display: inline-block;
   font-size: 0;
+  max-height: 60vh;
+}
+
+.art-frame--small {
+  max-width: 150px;
+  max-height: 100%;
 }
 
 .art-placeholder {
@@ -12,8 +19,8 @@ $default-art-width: 626px;
   width: $default-art-width;
 }
 
-.art-placeholder,
-.art-image {
+.art-frame__placeholder,
+.art-frame__image {
   max-width: 100%;
-  max-height: 60vh;
+  max-height: 100%;
 }
