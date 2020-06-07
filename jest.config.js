@@ -11,9 +11,6 @@ export default {
   moduleNameMapper: {
     "^vue$": 'vue/dist/vue.js'
   },
-  roots: [
-    "<rootDir>/src/js"
-  ],
   testEnvironment: "jest-environment-jsdom-sixteen",
   transform: {},
 };
