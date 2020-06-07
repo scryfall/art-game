@@ -99,7 +99,7 @@ export class Card {
 
     const comma = ', ';
     const the = ' the ';
-    const pComma = face.name.indexOf(', ');
+    const pComma = face.name.indexOf(comma);
     const pThe = face.name.indexOf(the);
     if (pComma > 0) {
       const properName = face.name.slice(0, pComma);
