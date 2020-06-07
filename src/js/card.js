@@ -106,7 +106,7 @@ export class Card {
       const title = face.name.slice(pComma + comma.length).trim();
       names.push(properName, title, `the ${title}`);
       return names;
-    } else if (pThe) {
+    } else if (pThe > -1) {
       const properName = face.name.slice(0, pThe);
       const title = face.name.slice(pThe + the.length).trim();
       names.push(properName, title, `the ${title}`);
