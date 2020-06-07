@@ -10,7 +10,7 @@ A game for guessing card names based on their art.
 ## Development
 
 * Run a local development server: `npm run dev`
-* Create a development build: `npm run build`
+* Create a development build: `npm run build:dev`
 * Lint: `npm run lint`
 * Run unit tests: `npm test`
 
@@ -28,8 +28,8 @@ You can run this server locally using `npm start`.
 
 This server depends on already having a build generated. As part of installing the project, a production build will already be present in this directory, so you can run this immediately. Otherwise you can generate a build as follows:
 
-* Development build: `npm run build build`
-* Production build: `npm run build:prod`
+* Development build: `npm run build:dev`
+* Production build: `npm run build`
 
 ## Deployment
 

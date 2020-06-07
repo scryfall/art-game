@@ -10,9 +10,9 @@
     "node": "10.14.1"
   },
   "scripts": {
-    "postinstall": "npm run build:prod",
-    "build": "gulp build",
-    "build:prod": "npm run build -- --prod",
+    "postinstall": "npm run build",
+    "build": "gulp build --prod",
+    "build:dev": "gulp build",
     "dev": "gulp serve",
     "lint": "gulp lint",
     "start": "node index.js"
