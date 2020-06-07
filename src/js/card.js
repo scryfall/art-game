@@ -10,7 +10,7 @@ export class Card {
    * @param {object} card A card from the Scryfall API
    */
   constructor(card) {
-    this.card = card;
+    this.data = card;
   }
 
   /**
@@ -18,7 +18,7 @@ export class Card {
    * @return {string} The card's name
    */
   get name() {
-    return this.card.name;
+    return this.data.name;
   }
 
   /**
@@ -26,7 +26,7 @@ export class Card {
    * @return {string} The art crop URI
    */
   get artCropUri() {
-    return this.card.image_uris.art_crop;
+    return this.data.image_uris.art_crop;
   }
 
   /**
@@ -34,7 +34,7 @@ export class Card {
    * @return {string} The URI for the card page on Scryfall
    */
   get scryfallUri() {
-    return this.card.scryfall_uri;
+    return this.data.scryfall_uri;
   }
 
   /**
@@ -43,7 +43,7 @@ export class Card {
    * @returns {boolean} Whether the card is a multiface card
    */
   get isMultiface() {
-    return !!this.card.card_faces;
+    return !!this.data.card_faces;
   }
 
   /**
@@ -69,9 +69,9 @@ export class Card {
    */
   getAllNames() {
     if (this.isMultiface) {
-      return this.card.card_faces.flatMap(face => this.getNamesForFace(face));
+      return this.data.card_faces.flatMap(face => this.getNamesForFace(face));
     } else {
-      return this.getNamesForFace(this.card);
+      return this.getNamesForFace(this.data);
     }
   }
 

@@ -19,7 +19,7 @@ describe('Scryfall', () => {
       const card = await scryfall.getRandomCard('standard');
 
       expect(card).toBeDefined();
-      expect(card.card).toBe(data);
+      expect(card.data).toBe(data);
       expect(scryfall.axios.get).toHaveBeenCalledTimes(1);
     });
 
