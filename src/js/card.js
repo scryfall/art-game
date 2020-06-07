@@ -10,7 +10,7 @@ export class Card {
    * @param {object} card A card from the Scryfall API
    */
   constructor(card) {
-    this.card = card;
+    this.data = card;
   }
 
   /**
@@ -18,7 +18,7 @@ export class Card {
    * @return {string} The card's name
    */
   get name() {
-    return this.card.name;
+    return this.data.name;
   }
 
   /**
@@ -26,7 +26,7 @@ export class Card {
    * @return {string} The art crop URI
    */
   get artCropUri() {
-    return this.card.image_uris.art_crop;
+    return this.data.image_uris.art_crop;
   }
 
   /**
@@ -34,27 +34,16 @@ export class Card {
    * @return {string} The URI for the card page on Scryfall
    */
   get scryfallUri() {
-    return this.card.scryfall_uri;
+    return this.data.scryfall_uri;
   }
 
   /**
-   * Is this card a split card?
-   * @returns {boolean} Whether the card is a split card
+   * Is this card a multiface card?
+   * E.g. split, flip, transform, adventure, etc.
+   * @returns {boolean} Whether the card is a multiface card
    */
-  get isSplit() {
-    return !!this.card.card_faces;
-  }
-
-  /**
-   * Get an array of all names this card has.
-   * @returns {string[]} The card's names
-   */
-  get allNames() {
-    if (this.isSplit) {
-      return this.card.card_faces.map(face => face.name);
-    } else {
-      return [this.card.name];
-    }
+  get isMultiface() {
+    return !!this.data.card_faces;
   }
 
   /**
@@ -65,12 +54,66 @@ export class Card {
   guessName(guess) {
     guess = naturalize(guess);
 
-    const goodGuess = this.allNames.reduce((acc, cur) => {
+    const goodGuess = this.getAllNames().reduce((acc, cur) => {
       const actual = naturalize(cur);
       const correct = levenshtein(guess, actual) <= 3;
       return acc || correct;
     }, false);
 
     return goodGuess;
+  }
+
+  /**
+   * Get an array of all names this card has.
+   * @returns {string[]} The card's names
+   */
+  getAllNames() {
+    if (this.isMultiface) {
+      return [this.name].concat(this.data.card_faces.flatMap(face => this.getNamesForFace(face)));
+    } else {
+      return this.getNamesForFace(this.data);
+    }
+  }
+
+  /**
+   * Get all names belonging to a face of a card.
+   *
+   * If the face is legendary, this will include the face's proper name and title.
+   * Their title will be specified with and without "the", regardless of whether it was present.
+   * This is to anticipate variants in how users will guess at the name.
+   *
+   * Examples:
+   *    ["Vraska, Golgari Queen", "Vraska", "Golgari Queen", "the Golgari Queen"]
+   *    ["Saskia the Unyielding", "Saskia", "Unyielding", "the Unyielding"]
+   *    ["Daxos, Blessed by the Sun", "Daxos", "Blessed by the Sun", "the Blessed by the Sun"]
+   *
+   * Because of our friend Daxos, we can't just split on commas and "the",
+   * or else we get Daxos, Blessed by, Sun. Alas.
+   *
+   * @private
+   * @param {object} face A face of a card
+   * @returns {string[]} The face's names
+   */
+  getNamesForFace(face) {
+    const names = [face.name];
+    const legendary = face.type_line && face.type_line.toLowerCase().includes('legendary');
+    if (!legendary) return names;
+
+    const comma = ', ';
+    const the = ' the ';
+    const pComma = face.name.indexOf(comma);
+    const pThe = face.name.indexOf(the);
+    if (pComma > -1) {
+      const properName = face.name.slice(0, pComma);
+      const title = face.name.slice(pComma + comma.length).trim();
+      names.push(properName, title);
+      return names;
+    } else if (pThe > -1) {
+      const properName = face.name.slice(0, pThe);
+      const title = face.name.slice(pThe + the.length).trim();
+      names.push(properName, title);
+    }
+
+    return names;
   }
 }

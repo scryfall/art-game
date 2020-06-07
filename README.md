@@ -12,6 +12,7 @@ A game for guessing card names based on their art.
 * Run a local development server: `npm run dev`
 * Create a development build: `npm run build`
 * Lint: `npm run lint`
+* Run unit tests: `npm test`
 
 The development server uses [browsersync](https://www.browsersync.io/) to show any code changes live, reloading the page as needed. It will automatically create a build as part of starting.
 
@@ -34,9 +35,11 @@ This server depends on already having a build generated. As part of installing t
 
 Deploy this project via Heroku.
 
-## Other project info 
+## Other project info
 
 This is a Vue 2 SPA.
+
+We use Jest for unit testing. You'll see we import the jest globals we use: this is optional but it adds intellisense information.
 
 Baseline requirements:
 
