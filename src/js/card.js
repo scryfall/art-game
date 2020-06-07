@@ -82,9 +82,12 @@ export class Card {
    * This is to anticipate variants in how users will guess at the name.
    * 
    * Examples:
-   *    ["Jace, Cunning Castaway", "Jace", "Cunning Castaway", "the Cunning Castaway"]
+   *    ["Vraska, Golgari Queen", "Vraska", "Golgari Queen", "the Golgari Queen"]
    *    ["Saskia the Unyielding", "Saskia", "Unyielding", "the Unyielding"]
-  *     ["Vraska, Golgari Queen", "Vraska", "Golgari Queen", "the Golgari Queen"]
+   *    ["Daxos, Blessed by the Sun", "Daxos", "Blessed by the Sun", "the Blessed by the Sun"]
+   * 
+   * Because of our friend Daxos, we can't just split on commas and "the",
+   * or else we get Daxos, Blessed by, Sun. Alas.
    * 
    * @param {object} face A face of a card
    * @returns {string[]} The face's names
@@ -94,10 +97,20 @@ export class Card {
     const legendary = face.type_line.toLowerCase().includes('legendary');
     if (!legendary) return names;
 
-    const parts = face.name.split(/(?:, | the )/);
-    const properName = parts[0];
-    const title = parts[1];
-    names.push(properName, title, `the ${title}`);
+    const comma = ', ';
+    const the = ' the ';
+    const pComma = face.name.indexOf(', ');
+    const pThe = face.name.indexOf(the);
+    if (pComma > 0) {
+      const properName = face.name.slice(0, pComma);
+      const title = face.name.slice(pComma + comma.length).trim();
+      names.push(properName, title, `the ${title}`);
+      return names;
+    } else if (pThe) {
+      const properName = face.name.slice(0, pThe);
+      const title = face.name.slice(pThe + the.length).trim();
+      names.push(properName, title, `the ${title}`);
+    }
 
     return names;
   }
