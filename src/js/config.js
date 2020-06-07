@@ -4,7 +4,7 @@
  * @enum {string}
  */
 export const StorageKey = Object.freeze({
-  Theme: 'theme',
+  Theme: "theme",
 });
 
 /**
@@ -13,21 +13,20 @@ export const StorageKey = Object.freeze({
  * @enum {string}
  */
 export const Theme = Object.freeze({
-  Dark: 'dark',
-  Light: 'light',
+  Dark: "dark",
+  Light: "light",
 });
 
 /**
  * Criteria to use for every random fetch.
  */
 export const UniversalCriteria = [
-  '-t:basic',
-  '-t:saga',
-  '-t:stickers',
-  'not:split',
-  'not:transform',
-  'not:fullart',
-  'not:extra',
+  "-t:basic",
+  "-t:saga",
+  "-t:stickers",
+  "not:transform",
+  "not:fullart",
+  "not:extra",
 ];
 
 /**
@@ -47,7 +46,7 @@ export const PresetFormatQueries = [
  * @enum {string}
  */
 export const Outcome = Object.freeze({
-  Correct: 'correct',
-  Incorrect: 'incorrect',
-  Skip: 'skip',
+  Correct: "correct",
+  Incorrect: "incorrect",
+  Skip: "skip",
 });
