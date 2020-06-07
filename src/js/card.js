@@ -46,18 +46,6 @@ export class Card {
   }
 
   /**
-   * Get an array of all names this card has.
-   * @returns {string[]} The card's names
-   */
-  get allNames() {
-    if (this.isSplit) {
-      return this.card.card_faces.map(face => face.name);
-    } else {
-      return [this.card.name];
-    }
-  }
-
-  /**
    * Check if a guess at this card's name is correct.
    * @param {string} guess A guess at the name
    * @returns {boolean} Whether the guess was approximately correct
@@ -65,12 +53,52 @@ export class Card {
   guessName(guess) {
     guess = naturalize(guess);
 
-    const goodGuess = this.allNames.reduce((acc, cur) => {
+    const goodGuess = this.getAllNames().reduce((acc, cur) => {
       const actual = naturalize(cur);
       const correct = levenshtein(guess, actual) <= 3;
       return acc || correct;
     }, false);
 
     return goodGuess;
+  }
+
+  /**
+   * Get an array of all names this card has.
+   * @returns {string[]} The card's names
+   */
+  getAllNames() {
+    if (this.isSplit) {
+      return this.card.card_faces.flatMap(face => this.getNamesForFace(face));
+    } else {
+      return this.getNamesForFace(this.card);
+    }
+  }
+
+  /**
+   * Get all names belonging to a face of a card.
+   * 
+   * If the face is legendary, this will include the face's proper name and title.
+   * Their title will be specified with and without "the", regardless of whether it was present.
+   * This is to anticipate variants in how users will guess at the name.
+   * 
+   * Examples:
+   *    ["Jace, Cunning Castaway", "Jace", "Cunning Castaway", "the Cunning Castaway"]
+   *    ["Saskia the Unyielding", "Saskia", "Unyielding", "the Unyielding"]
+  *     ["Vraska, Golgari Queen", "Vraska", "Golgari Queen", "the Golgari Queen"]
+   * 
+   * @param {object} face A face of a card
+   * @returns {string[]} The face's names
+   */
+  getNamesForFace(face) {
+    const names = [face.name];
+    const legendary = face.type_line.toLowerCase().includes('legendary');
+    if (!legendary) return names;
+
+    const parts = face.name.split(/(?:, | the )/);
+    const properName = parts[0];
+    const title = parts[1];
+    names.push(properName, title, `the ${title}`);
+
+    return names;
   }
 }
