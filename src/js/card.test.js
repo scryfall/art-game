@@ -45,22 +45,27 @@ describe('Card', () => {
       expect(card.getAllNames()).toEqual([name]);
     });
 
-    it('returns two names for multiface cards', () => {
+    it('for multiface cards returns both names plus the A // B name', () => {
       const names = ['Rimrock Knight', 'Boulder Rush'];
+      const fullname = names.join(' // ');
       const card = new Card({
+        name: fullname,
         card_faces: [
           { name: names[0] },
           { name: names[1] },
         ]
       });
 
-      expect(card.getAllNames()).toEqual(names);
+      const allNames = [fullname].concat(names);
+      expect(card.getAllNames()).toEqual(allNames);
     });
 
-    it('flattens lists of names from getNamesForFace', () => {
+    it('returns a flat array even when getNamesForFace returns many names', () => {
+      const fullname = 'a, b, c // d';
       const names0 = ['a', 'b', 'c'];
       const names1 = ['d'];
       const card = new Card({
+        name: fullname,
         card_faces: [
           { name: '', mock_names: names0 },
           { name: '', mock_names: names1 },
@@ -68,8 +73,24 @@ describe('Card', () => {
       });
       card.getNamesForFace = jest.fn(face => face.mock_names);
 
-      const allNames = names0.concat(names1);
+      const allNames = [fullname].concat(names0, names1);
       expect(card.getAllNames()).toEqual(allNames);
+    });
+
+    it('handles Garruk Relentless as expected', () => {
+      const fullname = 'Garruk Relentless // Garruk, the Veil-Cursed';
+      const name0 = 'Garruk Relentless';
+      const name1 = 'Garruk, the Veil-Cursed';
+      const card = new Card({
+        name: fullname,
+        card_faces: [
+          { name: name0, type_line: 'Legendary Planeswalker — Garruk' },
+          { name: name1, type_line: 'Legendary Planeswalker — Garruk' },
+        ]
+      });
+
+      const expected = [fullname, name0, name1, 'Garruk', 'the Veil-Cursed'];
+      expect(card.getAllNames()).toEqual(expected);
     });
   });
 
@@ -105,16 +126,24 @@ describe('Card', () => {
 
     [
       {
-        name: 'Vraska, Golgari Queen',
-        variants: ['Vraska', 'Golgari Queen', 'the Golgari Queen']
+        name: 'Vraska, Golgari Queen', // comma
+        variants: ['Vraska', 'Golgari Queen']
       },
       {
-        name: 'Saskia the Unyielding',
-        variants: ['Saskia', 'Unyielding', 'the Unyielding']
+        name: 'Jace, Cunning Castaway',
+        variants: ['Jace', 'Cunning Castaway']
       },
       {
-        name: 'Daxos, Blessed by the Sun',
-        variants: ['Daxos', 'Blessed by the Sun', 'the Blessed by the Sun']
+        name: 'Saskia the Unyielding', // 'the'
+        variants: ['Saskia', 'Unyielding']
+      },
+      {
+        name: 'Adeliz, the Cinder Wind', // comma followed by 'the'
+        variants: ['Adeliz', 'the Cinder Wind']
+      },
+      {
+        name: 'Daxos, Blessed by the Sun', // comma with a 'the' distantly afterwards
+        variants: ['Daxos', 'Blessed by the Sun']
       },
     ].forEach(scenario => {
       it(`returns full name, short name, and titles for legends with a shortname (${scenario.name})`, () => {

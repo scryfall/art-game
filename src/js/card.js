@@ -69,7 +69,7 @@ export class Card {
    */
   getAllNames() {
     if (this.isMultiface) {
-      return this.data.card_faces.flatMap(face => this.getNamesForFace(face));
+      return [this.name].concat(this.data.card_faces.flatMap(face => this.getNamesForFace(face)));
     } else {
       return this.getNamesForFace(this.data);
     }
@@ -106,12 +106,12 @@ export class Card {
     if (pComma > -1) {
       const properName = face.name.slice(0, pComma);
       const title = face.name.slice(pComma + comma.length).trim();
-      names.push(properName, title, `the ${title}`);
+      names.push(properName, title);
       return names;
     } else if (pThe > -1) {
       const properName = face.name.slice(0, pThe);
       const title = face.name.slice(pThe + the.length).trim();
-      names.push(properName, title, `the ${title}`);
+      names.push(properName, title);
     }
 
     return names;
