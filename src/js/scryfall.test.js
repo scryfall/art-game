@@ -1,4 +1,3 @@
-import { describe, expect, it, beforeEach, jest } from '@jest/globals';
 import { Scryfall } from './scryfall';
 
 describe('Scryfall', () => {
