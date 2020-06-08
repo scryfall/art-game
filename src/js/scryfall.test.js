@@ -1,4 +1,3 @@
-import { describe, expect, it, beforeEach, jest } from '@jest/globals';
 import { Scryfall } from './scryfall';
 
 describe('Scryfall', () => {
@@ -12,7 +11,7 @@ describe('Scryfall', () => {
     const data = { name: 'test name' };
 
     beforeEach(() => {
-      scryfall.axios.get = jest.fn(() => Promise.resolve({ data }));
+      scryfall.axios.get = jest.mockResolvedValue({ data });
     });
 
     it('should call with the requested format', async () => {

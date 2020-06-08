@@ -28,10 +28,10 @@ if (config.prod) Object.assign(config, prodConfig);
 gulp.task('lint', () => {
   return gulp.src([
     '*.js',
-    'src/**/*.js',
-    '!src/js/lib/*.js'
+    'src/**/*.js'
   ])
     .pipe(eslint())
+    .pipe(eslint.format())
     .pipe(eslint.failOnError());
 });
 
