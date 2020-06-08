@@ -9,7 +9,7 @@ new Vue({
   data: {
     supportedFormats: SupportedFormats,
     theme: Theme.Dark,
-    
+
     format: null,
     score: 0,
     guess: '',
@@ -21,7 +21,7 @@ new Vue({
     prevCard: null,
     prevGuess: null,
     prevOutcome: null,
-    
+
     Outcome,
   },
   computed: {

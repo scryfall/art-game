@@ -14,7 +14,7 @@ let contentSecurityPolicy = [
 
 express()
   .use(express.static(path.join(__dirname, 'dist'), {
-    setHeaders: (res, path, stat) => {
+    setHeaders: (res) => {
       if (ENV !== ENV_DEV) {
         res.set('Content-Security-Policy', contentSecurityPolicy);
       }
