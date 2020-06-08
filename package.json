@@ -29,6 +29,7 @@
     "gulp-eslint": "^6.0.0",
     "gulp-sass": "^4.1.0",
     "jest": "^26.0.1",
+    "jest-cli": "^26.0.1",
     "jest-environment-jsdom-sixteen": "^1.0.3",
     "js-levenshtein": "^1.1.6",
     "tar": "^6.0.2",

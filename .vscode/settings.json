@@ -10,4 +10,5 @@
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
+  "jest.pathToJest": "npm test --",
 }
