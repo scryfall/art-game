@@ -41,7 +41,7 @@ Deploy this project via Heroku.
 
 This is a Vue 2 SPA.
 
-We use Jest for unit testing. You'll see we import the jest globals we use: this is optional but it adds intellisense information.
+We use Jest for unit testing.
 
 Baseline requirements:
 
