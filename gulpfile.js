@@ -31,6 +31,7 @@ gulp.task('lint', () => {
     'src/**/*.js'
   ])
     .pipe(eslint())
+    .pipe(eslint.format())
     .pipe(eslint.failOnError());
 });
 
