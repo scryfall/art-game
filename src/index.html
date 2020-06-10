@@ -37,6 +37,7 @@
       <div class="format-buttons" ref="formatButtons">
         <button
           v-for="(format, index) in supportedFormats"
+          :id="format + '-format-button'"
           :key="index"
           type="button"
           class="button--lg"
@@ -50,7 +51,7 @@
 
     <div role="main" class="screen screen--game" v-show="started">
       <div class="card-art">
-        <div class="art-frame">
+        <div class="art-frame" :data-answer="answer">
           <div class="art-frame__placeholder" v-if="!artUrl"></div>
           <img class="art-frame__image" :src="artUrl">
         </div>

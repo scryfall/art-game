@@ -33,6 +33,9 @@ new Vue({
     },
     showFeedback() {
       return !!this.prevCard;
+    },
+    answer() {
+      return this.card.name;
     }
   },
   methods: {

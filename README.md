@@ -15,6 +15,9 @@ Various NPM scripts are available which call out to [Gulp](https://gulpjs.com/) 
 * Create a development build: `npm run build:dev` or `gulp build`
 * Lint: `npm run lint` or `gulp lint`
 * Run unit tests: `npm test`
+* Run integration tests:
+  - Make sure app is running (`npm start` or `npm run dev`)
+  - `npm run test:integration`
 
 The development server uses [browsersync](https://www.browsersync.io/) to show any code changes live, reloading the page as needed. It will automatically create a build as part of starting.
 
@@ -42,6 +45,8 @@ Deploy this project via Heroku.
 This is a Vue 2 SPA.
 
 We use Jest for unit testing.
+
+We use Webdriver.io for integration testing.
 
 Baseline requirements:
 
