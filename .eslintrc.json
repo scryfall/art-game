@@ -10,9 +10,13 @@
   },
   "overrides": [
     {
-      "files": ["*.test.js"],
+      "files": ["*.test.js", "*.browser-test.js"],
       "env": {
         "jest": true
+      },
+      "globals": {
+        "$": false,
+        "browser": false
       }
     }
   ]
