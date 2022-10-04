@@ -8,7 +8,7 @@ let contentSecurityPolicy = [
   "default-src *.scryfall.com",
   "script-src *.scryfall.com 'unsafe-eval'",
   "style-src *.scryfall.com",
-  "img-src *.scryfall.com data:",
+  "img-src *.scryfall.com *.scryfall.io data:",
   "block-all-mixed-content"
 ].join('; ');
 
