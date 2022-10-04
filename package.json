@@ -7,7 +7,7 @@
   "author": "spacemonaut",
   "license": "UNLICENSED",
   "engines": {
-    "node": "10.14.1"
+    "node": "16.17.1"
   },
   "scripts": {
     "postinstall": "npm run build",
@@ -37,7 +37,7 @@
     "geckodriver": "^1.19.1",
     "gulp": "^4.0.2",
     "gulp-eslint": "^6.0.0",
-    "gulp-sass": "^4.1.0",
+    "gulp-sass": "^5.1.0",
     "jest": "^26.0.1",
     "jest-cli": "^26.0.1",
     "jest-environment-jsdom-sixteen": "^1.0.3",
@@ -52,7 +52,7 @@
     "yargs": "^15.3.1"
   },
   "dependencies": {
-    "axios": "^0.19.0",
-    "express": "^4.16.4"
+    "axios": "^0.27.2",
+    "express": "^4.18.1"
   }
 }
