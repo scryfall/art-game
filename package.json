@@ -4,7 +4,7 @@
   "description": "",
   "private": true,
   "main": "index.js",
-  "author": "spacemonaut",
+  "author": "scarletcs",
   "license": "UNLICENSED",
   "engines": {
     "node": "16.17.1"
