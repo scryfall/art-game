@@ -40,11 +40,12 @@ new Vue({
     },
   },
   methods: {
-    start(query) {
+    async start(query) {
       this.query = query;
       this.$nextTick(() => {
         this.focusGuessInput();
       });
+      await this.getNextCard(this.query);
     },
     clearCardData() {
       this.card = {};
@@ -53,7 +54,6 @@ new Vue({
       this.artToLoad = null;
     },
     async startWithCustomQuery() {
-      await this.getNextCard(this.customQuery);
       this.start(this.customQuery);
     },
     focusGuessInput() {
