@@ -59,7 +59,7 @@ new Vue({
       try {
         const criteria = [].concat(UniversalCriteria);
         if (this.prevCard) criteria.push(`-!"${this.prevCard.name}"`);
-        this.card = await scryfall.getRandomCard(format, criteria);
+        this.card = await scryfall.getRandomCard(`f:${format}`, criteria);
         this.errorLoading = false;
         this.artToLoad = this.card.artCropUri;
       } catch (e) {
