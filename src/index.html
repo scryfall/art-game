@@ -66,6 +66,24 @@
             {{ config.id | capitalize }}
           </button>
         </div>
+
+        <p>
+          or, use your own
+          <a href="https://scryfall.com/docs/syntax">Scryfall query</a>:
+        </p>
+
+        <form @submit="start(customQuery)">
+          <label class="vh" for="custom-query">Custom Scryfall Query</label>
+          <input
+            v-model="customQuery"
+            id="custom-query"
+            class="input--lg"
+            type="text"
+            placeholder="set:dom type:creaure"
+            @keypress.enter="start(customQuery)"
+          />
+          <input type="submit" class="button--lg" value="Start" />
+        </form>
       </div>
 
       <div role="main" class="screen screen--game" v-show="started">
