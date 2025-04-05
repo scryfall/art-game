@@ -14,14 +14,8 @@
     />
     <meta name="og:url" content="https://artgame.scryfall.com/" />
     <meta name="og:site_name" content="Scryfall" />
-    <meta
-      name="og:description"
-      content="Guess Magic: the Gathering cards using only the artwork"
-    />
-    <meta
-      name="description"
-      content="Guess Magic: the Gathering cards using only the artwork"
-    />
+    <meta name="og:description" content="Guess Magic: the Gathering cards using only the artwork" />
+    <meta name="description" content="Guess Magic: the Gathering cards using only the artwork" />
     <link
       rel="icon"
       type="image/x-icon"
@@ -99,11 +93,7 @@
           </div>
         </div>
 
-        <img
-          class="art-preloader"
-          :src="artToLoad"
-          @load="imageFinishedLoading"
-        />
+        <img class="art-preloader" :src="artToLoad" @load="imageFinishedLoading" />
 
         <p>
           Which card is this?
@@ -147,21 +137,14 @@
             <div class="outcome">
               <p>
                 <span v-if="prevOutcome === Outcome.Correct">Correct!</span>
-                <span v-else-if="prevOutcome === Outcome.Incorrect"
-                  >Incorrect.</span
-                >
+                <span v-else-if="prevOutcome === Outcome.Incorrect">Incorrect.</span>
                 <span v-else-if="prevOutcome === Outcome.Skip">Skipped.</span>
                 That was
-                <a
-                  :href="prevCard.scryfallUri"
-                  class="feedback-cardname"
-                  target="_blank"
+                <a :href="prevCard.scryfallUri" class="feedback-cardname" target="_blank"
                   >{{ prevCard.name }}</a
                 >.
               </p>
-              <p v-if="prevOutcome === Outcome.Incorrect">
-                You guessed: {{ prevGuess }}
-              </p>
+              <p v-if="prevOutcome === Outcome.Incorrect">You guessed: {{ prevGuess }}</p>
             </div>
           </div>
         </div>
