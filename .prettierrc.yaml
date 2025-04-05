@@ -1,0 +1,7 @@
+overrides:
+  - files:
+      - "*.html"
+      - "*.js"
+      - "*.scss"
+    options:
+      printWidth: 100

@@ -1,42 +1,70 @@
-browser.addCommand("guess", (answer) => {
-  $(".guess").waitForEnabled();
-  $(".guess").keys(answer);
-  browser.keys("\uE007");
+/**
+ * A list of special keys.
+ * @see {@link https://w3c.github.io/webdriver/#keyboard-actions Webdriver: Keyboard actions}
+ */
+const KEY = Object.freeze({
+  Enter: "\uE007",
+});
+
+browser.addCommand("guess", async (answer) => {
+  await $(".guess").waitForEnabled();
+  await $(".guess").click();
+  await browser.keys([answer, KEY.Enter]);
 });
 
 describe("Art Game", () => {
-  it("allows user to choose format", () => {
-    browser.url("/");
+  it("allows user to choose format", async () => {
+    await browser.url("/");
 
-    expect($("#standard-format-button").isDisplayed()).toBe(true);
-    expect($("#pioneer-format-button").isDisplayed()).toBe(true);
-    expect($("#modern-format-button").isDisplayed()).toBe(true);
-    expect($("#vintage-format-button").isDisplayed()).toBe(true);
+    expect(await $("#standard-format-button").isDisplayed()).toBe(true);
+    expect(await $("#pioneer-format-button").isDisplayed()).toBe(true);
+    expect(await $("#modern-format-button").isDisplayed()).toBe(true);
+    expect(await $("#vintage-format-button").isDisplayed()).toBe(true);
   });
 
-  it("can guess correctly", () => {
-    browser.url("/");
+  it("allows user to choose a custom query", async () => {
+    await browser.url("/");
+
+    await $("#custom-query").isDisplayed();
+    await $("#custom-query").click();
+    await browser.keys(["Jolene, the Plunder Queen", KEY.Enter]);
+
+    await browser.waitUntil(
+      async function () {
+        return (
+          (await $("[data-answer]").getAttribute("data-answer")) === "Jolene, the Plunder Queen"
+        );
+      },
+      {
+        timeout: 5000,
+        timeoutMsg: "expected text to be different after 5s",
+      }
+    );
+  });
+
+  it("can guess correctly", async () => {
+    await browser.url("/");
 
     $("#modern-format-button").click();
 
-    const answer = $("[data-answer]").getAttribute("data-answer");
+    const answer = await $("[data-answer]").getAttribute("data-answer");
 
-    browser.guess(answer);
+    await browser.guess(answer);
 
-    $(".outcome").waitForDisplayed();
+    await $(".outcome").waitForDisplayed();
 
-    expect($(".outcome").getHTML()).toContain("Correct!");
+    expect(await $(".outcome").getHTML()).toContain("Correct!");
   });
 
-  it("can guess incorrectly", () => {
-    browser.url("/");
+  it("can guess incorrectly", async () => {
+    await browser.url("/");
 
-    $("#modern-format-button").click();
+    await $("#modern-format-button").click();
 
-    browser.guess("definitely not the right card");
+    await browser.guess("definitely not the right card");
 
-    $(".outcome").waitForDisplayed();
+    await $(".outcome").waitForDisplayed();
 
-    expect($(".outcome").getHTML()).toContain("Incorrect.");
+    expect(await $(".outcome").getHTML()).toContain("Incorrect.");
   });
 });
