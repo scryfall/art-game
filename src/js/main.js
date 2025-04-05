@@ -1,17 +1,11 @@
 import Vue from "vue";
 import { Scryfall } from "./scryfall";
-import {
-  StorageKey,
-  Theme,
-  UniversalCriteria,
-  Outcome,
-  PresetFormatQueries,
-} from "./config";
+import { StorageKey, Theme, UniversalCriteria, Outcome, PresetFormatQueries } from "./config";
 
 const scryfall = new Scryfall();
 
 new Vue({
-  el: '#app',
+  el: "#app",
   data: {
     presetFormatQueries: PresetFormatQueries,
     theme: Theme.Dark,
@@ -19,9 +13,9 @@ new Vue({
     query: null,
     customQuery: "",
     score: 0,
-    guess: '',
+    guess: "",
     loadingNextCard: false,
-    card: { },
+    card: {},
     artUrl: null,
     artToLoad: null,
     errorLoading: false,
@@ -59,10 +53,6 @@ new Vue({
       this.artToLoad = null;
     },
     async startWithCustomQuery() {
-      // got to clear out the art for the prefetched standard card
-      // since it's not guarenteed that the custom query will match it
-      this.clearCardData();
-
       await this.getNextCard(this.customQuery);
       this.start(this.customQuery);
     },
@@ -100,31 +90,30 @@ new Vue({
       this.prevGuess = this.guess;
       this.prevCard = this.card;
       this.getNextCard();
-      this.guess = '';
+      this.guess = "";
     },
     retry() {
       this.getNextCard();
     },
     skip() {
       this.prevOutcome = Outcome.Skip;
-      this.prevGuess = '';
+      this.prevGuess = "";
       this.prevCard = this.card;
       this.getNextCard();
-    }
+    },
   },
   created() {
     const storedTheme = localStorage.getItem(StorageKey.Theme);
     if (storedTheme) this.theme = storedTheme;
-    this.getNextCard("f:standard");
   },
   mounted() {
     this.$refs.formatButtons.firstElementChild.focus();
   },
   filters: {
     capitalize(value) {
-      if (!value) return '';
+      if (!value) return "";
       value = value.toString();
       return value[0].toUpperCase() + value.slice(1);
-    }
-  }
+    },
+  },
 });
