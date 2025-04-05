@@ -1,20 +1,21 @@
-import Vue from 'vue';
-import { Scryfall } from './scryfall';
-import { StorageKey, Theme, UniversalCriteria, SupportedFormats, Outcome } from './config';
+import Vue from "vue";
+import { Scryfall } from "./scryfall";
+import { StorageKey, Theme, UniversalCriteria, Outcome, PresetFormatQueries } from "./config";
 
 const scryfall = new Scryfall();
 
 new Vue({
-  el: '#app',
+  el: "#app",
   data: {
-    supportedFormats: SupportedFormats,
+    presetFormatQueries: PresetFormatQueries,
     theme: Theme.Dark,
 
-    format: null,
+    query: null,
+    customQuery: "",
     score: 0,
-    guess: '',
+    guess: "",
     loadingNextCard: false,
-    card: { },
+    card: {},
     artUrl: null,
     artToLoad: null,
     errorLoading: false,
@@ -29,21 +30,31 @@ new Vue({
       return `theme--${this.theme}`;
     },
     started() {
-      return !!this.format;
+      return !!this.query;
     },
     showFeedback() {
       return !!this.prevCard;
     },
     answer() {
       return this.card.name;
-    }
+    },
   },
   methods: {
-    start(format) {
-      this.format = format;
+    start(query) {
+      this.query = query;
       this.$nextTick(() => {
         this.focusGuessInput();
       });
+    },
+    clearCardData() {
+      this.card = {};
+      this.prevCard = null;
+      this.artUrl = null;
+      this.artToLoad = null;
+    },
+    async startWithCustomQuery() {
+      await this.getNextCard(this.customQuery);
+      this.start(this.customQuery);
     },
     focusGuessInput() {
       const guessInput = this.$refs.guessInput;
@@ -53,17 +64,17 @@ new Vue({
       this.theme = this.theme === Theme.Dark ? Theme.Light : Theme.Dark;
       localStorage.setItem(StorageKey.Theme, this.theme);
     },
-    async getNextCard(format) {
-      if (!format) format = this.format;
+    async getNextCard(query) {
+      if (!query) query = this.query;
       this.loadingNextCard = true;
       try {
         const criteria = [].concat(UniversalCriteria);
         if (this.prevCard) criteria.push(`-!"${this.prevCard.name}"`);
-        this.card = await scryfall.getRandomCard(format, criteria);
+        this.card = await scryfall.getRandomCard(query, criteria);
         this.errorLoading = false;
         this.artToLoad = this.card.artCropUri;
       } catch (e) {
-        console.error(`Failed to load a card for format ${format}`, e);
+        console.error(`Failed to load a card for query ${query}`, e);
         this.errorLoading = true;
       }
     },
@@ -79,31 +90,30 @@ new Vue({
       this.prevGuess = this.guess;
       this.prevCard = this.card;
       this.getNextCard();
-      this.guess = '';
+      this.guess = "";
     },
     retry() {
       this.getNextCard();
     },
     skip() {
       this.prevOutcome = Outcome.Skip;
-      this.prevGuess = '';
+      this.prevGuess = "";
       this.prevCard = this.card;
       this.getNextCard();
-    }
+    },
   },
   created() {
     const storedTheme = localStorage.getItem(StorageKey.Theme);
     if (storedTheme) this.theme = storedTheme;
-    this.getNextCard('standard');
   },
   mounted() {
     this.$refs.formatButtons.firstElementChild.focus();
   },
   filters: {
     capitalize(value) {
-      if (!value) return '';
+      if (!value) return "";
       value = value.toString();
       return value[0].toUpperCase() + value.slice(1);
-    }
-  }
+    },
+  },
 });

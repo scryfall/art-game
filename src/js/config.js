@@ -33,11 +33,11 @@ export const UniversalCriteria = [
  * The supported formats in the art game.
  * This is the order they'll show up on the front page, too.
  */
-export const SupportedFormats = [
-  'standard',
-  'pioneer',
-  'modern',
-  'vintage'
+export const PresetFormatQueries = [
+  { id: "standard", query: "f:standard" },
+  { id: "pioneer", query: "f:pioneer" },
+  { id: "modern", query: "f:modern" },
+  { id: "vintage", query: "f:vintage" },
 ];
 
 /**
