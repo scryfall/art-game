@@ -9,4 +9,8 @@ module.exports = {
       vue: 'vue/dist/vue.js'
     },
   },
+  performance: {
+    maxEntrypointSize: 500000,
+    maxAssetSize: 500000,
+}
 };
