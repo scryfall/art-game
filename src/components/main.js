@@ -6,7 +6,7 @@ import {
   UniversalCriteria,
   Outcome,
   PresetFormatQueries,
-} from "../models/config";
+} from "../models/criteria";
 
 const scryfall = new Scryfall();
 
