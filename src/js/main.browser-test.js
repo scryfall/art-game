@@ -32,8 +32,7 @@ describe("Art Game", () => {
     await browser.waitUntil(
       async function () {
         return (
-          (await $("[data-answer]").getAttribute("data-answer")) ===
-          "Jolene, the Plunder Queen"
+          (await $("[data-answer]").getAttribute("data-answer")) === "Jolene, the Plunder Queen"
         );
       },
       {
