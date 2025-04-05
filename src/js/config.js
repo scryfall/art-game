@@ -23,10 +23,11 @@ export const Theme = Object.freeze({
 export const UniversalCriteria = [
   '-t:basic',
   '-t:saga',
-  '-is:split',
-  '-is:transform',
-  '-is:fullart',
-  '-is:extra'
+  '-t:stickers',
+  'not:split',
+  'not:transform',
+  'not:fullart',
+  'not:extra',
 ];
 
 /**
