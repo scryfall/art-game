@@ -55,15 +55,15 @@
 
         <div class="format-buttons" ref="formatButtons">
           <button
-            v-for="(format, index) in supportedFormats"
-            :id="format + '-format-button'"
+            v-for="(config, index) in presetFormatQueries"
+            :id="config.id + '-format-button'"
             :key="index"
             type="button"
             class="button--lg"
-            @click="start(format)"
-            @keypress.enter="start(format)"
+            @click="start(config.query)"
+            @keypress.enter="start(config.query)"
           >
-            {{ format | capitalize }}
+            {{ config.id | capitalize }}
           </button>
         </div>
       </div>
