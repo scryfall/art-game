@@ -53,9 +53,6 @@ new Vue({
       this.artUrl = null;
       this.artToLoad = null;
     },
-    async startWithCustomQuery() {
-      this.start(this.customQuery);
-    },
     focusGuessInput() {
       const guessInput = this.$refs.guessInput;
       setTimeout(() => guessInput.focus(), 1);
