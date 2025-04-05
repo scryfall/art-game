@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { Card } from './card';
+import axios from "axios";
+import { Card } from "../models/card";
 
 export class Scryfall {
   constructor() {
@@ -15,9 +15,7 @@ export class Scryfall {
   async getRandomCard(query, additionalCriteria) {
     additionalCriteria = additionalCriteria || [];
     const endpoint = "https://api.scryfall.com/cards/random";
-    const response = await this.axios.get(
-      `${endpoint}?q=${query} ${additionalCriteria.join(" ")}`
-    );
+    const response = await this.axios.get(`${endpoint}?q=${query} ${additionalCriteria.join(" ")}`);
     return new Card(response.data);
   }
 }

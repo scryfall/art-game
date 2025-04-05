@@ -1,4 +1,4 @@
-import { naturalize } from "./utils";
+import { naturalize } from "../utils/utils";
 import levenshtein from "js-levenshtein";
 
 /**
@@ -69,7 +69,7 @@ export class Card {
    */
   getAllNames() {
     if (this.isMultiface) {
-      return [this.name].concat(this.data.card_faces.flatMap(face => this.getNamesForFace(face)));
+      return [this.name].concat(this.data.card_faces.flatMap((face) => this.getNamesForFace(face)));
     } else {
       return this.getNamesForFace(this.data);
     }
@@ -96,11 +96,11 @@ export class Card {
    */
   getNamesForFace(face) {
     const names = [face.name];
-    const legendary = face.type_line && face.type_line.toLowerCase().includes('legendary');
+    const legendary = face.type_line && face.type_line.toLowerCase().includes("legendary");
     if (!legendary) return names;
 
-    const comma = ', ';
-    const the = ' the ';
+    const comma = ", ";
+    const the = " the ";
     const pComma = face.name.indexOf(comma);
     const pThe = face.name.indexOf(the);
     if (pComma > -1) {

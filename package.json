@@ -1,6 +1,7 @@
 {
   "name": "scryfall-art-game",
-  "version": "2.0.0",
+  "version": "0.0.0",
+  "type": "module",
   "description": "",
   "private": true,
   "main": "index.js",
@@ -10,49 +11,23 @@
     "node": "^22"
   },
   "scripts": {
-    "postinstall": "npm run build",
-    "build": "gulp build --prod",
-    "build:dev": "gulp build",
-    "dev": "gulp serve",
-    "lint": "gulp lint",
-    "start": "node index.js",
-    "test": "jest",
-    "test:integration": "wdio wdio.conf.js",
-    "posttest": "npm run lint"
-  },
-  "devDependencies": {
-    "@types/jest": "^26.0.0",
-    "@wdio/cli": "^9.12.4",
-    "@wdio/local-runner": "^9.12.4",
-    "@wdio/mocha-framework": "^9.12.3",
-    "@wdio/spec-reporter": "^9.12.3",
-    "ajv": "^6.12.2",
-    "babel-jest": "^26.0.1",
-    "babel-preset-env": "^1.7.0",
-    "browser-sync": "^2.26.7",
-    "chromedriver": "^135.0.0",
-    "del": "^5.1.0",
-    "eslint": "^7.2.0",
-    "geckodriver": "^5.0.0",
-    "gulp": "^4.0.2",
-    "gulp-eslint": "^6.0.0",
-    "gulp-sass": "^5.1.0",
-    "jest": "^26.0.1",
-    "jest-cli": "^26.0.1",
-    "jest-environment-jsdom-sixteen": "^1.0.3",
-    "js-levenshtein": "^1.1.6",
-    "tar": "^6.0.2",
-    "terser-webpack-plugin": "^3.0.3",
-    "unorm": "^1.6.0",
-    "vue": "^2.6.11",
-    "wdio-chromedriver-service": "^8.1.1",
-    "wdio-geckodriver-service": "^5.0.2",
-    "webpack-stream": "^7.0.0",
-    "yargs": "^15.3.1"
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "lint": "eslint ."
   },
   "dependencies": {
-    "axios": "^0.27.2",
-    "express": "^4.18.1",
-    "sass": "^1.55.0"
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vue/tsconfig": "^0.7.0",
+    "eslint": "^9.24.0",
+    "sass": "^1.86.3",
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0",
+    "vitest": "^3.1.1",
+    "vue-tsc": "^2.2.4"
   }
 }

@@ -1,6 +1,12 @@
 import Vue from "vue";
-import { Scryfall } from "./scryfall";
-import { StorageKey, Theme, UniversalCriteria, Outcome, PresetFormatQueries } from "./config";
+import { Scryfall } from "../utils/scryfall";
+import {
+  StorageKey,
+  Theme,
+  UniversalCriteria,
+  Outcome,
+  PresetFormatQueries,
+} from "../models/config";
 
 const scryfall = new Scryfall();
 
