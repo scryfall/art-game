@@ -52,10 +52,16 @@ new Vue({
         this.focusGuessInput();
       });
     },
+    clearCardData() {
+      this.card = {};
+      this.prevCard = null;
+      this.artUrl = null;
+      this.artToLoad = null;
+    },
     async startWithCustomQuery() {
       // got to clear out the art for the prefetched standard card
       // since it's not guarenteed that the custom query will match it
-      this.artUrl = null;
+      this.clearCardData();
 
       await this.getNextCard(this.customQuery);
       this.start(this.customQuery);
