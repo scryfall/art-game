@@ -78,7 +78,7 @@ new Vue({
         this.errorLoading = false;
         this.artToLoad = this.card.artCropUri;
       } catch (e) {
-        console.error(`Failed to load a card for format ${query}`, e);
+        console.error(`Failed to load a card for query ${query}`, e);
         this.errorLoading = true;
       }
     },
