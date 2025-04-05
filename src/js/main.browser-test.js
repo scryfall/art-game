@@ -1,7 +1,15 @@
+/**
+ * A list of special keys.
+ * @see {@link https://w3c.github.io/webdriver/#keyboard-actions Webdriver: Keyboard actions}
+ */
+const KEY = Object.freeze({
+  Enter: "\uE007",
+});
+
 browser.addCommand("guess", async (answer) => {
   await $(".guess").waitForEnabled();
   await $(".guess").click();
-  await browser.keys([answer, "\uE007"]);
+  await browser.keys([answer, KEY.Enter]);
 });
 
 describe("Art Game", () => {
@@ -19,7 +27,7 @@ describe("Art Game", () => {
 
     await $("#custom-query").isDisplayed();
     await $("#custom-query").click();
-    await browser.keys(["Jolene, the Plunder Queen", "\uE007"]);
+    await browser.keys(["Jolene, the Plunder Queen", KEY.Enter]);
 
     await browser.waitUntil(
       async function () {
