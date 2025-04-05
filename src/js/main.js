@@ -47,12 +47,6 @@ new Vue({
       });
       await this.getNextCard(this.query);
     },
-    clearCardData() {
-      this.card = {};
-      this.prevCard = null;
-      this.artUrl = null;
-      this.artToLoad = null;
-    },
     focusGuessInput() {
       const guessInput = this.$refs.guessInput;
       setTimeout(() => guessInput.focus(), 1);
