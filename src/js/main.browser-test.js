@@ -6,7 +6,7 @@ browser.addCommand("guess", async (answer) => {
 
 describe("Art Game", () => {
   it("allows user to choose format", async () => {
-    browser.url("/");
+    await browser.url("/");
 
     expect(await $("#standard-format-button").isDisplayed()).toBe(true);
     expect(await $("#pioneer-format-button").isDisplayed()).toBe(true);
@@ -15,7 +15,7 @@ describe("Art Game", () => {
   });
 
   it("can guess correctly", async () => {
-    browser.url("/");
+    await browser.url("/");
 
     $("#modern-format-button").click();
 
@@ -29,7 +29,7 @@ describe("Art Game", () => {
   });
 
   it("can guess incorrectly", async () => {
-    browser.url("/");
+    await browser.url("/");
 
     await $("#modern-format-button").click();
 
