@@ -14,6 +14,27 @@ describe("Art Game", () => {
     expect(await $("#vintage-format-button").isDisplayed()).toBe(true);
   });
 
+  it("allows user to choose a custom query", async () => {
+    await browser.url("/");
+
+    await $("#custom-query").isDisplayed();
+    await $("#custom-query").click();
+    await browser.keys(["Jolene, the Plunder Queen", "\uE007"]);
+
+    await browser.waitUntil(
+      async function () {
+        return (
+          (await $("[data-answer]").getAttribute("data-answer")) ===
+          "Jolene, the Plunder Queen"
+        );
+      },
+      {
+        timeout: 5000,
+        timeoutMsg: "expected text to be different after 5s",
+      }
+    );
+  });
+
   it("can guess correctly", async () => {
     await browser.url("/");
 

@@ -72,7 +72,7 @@
           <a href="https://scryfall.com/docs/syntax">Scryfall query</a>:
         </p>
 
-        <form @submit="start(customQuery)">
+        <form @submit.prevent="startWithCustomQuery()">
           <label class="vh" for="custom-query">Custom Scryfall Query</label>
           <input
             v-model="customQuery"
@@ -80,7 +80,7 @@
             class="input--lg"
             type="text"
             placeholder="set:dom type:creaure"
-            @keypress.enter="start(customQuery)"
+            @keypress.enter="startWithCustomQuery()"
           />
           <input type="submit" class="button--lg" value="Start" />
         </form>

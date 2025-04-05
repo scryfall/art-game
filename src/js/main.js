@@ -17,6 +17,7 @@ new Vue({
     theme: Theme.Dark,
 
     query: null,
+    customQuery: "",
     score: 0,
     guess: '',
     loadingNextCard: false,
@@ -50,6 +51,14 @@ new Vue({
       this.$nextTick(() => {
         this.focusGuessInput();
       });
+    },
+    async startWithCustomQuery() {
+      // got to clear out the art for the prefetched standard card
+      // since it's not guarenteed that the custom query will match it
+      this.artUrl = null;
+
+      await this.getNextCard(this.customQuery);
+      this.start(this.customQuery);
     },
     focusGuessInput() {
       const guessInput = this.$refs.guessInput;
