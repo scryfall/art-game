@@ -4,7 +4,7 @@ A game for guessing card names based on their art.
 
 ## Setup:
 
-1. Install [Node](https://nodejs.org/en/) and [npm](https://www.npmjs.com/get-npm) latest
+1. Install [Node](https://nodejs.org/en/) and [npm](https://www.npmjs.com/get-npm) (v18)
 2. Run `npm install`
 
 ## Development

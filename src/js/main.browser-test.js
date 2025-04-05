@@ -1,42 +1,42 @@
-browser.addCommand("guess", (answer) => {
-  $(".guess").waitForEnabled();
-  $(".guess").keys(answer);
-  browser.keys("\uE007");
+browser.addCommand("guess", async (answer) => {
+  await $(".guess").waitForEnabled();
+  await $(".guess").click();
+  await browser.keys([answer, "\uE007"]);
 });
 
 describe("Art Game", () => {
-  it("allows user to choose format", () => {
-    browser.url("/");
+  it("allows user to choose format", async () => {
+    await browser.url("/");
 
-    expect($("#standard-format-button").isDisplayed()).toBe(true);
-    expect($("#pioneer-format-button").isDisplayed()).toBe(true);
-    expect($("#modern-format-button").isDisplayed()).toBe(true);
-    expect($("#vintage-format-button").isDisplayed()).toBe(true);
+    expect(await $("#standard-format-button").isDisplayed()).toBe(true);
+    expect(await $("#pioneer-format-button").isDisplayed()).toBe(true);
+    expect(await $("#modern-format-button").isDisplayed()).toBe(true);
+    expect(await $("#vintage-format-button").isDisplayed()).toBe(true);
   });
 
-  it("can guess correctly", () => {
-    browser.url("/");
+  it("can guess correctly", async () => {
+    await browser.url("/");
 
     $("#modern-format-button").click();
 
-    const answer = $("[data-answer]").getAttribute("data-answer");
+    const answer = await $("[data-answer]").getAttribute("data-answer");
 
-    browser.guess(answer);
+    await browser.guess(answer);
 
-    $(".outcome").waitForDisplayed();
+    await $(".outcome").waitForDisplayed();
 
-    expect($(".outcome").getHTML()).toContain("Correct!");
+    expect(await $(".outcome").getHTML()).toContain("Correct!");
   });
 
-  it("can guess incorrectly", () => {
-    browser.url("/");
+  it("can guess incorrectly", async () => {
+    await browser.url("/");
 
-    $("#modern-format-button").click();
+    await $("#modern-format-button").click();
 
-    browser.guess("definitely not the right card");
+    await browser.guess("definitely not the right card");
 
-    $(".outcome").waitForDisplayed();
+    await $(".outcome").waitForDisplayed();
 
-    expect($(".outcome").getHTML()).toContain("Incorrect.");
+    expect(await $(".outcome").getHTML()).toContain("Incorrect.");
   });
 });
