@@ -7,7 +7,7 @@
   "author": "scarletcs",
   "license": "UNLICENSED",
   "engines": {
-    "node": ">=18"
+    "node": "^22"
   },
   "scripts": {
     "postinstall": "npm run build",
