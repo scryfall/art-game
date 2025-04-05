@@ -1,128 +1,173 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Art Game &middot; Scryfall</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="og:title" content="Scryfall Art Game">
-  <meta name="og:type" content="website">
-  <meta name="og:image" content="https://assets.scryfall.com/icon.png?v=cb2efa3b7334b4428ab13c6f85673510">
-  <meta name="og:url" content="https://artgame.scryfall.com/">
-  <meta name="og:site_name" content="Scryfall">
-  <meta name="og:description" content="Guess Magic: the Gathering cards using only the artwork">
-  <meta name="description" content="Guess Magic: the Gathering cards using only the artwork">
-  <link rel="icon" type="image/x-icon" href="https://assets.scryfall.com/favicon.ico?v=cb2efa3b7334b4428ab13c6f85673510">
-  <meta name="apple-mobile-web-app-title" content="Art Game">
-  <link rel="apple-touch-icon" href="https://assets.scryfall.com/apple-touch-icon.png?v=cb2efa3b7334b4428ab13c6f85673510">
-  <link rel="icon" sizes="196x196" href="https://assets.scryfall.com/icon.png?v=cb2efa3b7334b4428ab13c6f85673510">
-  <link rel="stylesheet" media="screen" href="css/main.css">
-</head>
-<body>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Art Game &middot; Scryfall</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="og:title" content="Scryfall Art Game" />
+    <meta name="og:type" content="website" />
+    <meta
+      name="og:image"
+      content="https://assets.scryfall.com/icon.png?v=cb2efa3b7334b4428ab13c6f85673510"
+    />
+    <meta name="og:url" content="https://artgame.scryfall.com/" />
+    <meta name="og:site_name" content="Scryfall" />
+    <meta
+      name="og:description"
+      content="Guess Magic: the Gathering cards using only the artwork"
+    />
+    <meta
+      name="description"
+      content="Guess Magic: the Gathering cards using only the artwork"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://assets.scryfall.com/favicon.ico?v=cb2efa3b7334b4428ab13c6f85673510"
+    />
+    <meta name="apple-mobile-web-app-title" content="Art Game" />
+    <link
+      rel="apple-touch-icon"
+      href="https://assets.scryfall.com/apple-touch-icon.png?v=cb2efa3b7334b4428ab13c6f85673510"
+    />
+    <link
+      rel="icon"
+      sizes="196x196"
+      href="https://assets.scryfall.com/icon.png?v=cb2efa3b7334b4428ab13c6f85673510"
+    />
+    <link rel="stylesheet" media="screen" href="css/main.css" />
+  </head>
+  <body>
+    <div id="app" :class="[themeClass]">
+      <header>
+        <a href="/">
+          <h1>
+            <img class="logo" src="assets/header-logo.svg" alt="Scryfall" />
+            Art Game
+          </h1>
+        </a>
+      </header>
 
-  <div id="app" :class="[themeClass]">
-    <header>
-      <a href="/">
-        <h1>
-          <img class="logo" src="assets/header-logo.svg" alt="Scryfall">
-          Art Game
-        </h1>
-      </a>
-    </header>
+      <div role="main" class="screen screen--startup" v-if="!started">
+        <p>Which format should we show cards from?</p>
 
-    <div role="main" class="screen screen--startup" v-if="!started">
-      <p>Which format should we show cards from?</p>
-
-      <div class="format-buttons" ref="formatButtons">
-        <button
-          v-for="(format, index) in supportedFormats"
-          :id="format + '-format-button'"
-          :key="index"
-          type="button"
-          class="button--lg"
-          @click="start(format)"
-          @keypress.enter="start(format)"
-        >
-          {{ format | capitalize }}
-        </button>
+        <div class="format-buttons" ref="formatButtons">
+          <button
+            v-for="(format, index) in supportedFormats"
+            :id="format + '-format-button'"
+            :key="index"
+            type="button"
+            class="button--lg"
+            @click="start(format)"
+            @keypress.enter="start(format)"
+          >
+            {{ format | capitalize }}
+          </button>
+        </div>
       </div>
-    </div>
 
-    <div role="main" class="screen screen--game" v-show="started">
-      <div class="card-art">
-        <div class="art-frame" :data-answer="answer">
-          <div class="art-frame__placeholder" v-if="!artUrl"></div>
-          <img class="art-frame__image" :src="artUrl">
+      <div role="main" class="screen screen--game" v-show="started">
+        <div class="card-art">
+          <div class="art-frame" :data-answer="answer">
+            <div class="art-frame__placeholder" v-if="!artUrl"></div>
+            <img class="art-frame__image" :src="artUrl" />
+          </div>
+
+          <div v-if="errorLoading" class="error-loading">
+            <p>There was an error loading the next card.</p>
+            <a role="button" class="button--lg" @click="retry">&#8635; Retry</a>
+          </div>
         </div>
 
-        <div v-if="errorLoading" class="error-loading">
-          <p>There was an error loading the next card.</p>
-          <a role="button" class="button--lg" @click="retry">&#8635; Retry</a>
-        </div>
-      </div>
+        <img
+          class="art-preloader"
+          :src="artToLoad"
+          @load="imageFinishedLoading"
+        />
 
-      <img class="art-preloader" :src="artToLoad" @load="imageFinishedLoading">
+        <p>
+          Which card is this?
+          <span class="skip">
+            (<button
+              type="button"
+              class="button--skip"
+              @click.prevent="skip"
+              @keypress.enter="skip"
+            >
+              skip</button
+            >)
+          </span>
+        </p>
 
-      <p>
-        Which card is this?
-        <span class="skip">
-          (<button type="button" class="button--skip" @click.prevent="skip" @keypress.enter="skip">skip</button>)
-        </span>
-      </p>
+        <form @submit.prevent="check">
+          <input
+            type="text"
+            ref="guessInput"
+            class="guess"
+            v-model="guess"
+            :disabled="loadingNextCard"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+          />
+          <button type="submit" class="vh" tabindex="-1">Check</button>
+        </form>
 
-      <form @submit.prevent="check">
-        <input
-          type="text"
-          ref="guessInput"
-          class="guess"
-          v-model="guess"
-          :disabled="loadingNextCard"
-          autocomplete="off"
-          autocorrect="off"
-          autocapitalize="off"
-          spellcheck="false"
-        >
-        <button type="submit" class="vh" tabindex="-1">Check</button>
-      </form>
+        <div class="feedback" v-if="showFeedback">
+          <p class="score">Score: {{ score }}</p>
 
-      <div class="feedback" v-if="showFeedback">
-        <p class="score">Score: {{ score }}</p>
+          <div class="retrospective">
+            <div class="figure">
+              <div class="art-frame art-frame--small">
+                <img class="art-frame__image" :src="prevCard.artCropUri" />
+              </div>
+            </div>
 
-        <div class="retrospective">
-          <div class="figure">
-            <div class="art-frame art-frame--small">
-              <img class="art-frame__image" :src="prevCard.artCropUri">
+            <div class="outcome">
+              <p>
+                <span v-if="prevOutcome === Outcome.Correct">Correct!</span>
+                <span v-else-if="prevOutcome === Outcome.Incorrect"
+                  >Incorrect.</span
+                >
+                <span v-else-if="prevOutcome === Outcome.Skip">Skipped.</span>
+                That was
+                <a
+                  :href="prevCard.scryfallUri"
+                  class="feedback-cardname"
+                  target="_blank"
+                  >{{ prevCard.name }}</a
+                >.
+              </p>
+              <p v-if="prevOutcome === Outcome.Incorrect">
+                You guessed: {{ prevGuess }}
+              </p>
             </div>
           </div>
-
-          <div class="outcome">
-            <p>
-              <span v-if="prevOutcome === Outcome.Correct">Correct!</span>
-              <span v-else-if="prevOutcome === Outcome.Incorrect">Incorrect.</span>
-              <span v-else-if="prevOutcome === Outcome.Skip">Skipped.</span>
-              That was
-              <a :href="prevCard.scryfallUri" class="feedback-cardname" target="_blank">{{ prevCard.name }}</a>.
-            </p>
-            <p v-if="prevOutcome === Outcome.Incorrect">You guessed: {{ prevGuess }}</p>
-          </div>
         </div>
-
       </div>
+
+      <footer>
+        <div class="controls">
+          <button
+            type="button"
+            class="button--sm"
+            @click="toggleTheme"
+            @keypress.enter="toggleTheme"
+          >
+            {{ theme | capitalize }} theme
+          </button>
+        </div>
+        <div class="credit">
+          by
+          <a href="https://github.com/scarletcs/" target="_blank">scarletcs</a>
+          based on the MagicCards.info Art Game
+        </div>
+      </footer>
     </div>
 
-    <footer>
-      <div class="controls">
-        <button type="button" class="button--sm" @click="toggleTheme" @keypress.enter="toggleTheme">
-          {{ theme | capitalize }} theme
-        </button>
-      </div>
-      <div class="credit">
-        by <a href="https://github.com/scarletcs/" target="_blank">scarletcs</a> based on the MagicCards.info Art Game
-      </div>
-    </footer>
-  </div>
-
-  <script src="js/main.js?v2"></script>
-</body>
+    <script src="js/main.js?v2"></script>
+  </body>
 </html>
