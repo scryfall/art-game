@@ -76,6 +76,10 @@ $default-art-width: 626px;
   background: rgba(0 0 0 / 0.5);
 }
 
+.shape-x {
+  color: var(--c-salmon);
+}
+
 img {
   outline: 2px solid var(--art-frame-border-color);
   border-radius: 4px;
