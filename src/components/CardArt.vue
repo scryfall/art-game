@@ -21,16 +21,12 @@ $default-art-width: 626px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: $default-art-width;
-  height: $default-art-height;
-  max-width: 100%;
-  max-height: 60vh;
 }
 
 img {
   border: 1px solid var(--art-frame-border-color);
-  border-radius: 2px;
-  max-height: 100%;
-  max-width: 100%;
+  border-radius: 4px;
+  max-height: 60vh;
+  max-width: min(100%, $default-art-width);
 }
 </style>
