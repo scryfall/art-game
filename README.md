@@ -2,57 +2,29 @@
 
 A game for guessing card names based on their art.
 
-## Setup:
+## Getting started
 
-1. Install [Node](https://nodejs.org/en/) and [npm](https://www.npmjs.com/get-npm) (v18)
+1. Install [Node](https://nodejs.org/en/), at least v22. (We recommend use [nvm](https://github.com/nvm-sh/nvm))
 2. Run `npm install`
+3. Run locally with `npm run dev`
 
-## Development
+You can also:
 
-Various NPM scripts are available which call out to [Gulp](https://gulpjs.com/) commands. Alternatively, you can install the Gulp CLI globally (`npm i -g gulp-cli`) and call them directly.
+- Run tests: `npm test`
+- Run lint: `npm run lint`
+- Build for deployment: `npm build`
+- Preview a production deployment: `npm run preview`
 
-* Run a local development server: `npm run dev` or `gulp` (alias for `gulp serve`)
-* Create a development build: `npm run build:dev` or `gulp build`
-* Lint: `npm run lint` or `gulp lint`
-* Run unit tests: `npm test`
-* Run integration tests:
-  - Make sure app is running (`npm start` or `npm run dev`)
-  - `npm run test:integration`
+## Dependencies
 
-The development server uses [browsersync](https://www.browsersync.io/) to show any code changes live, reloading the page as needed. It will automatically create a build as part of starting.
+This project uses the following dependencies:
 
-Create a production build, or run the local server with production code, by appending the `--prod` argument to the above commands.
+- [Vue 3](https://vuejs.org/) for all our components and rendering.
+- [TypeScript](https://www.typescriptlang.org/), rather than vanilla JavaScript.
+- [Vite](https://vite.dev/) for local development and building.
+- [Vitest](https://vitest.dev/) for unit tests.
+- [Vue Redux](https://vue-redux.js.org/) for state management.
+- [Sass](https://sass-lang.com/) (via the [sass](https://www.npmjs.com/package/sass) package) for styling. Specifically, we use SCSS files.
+- [ESLint](https://eslint.org) and [Vue ESLint](https://eslint.vuejs.org/user-guide/) for linting.
 
-If linting fails, the build fails.
-
-## Using the Express server
-
-This project includes a lightweight [Express](https://expressjs.com/) server at [`index.js`](index.js) which serves the project in production.
-
-You can run this server locally using `npm start`.
-
-This server depends on already having a build generated. As part of installing the project, a production build will already be present in this directory, so you can run this immediately. Otherwise you can generate a build as follows:
-
-* Development build: `npm run build:dev` or `gulp build`
-* Production build: `npm run build` or `gulp build --prod`
-
-## Deployment
-
-Deploy this project via Heroku.
-
-## Other project info
-
-This is a Vue 2 SPA.
-
-We use Jest for unit testing.
-
-We use Webdriver.io for integration testing.
-
-Baseline requirements:
-
-* Browser targets: IE11+, edge Chrome, Firefox, Safari (incl. iOS)
-* A static site powered fully by JS and the public API at https://scryfall.com/docs/api/cards/random
-* Minimise usage of cookies or localstorage.
-* Responsive down to 320px.
-* No CDNs beside this project's own asset CDN and img.scryfall.com
-* Keep within Scryfall brand colors (defined in [`_colors.scss`](src/scss/_colors.scss))
+This project assumes you're using [VS Code](https://code.visualstudio.com/) as your editor.

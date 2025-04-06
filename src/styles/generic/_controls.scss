@@ -1,0 +1,40 @@
+a:link,
+a:visited,
+a:active,
+a:active {
+  color: unset;
+}
+
+button,
+input {
+  color: unset;
+  font-family: unset;
+  font-size: unset;
+}
+
+input {
+  border: 1px solid currentColor;
+  background: var(--input-background);
+  color: var(--input-color);
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled,
+input:disabled {
+  cursor: not-allowed;
+}
+
+button:focus,
+input:focus,
+a:focus {
+  outline: 2px solid var(--focus-outline-color);
+  box-shadow: 0 0 6px var(--focus-outline-color);
+}
+
+a:link {
+  outline-offset: 2px;
+  border-radius: 2px;
+}

@@ -1,0 +1,20 @@
+{
+  "Vue file": {
+    "scope": "vue",
+    "prefix": "vuefile",
+    "body": [
+      "<script setup lang=\"ts\">",
+      "$0",
+      "</script>",
+      "",
+      "<template>",
+      "",
+      "</template>",
+      "",
+      "<style scoped lang=\"scss\">",
+      "",
+      "</style>"
+    ],
+    "description": "description"
+  }
+}

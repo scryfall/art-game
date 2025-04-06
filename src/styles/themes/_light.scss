@@ -1,0 +1,17 @@
+[data-theme="light"] {
+  --page-background: var(--c-code-wash);
+  --text-color: var(--c-black);
+
+  --button-background: #f9f7f5;
+  --button-color: var(--c-grape);
+
+  --input-background: var(--c-white);
+  --input-color: var(--c-grape);
+
+  --art-frame-border-color: rgba(var(--c-victory-rgb) / 0.25);
+
+  --error-loading-background: rgba(var(--c-plum-rgb) / 0.75);
+  --error-loading-color: var(--c-white);
+
+  --focus-outline-color: var(--c-input-focus);
+}

@@ -1,0 +1,13 @@
+.card-image {
+  border-radius: 4.75% / 3.5%;
+
+  &[data-set="lea"] {
+    border-radius: 7% / 5.5%;
+  }
+
+  &[data-set="cei"],
+  &[data-set="ced"],
+  &[data-set="da1"] {
+    border-radius: 0;
+  }
+}

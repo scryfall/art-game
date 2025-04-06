@@ -1,0 +1,43 @@
+:root {
+  --c-black-rgb: 22, 22, 29;
+  --c-black: rgb(
+    var(--c-black-rgb)
+  ); // A less harsh black than pure #000 https://en.wikipedia.org/wiki/Eigengrau
+  --c-light-grey: #ddd;
+  --c-med-grey: #aeaeae;
+  --c-grey: #9b9b9b;
+  --c-dark-grey: #535353;
+  --c-code-wash: #f5f6f7;
+  --c-white: #fdfdfd; // A less-harsh white than pure #FFF
+
+  --c-plum-rgb: 52 50 66;
+  --c-plum: rgb(var(--c-plum-rgb));
+  --c-raisin: #5f4f66;
+  --c-grape-rgb: 88 34 172;
+  --c-grape: rgb(var(--c-grape-rgb));
+  --c-victory-rgb: 99 68 150;
+  --c-victory: rgb(var(--c-victory-rgb));
+  --c-salmon: #db4753;
+  --c-lavender: #cbaaf5;
+
+  --c-midnight: #1e2a38;
+  --c-expanse: #2b253a;
+
+  --c-input: #cbc7cd;
+  --c-input-focus: #9b919e;
+
+  --c-ruby: #da3946;
+  --c-sapphire: #3497be;
+  --c-emerald: #536446;
+  --c-diamond: #fae6c6;
+  --c-onyx: #16161d;
+
+  --c-common-black: #16161d;
+  --c-rare-gold: #c19c00;
+  --c-uncommon-silver: #6c848c;
+  --c-mythic-fire: #f64800;
+
+  --c-usd: #006885;
+  --c-tix: #da4100;
+  --c-eur: #8b3f8a;
+}
