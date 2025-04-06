@@ -45,7 +45,7 @@ const presets = [
 
 const customQuery = ref("");
 const customQueryFull = computed(() => {
-  return flatten([customQuery.value, ...commonCriteria]);
+  return flatten([`(${customQuery.value})`, ...commonCriteria]);
 });
 
 const disabled = computed(() => {
