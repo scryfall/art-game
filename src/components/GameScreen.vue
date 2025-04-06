@@ -14,13 +14,17 @@ const prevCard = useAppSelector((state) => state.game.previousCard);
 const prevGuess = useAppSelector((state) => state.game.guess);
 const query = useAppSelector((state) => state.game.query);
 
+const loadNextCard = () => {
+  dispatch(fetchNextCard({ query: query.value, excludeOracleId: card.value?.oracle_id }));
+};
+
 const skip = () => {
   dispatch(setGuess({ name: "", outcome: Outcome.Skip }));
-  dispatch(fetchNextCard(query.value));
+  loadNextCard();
 };
 
 const retry = () => {
-  dispatch(fetchNextCard(query.value));
+  loadNextCard();
 };
 
 const submitGuess = (guess: string) => {
@@ -31,7 +35,7 @@ const submitGuess = (guess: string) => {
 
   const outcome = isGuessOk(guess, card.value) ? Outcome.Correct : Outcome.Incorrect;
   dispatch(setGuess({ name: guess, outcome }));
-  dispatch(fetchNextCard(query.value));
+  loadNextCard();
 };
 </script>
 
