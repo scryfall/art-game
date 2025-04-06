@@ -20,6 +20,7 @@ You can also:
 This project uses the following dependencies:
 
 - [Vue 3](https://vuejs.org/) for all our components and rendering.
+- [TypeScript](https://www.typescriptlang.org/), rather than vanilla JavaScript.
 - [Vite](https://vite.dev/) for local development and building.
 - [Vitest](https://vitest.dev/) for unit tests.
 - [Vue Redux](https://vue-redux.js.org/) for state management.
