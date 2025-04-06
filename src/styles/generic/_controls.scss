@@ -1,0 +1,14 @@
+input {
+  border: 1px solid currentColor;
+  background: var(--input-background);
+  color: var(--c-input);
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled,
+input:disabled {
+  cursor: not-allowed;
+}

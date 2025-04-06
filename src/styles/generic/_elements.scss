@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   margin: 0;
@@ -9,12 +13,12 @@ a:link,
 a:visited,
 a:active,
 a:active {
-  color: inherit;
+  color: unset;
 }
 
 button,
 input {
-  color: inherit;
-  font-family: inherit;
-  font-size: inherit;
+  color: unset;
+  font-family: unset;
+  font-size: unset;
 }

@@ -10,7 +10,7 @@ const toggle = () => {
 </script>
 
 <template>
-  <button type="button" class="button--sm" @click="toggle" @keypress.enter="toggle">
+  <button type="button" class="btn btn-small" @click="toggle" @keypress.enter="toggle">
     {{ capitalize(theme) }} theme
   </button>
 </template>

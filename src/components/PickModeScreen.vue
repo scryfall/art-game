@@ -19,6 +19,7 @@ const commonCriteria = [
   "-t:basic",
   "-t:saga",
   "-t:stickers",
+  "not:reversible",
   "not:split",
   "not:transform",
   "not:fullart",
@@ -45,7 +46,7 @@ const customQueryFull = computed(() => {
   return flatten([customQuery.value, ...commonCriteria]);
 });
 
-const locked = computed(() => {
+const disabled = computed(() => {
   return gameLoadStatus.value !== LoadingStatus.Idle;
 });
 </script>
@@ -54,16 +55,16 @@ const locked = computed(() => {
   <main class="screen">
     <p>Which format should we show cards from?</p>
 
-    <div class="format-buttons" ref="formatButtons">
+    <div class="formats">
       <button
         v-for="(preset, index) in presets"
         :id="`${preset.id}-format-button`"
         :key="index"
         type="button"
-        class="button--lg"
+        class="btn btn-large"
         @click="start(preset.query)"
         @keypress.enter="start(preset.query)"
-        :disabled="locked"
+        :disabled="disabled"
       >
         {{ preset.label }}
       </button>
@@ -74,25 +75,35 @@ const locked = computed(() => {
       <a href="https://scryfall.com/docs/syntax" target="_blank">Scryfall query</a>:
     </p>
 
-    <form @submit.prevent="start(customQueryFull)">
+    <form class="custom-search" @submit.prevent="start(customQueryFull)">
       <label class="vh" for="custom-query">Custom Scryfall Query</label>
       <input
         v-model="customQuery"
         id="custom-query"
-        class="input--lg"
+        class="input-large"
         type="text"
         placeholder="set:dom type:creaure"
-        :disabled="locked"
+        :disabled="disabled"
       />
-      <button type="submit" class="button--lg" value="Start" :disabled="locked">Start</button>
+      <button type="submit" class="btn btn-large" value="Start" :disabled="disabled">Start</button>
     </form>
   </main>
 </template>
 
 <style scoped lang="scss">
+@use "../styles/mixins";
+
 .screen {
   display: flex;
   flex-flow: column;
   align-items: center;
+}
+
+.formats {
+  display: flex;
+  flex-flow: column;
+  gap: 8px;
+  min-width: 140px;
+  max-width: 90vw;
 }
 </style>

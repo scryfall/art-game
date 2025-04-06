@@ -1,35 +1,26 @@
-.button--lg,
-.button--sm {
+.btn {
   background: var(--button-background);
   color: var(--button-color);
-}
+  border: 1px solid;
 
-.button--lg,
-.button--sm {
-  box-sizing: border-box;
-  cursor: pointer;
-  display: inline-block;
-
-  &:not(:focus) {
-    opacity: 0.8;
+  &:disabled {
+    opacity: 0.5;
   }
 }
 
-.button--lg,
-.input--lg {
-  border: 1px solid;
+.btn-large,
+.input-large {
   border-radius: 3px;
   line-height: 40px;
   padding: 0 15px;
 }
 
-.button--sm {
-  border: 1px solid;
+.btn-small {
   border-radius: 2px;
   padding: 5px 10px;
 }
 
-.button--link {
+.link {
   background: transparent;
   border: none;
   cursor: pointer;
@@ -37,9 +28,4 @@
   margin: 0;
   padding: 0;
   text-decoration: underline;
-}
-
-.button--skip {
-  @extend .button--link;
-  opacity: 0.75;
 }

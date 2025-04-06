@@ -12,12 +12,14 @@ const theme = useAppSelector((state) => state.config.theme);
       <a href="/">
         <h1>
           <img class="logo" src="./assets/scryfall.svg" alt="Scryfall" />
-          Art Game
+          <span>Art Game</span>
         </h1>
       </a>
     </header>
 
-    <PickModeScreen />
+    <main>
+      <PickModeScreen class="screen" />
+    </main>
 
     <footer>
       <div class="controls">
@@ -48,26 +50,26 @@ const theme = useAppSelector((state) => state.config.theme);
 
   height: 100%;
 
-  padding: 0 16px;
-
   @include mixins.bp-small {
-    .screen {
-      flex: auto;
-      flex-shrink: 0;
+    justify-content: flex-start;
+    .footer {
+      justify-self: flex-end;
     }
-  }
-
-  @include mixins.bp-large {
-    justify-content: space-between;
   }
 }
 
 header {
-  text-align: center;
   padding: 10px 0;
+  padding-bottom: 40px;
 
-  @include mixins.bp-large {
-    padding-bottom: 50px;
+  h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    margin: 0;
+    font-size: 24px;
   }
 
   a {
@@ -76,20 +78,11 @@ header {
 
   .logo {
     height: 32px;
-    margin-right: 10px;
-    vertical-align: middle;
   }
 }
 
-h1 {
-  display: inline-block;
-  font-size: 18px;
-  line-height: 32px;
-  margin: 0;
-
-  @include mixins.bp-large {
-    font-size: 24px;
-  }
+main {
+  flex: 1;
 }
 
 footer {
@@ -97,22 +90,12 @@ footer {
   flex-direction: row-reverse;
   align-items: flex-end;
   justify-content: space-between;
-  margin-top: 20px;
-  margin-bottom: 30px;
-
-  @include mixins.bp-large {
-    margin-top: 50px;
-    margin-bottom: 10px;
-  }
+  padding: 20px;
 
   .credit {
     font-size: 12px;
     font-style: italic;
     opacity: 0.6;
-
-    @include mixins.bp-small {
-      margin-top: 20px;
-    }
   }
 
   .controls {
