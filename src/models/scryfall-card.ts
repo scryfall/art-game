@@ -3,6 +3,8 @@ type CardFace = {
 };
 
 export type ScryfallCard = {
+  id: string;
+  oracle_id: string;
   name: string;
   scryfall_uri: string;
   type_line: string;

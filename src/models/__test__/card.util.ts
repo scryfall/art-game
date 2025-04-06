@@ -3,6 +3,8 @@ import type { ScryfallCard } from "../scryfall-card";
 export function makeCard(overrides: Partial<ScryfallCard> = {}) {
   const card: ScryfallCard = {
     name: "<card name>",
+    id: "<scryfall id>",
+    oracle_id: "<oracle id>",
     scryfall_uri: "<scryfall uri>",
     type_line: "<type line>",
     image_uris: {

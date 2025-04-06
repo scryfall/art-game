@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { ScryfallCard } from "../models/scryfall-card";
 
-export class Scryfall {
+export class ScryfallApi {
   /**
    * Get a random card from the Random API.
    * @param query The query to send to Scryfall's random API endpoint

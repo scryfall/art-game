@@ -1,15 +1,15 @@
 import axios from "axios";
-import { Scryfall } from "../scryfall";
+import { ScryfallApi } from "../scryfall-api";
 import { vi } from "vitest";
 import { makeCard } from "../../models/__test__/card.util";
 
 vi.mock("axios", { spy: true });
 
-describe("Scryfall", () => {
-  let scryfall = new Scryfall();
+describe("ScryfallApi", () => {
+  let api = new ScryfallApi();
 
   beforeEach(() => {
-    scryfall = new Scryfall();
+    api = new ScryfallApi();
   });
 
   describe("getRandomCard", () => {
@@ -21,7 +21,7 @@ describe("Scryfall", () => {
 
       const query = "f:standard";
 
-      const card = await scryfall.getRandomCard(query);
+      const card = await api.getRandomCard(query);
 
       expect(card).toEqual(TEST_CARD);
       expect(axios.get).toHaveBeenCalledExactlyOnceWith(expect.stringContaining(query));

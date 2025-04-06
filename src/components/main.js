@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { Scryfall } from "../utils/scryfall";
+import { ScryfallApi } from "../utils/scryfall-api";
 import {
   StorageKey,
   Theme,
@@ -8,7 +8,7 @@ import {
   PresetFormatQueries,
 } from "../models/criteria";
 
-const scryfall = new Scryfall();
+const scryfall = new ScryfallApi();
 
 new Vue({
   el: "#app",

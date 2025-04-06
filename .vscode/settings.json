@@ -11,7 +11,6 @@
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "jest.pathToJest": "npm test --",
   "[html]": {
     "editor.formatOnSave": true,
   },
@@ -22,6 +21,9 @@
     "editor.formatOnSave": true,
   },
   "[sass]": {
+    "editor.formatOnSave": true,
+  },
+  "[vue]": {
     "editor.formatOnSave": true,
   }
 }

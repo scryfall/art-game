@@ -44,41 +44,6 @@
         </a>
       </header>
 
-      <div role="main" class="screen screen--startup" v-if="!started">
-        <p>Which format should we show cards from?</p>
-
-        <div class="format-buttons" ref="formatButtons">
-          <button
-            v-for="(config, index) in presetFormatQueries"
-            :id="config.id + '-format-button'"
-            :key="index"
-            type="button"
-            class="button--lg"
-            @click="start(config.query)"
-            @keypress.enter="start(config.query)"
-          >
-            {{ config.id | capitalize }}
-          </button>
-        </div>
-
-        <p>
-          or, use your own
-          <a href="https://scryfall.com/docs/syntax" target="_blank">Scryfall query</a>:
-        </p>
-
-        <form @submit.prevent="start(customQuery)">
-          <label class="vh" for="custom-query">Custom Scryfall Query</label>
-          <input
-            v-model="customQuery"
-            id="custom-query"
-            class="input--lg"
-            type="text"
-            placeholder="set:dom type:creaure"
-          />
-          <input type="submit" class="button--lg" value="Start" />
-        </form>
-      </div>
-
       <div role="main" class="screen screen--game" v-show="started">
         <div class="card-art">
           <div class="art-frame" :data-answer="answer">
