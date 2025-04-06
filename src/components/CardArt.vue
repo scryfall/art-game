@@ -4,10 +4,21 @@ import type { ScryfallCard } from "../models/scryfall-card";
 
 const props = defineProps<{ card: ScryfallCard }>();
 const imageUri = computed(() => props.card.image_uris.art_crop);
+
+const vertical = computed(() => {
+  const verticalTypes = ["saga", "class", "case"];
+  const cardTypes = props.card.type_line.split(" ");
+  for (const type of verticalTypes) {
+    if (cardTypes.includes(type)) {
+      return true;
+    }
+  }
+  return false;
+});
 </script>
 
 <template>
-  <div class="art-frame">
+  <div class="art-frame" :data-vertical="vertical">
     <!-- TODO(#35) Use this preloader to determine that the image is still loading. -->
     <!-- <img alt="" class="vh preload" :src="card.image_uris.art_crop" /> -->
     <img :src="imageUri" />
@@ -27,7 +38,7 @@ $default-art-width: 626px;
 img {
   outline: 2px solid var(--art-frame-border-color);
   border-radius: 4px;
-  max-height: 60vh;
+  max-height: min(60vh, $default-art-height);
   max-width: min(100%, $default-art-width);
 }
 </style>
