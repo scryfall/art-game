@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import type { ScryfallCard } from "../models/scryfall-card";
-import PreloadCardImage from "./PreloadCardImage.vue";
 
 const props = defineProps<{ card: ScryfallCard }>();
 const imageUri = computed(() => props.card.image_uris.art_crop);
@@ -9,7 +8,7 @@ const imageUri = computed(() => props.card.image_uris.art_crop);
 
 <template>
   <div class="art-frame">
-    <PreloadCardImage :card="props.card" />
+    <!-- <img alt="" class="vh preload" :src="card.image_uris.art_crop" /> -->
     <img :src="imageUri" />
   </div>
 </template>
