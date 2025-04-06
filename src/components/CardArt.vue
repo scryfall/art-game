@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import type { ScryfallCard } from "../models/scryfall-card";
+import PreloadCardImage from "./PreloadCardImage.vue";
 
 const props = defineProps<{ card: ScryfallCard }>();
 const imageUri = computed(() => props.card.image_uris.art_crop);
@@ -8,7 +9,7 @@ const imageUri = computed(() => props.card.image_uris.art_crop);
 
 <template>
   <div class="art-frame">
-    <!-- <div class="art-frame__placeholder" v-if="imageUri"></div> -->
+    <PreloadCardImage :card="props.card" />
     <img :src="imageUri" />
   </div>
 </template>
@@ -18,26 +19,19 @@ $default-art-height: 456px;
 $default-art-width: 626px;
 
 .art-frame {
-  border: 1px solid var(--art-frame-border-color);
-  box-sizing: border-box;
-  display: inline-block;
-  font-size: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $default-art-width;
+  height: $default-art-height;
+  max-width: 100%;
   max-height: 60vh;
 }
 
-.art-frame--small {
-  max-width: 150px;
+img {
+  border: 1px solid var(--art-frame-border-color);
+  border-radius: 2px;
   max-height: 100%;
-}
-
-// .art-placeholder {
-//   height: $default-art-height;
-//   width: $default-art-width;
-// }
-
-.art-frame__placeholder,
-.art-frame__image {
   max-width: 100%;
-  max-height: 100%;
 }
 </style>

@@ -1,29 +1,24 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { setGuess, useAppDispatch } from "../store";
-import type { ScryfallCard } from "../models/scryfall-card";
-import { isGuessOk } from "../utils/guess";
-import { Outcome } from "../models/outcome";
 
-const props = defineProps<{ disabled: boolean; card: ScryfallCard }>();
-const dispatch = useAppDispatch();
+defineProps<{ disabled: boolean }>();
+const emit = defineEmits(["submit"]);
 
 const guess = ref("");
 
-const submitGuess = () => {
-  const outcome = isGuessOk(guess.value, props.card) ? Outcome.Correct : Outcome.Incorrect;
-  dispatch(setGuess({ name: guess.value, outcome }));
+const submit = () => {
+  emit("submit", guess.value);
+  guess.value = "";
 };
 </script>
 
 <template>
-  <form @submit.prevent="submitGuess">
+  <form @submit.prevent="submit">
     <input
       type="text"
-      ref="guessInput"
-      class="guess"
+      class="input-large"
       v-model="guess"
-      :disabled="disabled || !card"
+      v-focus-when-enabled
       autocomplete="off"
       autocorrect="off"
       autocapitalize="off"
@@ -36,22 +31,23 @@ const submitGuess = () => {
 <style scoped lang="scss">
 @use "../styles/mixins";
 
-.guess {
+form,
+input {
+  max-width: 100%;
+}
+
+input {
   border: 1px solid;
   border-radius: 3px;
   box-sizing: border-box;
   display: block;
   font-size: 18px;
-  margin: 0 auto;
-  padding: 10px;
   width: 400px;
-  max-width: 100%;
 
   @include mixins.bp-large {
     font-size: 24px;
   }
 
-  &:disabled,
   &:not(:focus) {
     opacity: 0.6;
   }

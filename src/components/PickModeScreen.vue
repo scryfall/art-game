@@ -18,6 +18,7 @@ const start = (query: string) => {
 const commonCriteria = [
   "-t:basic",
   "-t:saga",
+  "-t:class",
   "-t:stickers",
   "not:reversible",
   "not:split",

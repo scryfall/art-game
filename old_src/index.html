@@ -34,65 +34,7 @@
     <link rel="stylesheet" media="screen" href="css/main.css" />
   </head>
   <body>
-    <div id="app" :class="[themeClass]">
-      <div role="main" class="screen screen--game" v-show="started">
-        <img class="art-preloader" :src="artToLoad" @load="imageFinishedLoading" />
-
-        <p>
-          Which card is this?
-          <span class="skip">
-            (<button
-              type="button"
-              class="button--skip"
-              @click.prevent="skip"
-              @keypress.enter="skip"
-            >
-              skip</button
-            >)
-          </span>
-        </p>
-
-        <!-- <form @submit.prevent="check">
-          <input
-            type="text"
-            ref="guessInput"
-            class="guess"
-            v-model="guess"
-            :disabled="loadingNextCard"
-            autocomplete="off"
-            autocorrect="off"
-            autocapitalize="off"
-            spellcheck="false"
-          />
-          <button type="submit" class="vh" tabindex="-1">Check</button>
-        </form> -->
-
-        <!-- <div class="feedback" v-if="showFeedback">
-          <p class="score">Score: {{ score }}</p>
-
-          <div class="retrospective">
-            <div class="figure">
-              <div class="art-frame art-frame--small">
-                <img class="art-frame__image" :src="prevCard.artCropUri" />
-              </div>
-            </div>
-
-            <div class="outcome">
-              <p>
-                <span v-if="prevOutcome === Outcome.Correct">Correct!</span>
-                <span v-else-if="prevOutcome === Outcome.Incorrect">Incorrect.</span>
-                <span v-else-if="prevOutcome === Outcome.Skip">Skipped.</span>
-                That was
-                <a :href="prevCard.scryfallUri" class="feedback-cardname" target="_blank"
-                  >{{ prevCard.name }}</a
-                >.
-              </p>
-              <p v-if="prevOutcome === Outcome.Incorrect">You guessed: {{ prevGuess }}</p>
-            </div>
-          </div>
-        </div> -->
-      </div>
-    </div>
+    <div id="app" :class="[themeClass]"></div>
 
     <script src="js/main.js?v2"></script>
   </body>

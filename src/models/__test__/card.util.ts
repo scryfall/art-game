@@ -7,6 +7,7 @@ export function makeCard(overrides: Partial<ScryfallCard> = {}) {
     oracle_id: "<oracle id>",
     scryfall_uri: "<scryfall uri>",
     type_line: "<type line>",
+    set: "<set code>",
     image_uris: {
       small: "<image.small>",
       normal: "<image.normal>",

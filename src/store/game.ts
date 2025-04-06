@@ -6,17 +6,14 @@ import { ScryfallApi } from "../utils/scryfall-api";
 
 const scryfallApi = new ScryfallApi();
 
+export type GameGuess = { name: string; outcome: Outcome };
+
 type GameSliceState = {
   status: LoadingStatus;
   nextCardStatus: LoadingStatus;
   query: string;
   score: number;
-  guess:
-    | undefined
-    | {
-        name: string;
-        outcome: Outcome;
-      };
+  guess: undefined | GameGuess;
   card: undefined | ScryfallCard;
   previousCard: undefined | ScryfallCard;
 };
@@ -35,7 +32,7 @@ export const startGame = createAsyncThunk("game/startGame", async (query: string
   await api.dispatch(fetchNextCard(query));
 });
 
-const fetchNextCard = createAsyncThunk("game/fetchNextCard", async (query: string) => {
+export const fetchNextCard = createAsyncThunk("game/fetchNextCard", async (query: string) => {
   const card = await scryfallApi.getRandomCard(query);
   return card;
 });
@@ -68,6 +65,7 @@ export const gameSlice = createSlice({
 
     builder.addCase(fetchNextCard.pending, (state) => {
       state.nextCardStatus = LoadingStatus.Pending;
+      state.previousCard = state.card;
     });
 
     builder.addCase(fetchNextCard.fulfilled, (state, action) => {

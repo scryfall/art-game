@@ -9,6 +9,8 @@ export type ScryfallCard = {
   name: string;
   scryfall_uri: string;
   type_line: string;
+  /** The set code. */
+  set: string;
   image_uris: {
     small: string;
     normal: string;
