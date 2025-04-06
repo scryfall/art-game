@@ -33,7 +33,7 @@ const showErrorOverlay = computed(() => {
 <template>
   <div class="art-frame">
     <div v-if="showErrorOverlay" class="overlay error">
-      <div class="cross"></div>
+      <div class="shape-x"></div>
     </div>
     <div v-else-if="showLoadingOverlay" class="overlay loading">
       <Pulser class="pulser" />
@@ -62,39 +62,6 @@ $default-art-width: 626px;
 
 .pulser {
   opacity: 0.5;
-}
-
-.cross {
-  --size: 80px;
-  position: relative;
-  font-size: var(--size);
-  width: 1em;
-  height: 1em;
-  color: var(--c-salmon);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &::before,
-  &::after {
-    content: "";
-    background: currentColor;
-    display: block;
-    height: calc(1em * 1.25);
-    width: 0.2em;
-    border-radius: 0.1em;
-
-    position: absolute;
-  }
-
-  &::before {
-    transform: rotate(-45deg);
-  }
-
-  &::after {
-    transform: rotate(45deg);
-  }
 }
 
 .overlay {
