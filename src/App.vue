@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import PickModeScreen from "./components/PickModeScreen.vue";
+import ScreenManager from "./components/ScreenManager.vue";
 import ThemeButton from "./components/ThemeButton.vue";
 import { useAppSelector } from "./store/hooks";
 
@@ -18,7 +18,7 @@ const theme = useAppSelector((state) => state.config.theme);
     </header>
 
     <main>
-      <PickModeScreen class="screen" />
+      <ScreenManager />
     </main>
 
     <footer>

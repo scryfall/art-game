@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { startGame, useGameLoadStatus } from "../store";
-import { useAppDispatch } from "../store/hooks";
+import { startGame } from "../store";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { LoadingStatus } from "../store/common";
 
 const dispatch = useAppDispatch();
-const gameLoadStatus = useGameLoadStatus();
+const gameLoadStatus = useAppSelector((state) => state.game.status);
 
 /**
  * Start the game with a given query.
@@ -52,7 +52,7 @@ const disabled = computed(() => {
 </script>
 
 <template>
-  <main class="screen">
+  <div class="screen">
     <p>Which format should we show cards from?</p>
 
     <div class="formats">
@@ -75,7 +75,7 @@ const disabled = computed(() => {
       <a href="https://scryfall.com/docs/syntax" target="_blank">Scryfall query</a>:
     </p>
 
-    <form class="custom-search" @submit.prevent="start(customQueryFull)">
+    <form class="custom" @submit.prevent="start(customQueryFull)">
       <label class="vh" for="custom-query">Custom Scryfall Query</label>
       <input
         v-model="customQuery"
@@ -85,9 +85,16 @@ const disabled = computed(() => {
         placeholder="set:dom type:creaure"
         :disabled="disabled"
       />
-      <button type="submit" class="btn btn-large" value="Start" :disabled="disabled">Start</button>
+      <button
+        type="submit"
+        class="btn btn-large"
+        value="Start"
+        :disabled="disabled || customQuery.length === 0"
+      >
+        Start
+      </button>
     </form>
-  </main>
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -102,8 +109,17 @@ const disabled = computed(() => {
 .formats {
   display: flex;
   flex-flow: column;
-  gap: 8px;
-  min-width: 140px;
+  gap: 16px;
+  min-width: 200px;
   max-width: 90vw;
+}
+
+p {
+  margin: 16px 0;
+}
+
+.custom {
+  display: flex;
+  gap: 10px;
 }
 </style>

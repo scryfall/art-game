@@ -1,14 +1,8 @@
-import {
-  createAsyncThunk,
-  createSlice,
-  isAsyncThunkAction,
-  type PayloadAction,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { ScryfallCard } from "../models/scryfall-card";
 import { Outcome } from "../models/outcome";
 import { LoadingStatus } from "./common";
 import { ScryfallApi } from "../utils/scryfall-api";
-import { useAppSelector } from "./hooks";
 
 const scryfallApi = new ScryfallApi();
 
@@ -37,9 +31,8 @@ const initialState: GameSliceState = {
   previousCard: undefined,
 };
 
-export const startGame = createAsyncThunk("game/startGame", async (query: string) => {
-  const card = await scryfallApi.getRandomCard(query);
-  return card;
+export const startGame = createAsyncThunk("game/startGame", async (query: string, api) => {
+  await api.dispatch(fetchNextCard(query));
 });
 
 const fetchNextCard = createAsyncThunk("game/fetchNextCard", async (query: string) => {
@@ -65,9 +58,8 @@ export const gameSlice = createSlice({
       state.query = action.meta.arg;
     });
 
-    builder.addCase(startGame.fulfilled, (state, action) => {
+    builder.addCase(startGame.fulfilled, (state) => {
       state.status = LoadingStatus.Success;
-      state.card = action.payload;
     });
 
     builder.addCase(startGame.rejected, (state) => {
@@ -90,5 +82,3 @@ export const gameSlice = createSlice({
 });
 
 export const { setGuess } = gameSlice.actions;
-
-export const useGameLoadStatus = () => useAppSelector((state) => state.game.status);
