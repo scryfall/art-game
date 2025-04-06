@@ -17,9 +17,10 @@ const start = (query: string) => {
 
 const commonCriteria = [
   "-t:basic",
+  "-t:stickers",
   "-t:saga",
   "-t:class",
-  "-t:stickers",
+  "-t:case",
   "not:reversible",
   "not:split",
   "not:transform",

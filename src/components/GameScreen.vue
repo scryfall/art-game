@@ -19,6 +19,10 @@ const skip = () => {
   dispatch(fetchNextCard(query.value));
 };
 
+const retry = () => {
+  dispatch(fetchNextCard(query.value));
+};
+
 const submitGuess = (guess: string) => {
   if (!card.value) {
     console.debug("received guess, but there's no card.");
@@ -35,6 +39,13 @@ const submitGuess = (guess: string) => {
 <template>
   <div class="screen" :data-answer="card?.name">
     <CardArt v-if="card" :card="card" />
+
+    <p class="error-loading" v-if="nextCardStatus === LoadingStatus.Failed">
+      There was an error loading the next card. Check your internet connection and
+      <button type="button" class="retry link" @click.prevent="retry" @keypress.enter="retry">
+        retry</button
+      >.
+    </p>
 
     <p>
       Which card is this?
@@ -59,5 +70,10 @@ const submitGuess = (guess: string) => {
   display: flex;
   flex-flow: column;
   align-items: center;
+}
+
+.error-loading {
+  background-color: var(--error-loading-background);
+  color: var(--error-loading-color);
 }
 </style>
