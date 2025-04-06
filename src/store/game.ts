@@ -8,6 +8,7 @@ import type { ScryfallCard } from "../models/scryfall-card";
 import { Outcome } from "../models/outcome";
 import { LoadingStatus } from "./common";
 import { ScryfallApi } from "../utils/scryfall-api";
+import { useAppSelector } from "./hooks";
 
 const scryfallApi = new ScryfallApi();
 
@@ -23,6 +24,7 @@ type GameSliceState = {
         outcome: Outcome;
       };
   card: undefined | ScryfallCard;
+  previousCard: undefined | ScryfallCard;
 };
 
 const initialState: GameSliceState = {
@@ -30,8 +32,9 @@ const initialState: GameSliceState = {
   nextCardStatus: LoadingStatus.Idle,
   query: "",
   score: 0,
-  card: undefined,
   guess: undefined,
+  card: undefined,
+  previousCard: undefined,
 };
 
 export const startGame = createAsyncThunk("game/startGame", async (query: string) => {
@@ -87,3 +90,5 @@ export const gameSlice = createSlice({
 });
 
 export const { setGuess } = gameSlice.actions;
+
+export const useGameLoadStatus = () => useAppSelector((state) => state.game.status);

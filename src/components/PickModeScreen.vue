@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { startGame } from "../store";
+import { startGame, useGameLoadStatus } from "../store";
 import { useAppDispatch } from "../store/hooks";
+import { LoadingStatus } from "../store/common";
 
 const dispatch = useAppDispatch();
+const gameLoadStatus = useGameLoadStatus();
 
 /**
  * Start the game with a given query.
@@ -42,6 +44,10 @@ const customQuery = ref("");
 const customQueryFull = computed(() => {
   return flatten([customQuery.value, ...commonCriteria]);
 });
+
+const locked = computed(() => {
+  return gameLoadStatus.value !== LoadingStatus.Idle;
+});
 </script>
 
 <template>
@@ -51,12 +57,13 @@ const customQueryFull = computed(() => {
     <div class="format-buttons" ref="formatButtons">
       <button
         v-for="(preset, index) in presets"
-        :id="preset.id + '-format-button'"
+        :id="`${preset.id}-format-button`"
         :key="index"
         type="button"
         class="button--lg"
         @click="start(preset.query)"
         @keypress.enter="start(preset.query)"
+        :disabled="locked"
       >
         {{ preset.label }}
       </button>
@@ -75,8 +82,9 @@ const customQueryFull = computed(() => {
         class="input--lg"
         type="text"
         placeholder="set:dom type:creaure"
+        :disabled="locked"
       />
-      <input type="submit" class="button--lg" value="Start" />
+      <button type="submit" class="button--lg" value="Start" :disabled="locked">Start</button>
     </form>
   </main>
 </template>

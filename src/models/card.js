@@ -1,4 +1,4 @@
-import { naturalize } from "../utils/utils";
+import { naturalize } from "../utils/string";
 import levenshtein from "js-levenshtein";
 
 /**

@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import "./style.scss";
+import "./styles/main.scss";
 import App from "./App.vue";
 import { provideStoreToApp } from "@reduxjs/vue-redux";
 import { loadConfig, store } from "./store";

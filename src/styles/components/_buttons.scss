@@ -1,5 +1,11 @@
 .button--lg,
 .button--sm {
+  background: var(--button-background);
+  color: var(--button-color);
+}
+
+.button--lg,
+.button--sm {
   box-sizing: border-box;
   cursor: pointer;
   display: inline-block;

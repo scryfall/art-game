@@ -1,4 +1,4 @@
-import { naturalize } from "../utils";
+import { naturalize } from "../string";
 
 describe("naturalize", () => {
   [

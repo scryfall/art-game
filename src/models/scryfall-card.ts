@@ -1,4 +1,5 @@
 type CardFace = {
+  name: string;
   type_line: string;
 };
 
