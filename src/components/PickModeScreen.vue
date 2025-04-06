@@ -84,7 +84,7 @@ const disabled = computed(() => {
         id="custom-query"
         class="input-large"
         type="text"
-        placeholder="set:dom type:creaure"
+        placeholder="set:dom type:creature"
         :disabled="disabled"
       />
       <button
