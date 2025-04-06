@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import { useAppDispatch, useAppSelector, toggleTheme } from "../store";
+import { Theme } from "../models/theme";
+import { useAppDispatch, useAppSelector, setTheme } from "../store";
 import { capitalize } from "../utils/string";
 
 const dispatch = useAppDispatch();
 const theme = useAppSelector((state) => state.config.theme);
 const toggle = () => {
-  dispatch(toggleTheme());
+  if (theme.value === Theme.Dark) {
+    dispatch(setTheme(Theme.Light));
+  } else {
+    dispatch(setTheme(Theme.Dark));
+  }
 };
 </script>
 

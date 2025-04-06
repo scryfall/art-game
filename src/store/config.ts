@@ -14,17 +14,8 @@ export const configSlice = createSlice({
     setTheme(state, action: PayloadAction<Theme>) {
       state.theme = action.payload;
     },
-    toggleTheme(state) {
-      if (state.theme === Theme.Dark) {
-        state.theme = Theme.Light;
-      } else {
-        state.theme = Theme.Dark;
-      }
-    },
   },
 });
-
-export const { setTheme, toggleTheme } = configSlice.actions;
 
 export const loadConfig = createAction(configSlice.actions.loadConfig.type, () => {
   const theme = localStorage.getItem(StorageKey.Theme) ?? Theme.Dark;
@@ -33,5 +24,13 @@ export const loadConfig = createAction(configSlice.actions.loadConfig.type, () =
     payload: {
       theme,
     },
+  };
+});
+
+export const setTheme = createAction(configSlice.actions.setTheme.type, (theme: Theme) => {
+  localStorage.setItem(StorageKey.Theme, theme);
+
+  return {
+    payload: theme,
   };
 });
