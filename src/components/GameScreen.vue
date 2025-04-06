@@ -79,6 +79,7 @@ const submitGuess = (guess: string) => {
 }
 
 .error-loading {
+  text-align: center;
   color: var(--error-loading-color);
 }
 </style>
