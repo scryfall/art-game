@@ -25,12 +25,11 @@ const retry = () => {
 
 const submitGuess = (guess: string) => {
   if (!card.value) {
-    console.debug("received guess, but there's no card.");
+    console.debug("Guess was submitted somehow, but no card is loaded.");
     return;
   }
 
   const outcome = isGuessOk(guess, card.value) ? Outcome.Correct : Outcome.Incorrect;
-  console.debug("received guess:", guess, `(${outcome})`);
   dispatch(setGuess({ name: guess, outcome }));
   dispatch(fetchNextCard(query.value));
 };
@@ -56,7 +55,10 @@ const submitGuess = (guess: string) => {
       </span>
     </p>
 
-    <GuessInput :disabled="nextCardStatus !== LoadingStatus.Success" @submit="submitGuess" />
+    <GuessInput
+      :disabled="nextCardStatus !== LoadingStatus.Success || !card"
+      @submit="submitGuess"
+    />
 
     <p class="score">Score: {{ score }}</p>
 
