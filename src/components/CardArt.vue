@@ -8,6 +8,7 @@ const imageUri = computed(() => props.card.image_uris.art_crop);
 
 <template>
   <div class="art-frame">
+    <!-- TODO(#35) Use this preloader to determine that the image is still loading. -->
     <!-- <img alt="" class="vh preload" :src="card.image_uris.art_crop" /> -->
     <img :src="imageUri" />
   </div>
