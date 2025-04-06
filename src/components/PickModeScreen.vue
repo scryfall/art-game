@@ -21,6 +21,7 @@ const commonCriteria = [
   "-t:saga",
   "-t:class",
   "-t:case",
+  "not:flavorname",
   "not:reversible",
   "not:split",
   "not:transform",
