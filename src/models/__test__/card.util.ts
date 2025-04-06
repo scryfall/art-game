@@ -19,3 +19,16 @@ export function makeCard(overrides: Partial<ScryfallCard> = {}) {
   };
   return card;
 }
+
+export function makeSplitCard(
+  face1: { name: string; type_line: string },
+  face2: { name: string; type_line: string },
+  overrides: Partial<ScryfallCard> = {}
+) {
+  return makeCard({
+    name: `${face1.name} // ${face2.name}`,
+    type_line: `${face1.type_line} // ${face2.type_line}`,
+    card_faces: [face1, face2],
+    ...overrides,
+  });
+}

@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { setGuess, useAppDispatch } from '../store';
-import type { ScryfallCard } from '../models/scryfall-card';
+import { ref } from "vue";
+import { setGuess, useAppDispatch } from "../store";
+import type { ScryfallCard } from "../models/scryfall-card";
+import { isGuessOk } from "../utils/guess";
+import { Outcome } from "../models/outcome";
 
-const props = defineProps<{ disabled: boolean, card: ScryfallCard | undefined }>();
+const props = defineProps<{ disabled: boolean; card: ScryfallCard }>();
 const dispatch = useAppDispatch();
 
 const guess = ref("");
 
-
-
 const submitGuess = () => {
-  dispatch(setGuess({ name: guess.value, outcome:  }))
-}
+  const outcome = isGuessOk(guess.value, props.card) ? Outcome.Correct : Outcome.Incorrect;
+  dispatch(setGuess({ name: guess.value, outcome }));
+};
 </script>
 
 <template>

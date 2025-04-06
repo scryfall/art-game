@@ -1,74 +1,46 @@
+import { CardBank } from "../../models/__test__/card-bank.util";
 import { makeCard } from "../../models/__test__/card.util";
+import type { ScryfallCard } from "../../models/scryfall-card";
 import { getCardNames } from "../card-names";
 
 describe("getCardNames", () => {
-  test.each<[string, string, string[]]>([
-    ["Arbor Elf", "Creature — Elf", []],
+  test.each<[ScryfallCard, string[]]>([
+    [CardBank.ArborElf, []],
     [
       // comma
-      "Alesha, Who Smiles at Death",
-      "Legendary Creature — Human Warrior",
+      CardBank.Alesha,
       ["Alesha", "Who Smiles at Death", "the Who Smiles at Death", "of the Who Smiles at Death"],
     ],
     [
       // "of the"
-      "Hivis of the Scale",
-      "Legendary Creature — Lizard Shaman",
+      CardBank.Hivis,
       ["Hivis", "Scale", "the Scale", "of the Scale"],
     ],
     [
       // "the"
-      "Mayael the Anima",
-      "Legendary Creature — Elf Shaman",
+      CardBank.Mayael,
       ["Mayael", "Anima", "the Anima", "of the Anima"],
     ],
     [
       // Combined comma + "the"
-      "Aegar, the Freezing Flame",
-      "Legendary Creature — Elf Shaman",
-      ["Aegar", "Freezing Flame", "the Freezing Flame", "of the Freezing Flame"],
+      CardBank.Jolene,
+      ["Jolene", "Plunder Queen", "the Plunder Queen", "of the Plunder Queen"],
     ],
-  ])("gets names back for single-faced cards: %s", (fullName, typeLine, additionalNames) => {
-    const card = makeCard({ name: fullName, type_line: typeLine });
-
-    expect(getCardNames(card).sort()).toEqual([fullName, ...additionalNames].sort());
+  ])("gets names back for single-faced cards: %#", (card, additionalNames) => {
+    expect(getCardNames(card).sort()).toEqual([card.name, ...additionalNames].sort());
   });
 
-  test.each<[string, string, string, string, string[]]>([
-    ["Alive", "Well", "Sorcery", "Sorcery", []],
-    ["Commit", "Memory", "Instant", "Sorcery", []],
+  test.each<[ScryfallCard, string[]]>([
+    [CardBank.AliveAndWell, []],
+    [CardBank.CommitToMemory, []],
+    [CardBank.BelunaGrandsquall, []],
     [
-      // Simple legend name
-      "Beluna Grandsquall",
-      "Seek Thrills",
-      "Legendary Creature — Giant Noble",
-      "Instant — Adventure",
-      [],
-    ],
-    [
-      // Complex legend name
-      "Kellan, the Fae-Blooded",
-      "Birthright Boon",
-      "Legendary Creature — Human Faerie",
-      "Sorcery — Adventure",
+      CardBank.KellanTheFaeBlooded,
       ["Kellan", "Fae-Blooded", "the Fae-Blooded", "of the Fae-Blooded"],
     ],
-  ])(
-    "gets names back for multi-part cards: %s // %s",
-    (name1, name2, type1, type2, additionalNames) => {
-      const combined = `${name1} // ${name2}`;
-      const card = makeCard({
-        name: combined,
-        type_line: `${type1} // ${type2}`,
-        card_faces: [
-          { name: name1, type_line: type1 },
-          { name: name2, type_line: type2 },
-        ],
-      });
-
-      expect(getCardNames(card).sort()).toEqual(
-        [combined, name1, name2, ...additionalNames].sort()
-      );
-    }
-  );
+  ])("gets names back for multi-part cards: %#", (card, additionalNames) => {
+    expect(getCardNames(card).sort()).toEqual(
+      [card.name, card.card_faces?.[0].name, card.card_faces?.[1].name, ...additionalNames].sort()
+    );
+  });
 });
