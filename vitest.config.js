@@ -7,6 +7,7 @@ export default defineConfig({
   test: {
     include: ["**/*.test.ts"],
     globals: true,
+    watch: false,
     alias: {
       axios: resolve("./__mocks__/axios.ts"),
     },
