@@ -11,7 +11,7 @@ const theme = useAppSelector((state) => state.config.theme);
     <header>
       <a href="/">
         <h1>
-          <img class="logo" src="./assets/scryfall.svg" alt="Scryfall" />
+          <img class="logo" src="/scryfall.svg" alt="Scryfall" />
           <span>Art Game</span>
         </h1>
       </a>
