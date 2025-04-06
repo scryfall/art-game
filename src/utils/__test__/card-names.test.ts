@@ -1,5 +1,4 @@
 import { CardBank } from "../../models/__test__/card-bank.util";
-import { makeCard } from "../../models/__test__/card.util";
 import type { ScryfallCard } from "../../models/scryfall-card";
 import { getCardNames } from "../card-names";
 
