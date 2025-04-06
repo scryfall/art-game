@@ -48,7 +48,7 @@ const theme = useAppSelector((state) => state.config.theme);
   justify-content: space-between;
   align-items: stretch;
 
-  height: 100%;
+  min-height: 100vh;
 
   @include mixins.bp-small {
     justify-content: flex-start;
