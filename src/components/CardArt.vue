@@ -27,7 +27,7 @@ $default-art-width: 626px;
 img {
   outline: 2px solid var(--art-frame-border-color);
   border-radius: 4px;
-  max-height: 60vh;
+  max-height: min(60vh, $default-art-height);
   max-width: min(100%, $default-art-width);
 }
 </style>
