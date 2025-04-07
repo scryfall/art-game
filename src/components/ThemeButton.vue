@@ -22,13 +22,14 @@ const toggle = () => {
     @click="toggle"
     @keypress.enter="toggle"
   >
-    <div class="toggle"></div>
-    <div class="icon sun">
+    <div class="toggle" aria-hidden="true"></div>
+    <div class="icon sun" aria-hidden="true">
       <SunOutlineSvg />
     </div>
-    <div class="icon moon">
+    <div class="icon moon" aria-hidden="true">
       <MoonSolidSvg />
     </div>
+    <div class="vh">{{ theme }} theme. Press to toggle.</div>
   </button>
 </template>
 
