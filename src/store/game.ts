@@ -29,13 +29,19 @@ const initialState: GameSliceState = {
 };
 
 export const startGame = createAsyncThunk("game/startGame", async (query: string, api) => {
-  await api.dispatch(fetchNextCard(query));
+  await api.dispatch(fetchNextCard({ query }));
 });
 
-export const fetchNextCard = createAsyncThunk("game/fetchNextCard", async (query: string) => {
-  const card = await scryfallApi.getRandomCard(query);
-  return card;
-});
+export const fetchNextCard = createAsyncThunk(
+  "game/fetchNextCard",
+  async (payload: { query: string; excludeOracleId?: string }) => {
+    const { query, excludeOracleId } = payload;
+
+    const lookup = excludeOracleId ? `${query} -oracle_id:${excludeOracleId}` : query;
+    const card = await scryfallApi.getRandomCard(lookup);
+    return card;
+  }
+);
 
 export const gameSlice = createSlice({
   name: "game",
