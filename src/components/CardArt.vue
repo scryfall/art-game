@@ -8,12 +8,7 @@ const imageUri = computed(() => props.card.image_uris.art_crop);
 const vertical = computed(() => {
   const verticalTypes = ["saga", "class", "case"];
   const cardTypes = props.card.type_line.split(" ");
-  for (const type of verticalTypes) {
-    if (cardTypes.includes(type)) {
-      return true;
-    }
-  }
-  return false;
+  return verticalTypes.some((type) => cardTypes.includes(type))
 });
 </script>
 
