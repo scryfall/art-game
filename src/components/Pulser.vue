@@ -1,39 +1,50 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="loader"></div>
+  <div class="loader">
+    <div class="pulse-0"></div>
+    <div class="pulse-1"></div>
+    <div class="pulse-2"></div>
+  </div>
 </template>
 
 <style scoped lang="scss">
-// Pulser courtesy of https://css-loaders.com/pulsing/
+// Pulser adapted from https://css-loaders.com/pulsing/
 .loader {
-  --mid-color: color-mix(in srgb, currentColor 75%, transparent);
-  --faded-color: color-mix(in srgb, currentColor 0%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: currentColor;
+  border-radius: 50%;
 
   width: 20px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: currentColor;
-  box-shadow: 0 0 0 0 var(--mid-color);
-  animation: l2 1.5s infinite linear;
+  height: 20px;
+  overflow: visible;
   position: relative;
 }
-.loader:before,
-.loader:after {
-  content: "";
+.pulse-0,
+.pulse-1,
+.pulse-2 {
   position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  box-shadow: 0 0 0 0 var(--mid-color);
-  animation: inherit;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: currentColor;
+  opacity: 0.75;
+  width: 0;
+  height: 0;
+  animation: l2 1.5s infinite linear;
+}
+.pulse-1 {
   animation-delay: -0.5s;
 }
-.loader:after {
+.pulse-2 {
   animation-delay: -1s;
 }
 @keyframes l2 {
   100% {
-    box-shadow: 0 0 0 40px var(--faded-color);
+    opacity: 0;
+    width: 80px;
+    height: 80px;
   }
 }
 </style>
