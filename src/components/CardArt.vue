@@ -4,11 +4,11 @@ import type { ScryfallCard } from "../models/scryfall-card";
 
 const props = defineProps<{ card: ScryfallCard }>();
 const imageUri = computed(() => props.card.image_uris.art_crop);
+const VERTICAL_TYPES = ["saga", "class", "case"];
 
 const vertical = computed(() => {
-  const verticalTypes = ["saga", "class", "case"];
   const cardTypes = props.card.type_line.split(" ");
-  return verticalTypes.some((type) => cardTypes.includes(type))
+  return VERTICAL_TYPES.some((type) => cardTypes.includes(type));
 });
 </script>
 
