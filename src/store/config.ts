@@ -5,6 +5,7 @@ import { StorageKey } from "../models/storage-key";
 export const configSlice = createSlice({
   name: "config",
   initialState: {
+    viewConfigScreen: false,
     theme: Theme.Dark,
   },
   reducers: {
@@ -14,8 +15,13 @@ export const configSlice = createSlice({
     setTheme(state, action: PayloadAction<Theme>) {
       state.theme = action.payload;
     },
+    setViewConfigScreen(state, action: PayloadAction<boolean>) {
+      state.viewConfigScreen = action.payload;
+    },
   },
 });
+
+export const { setViewConfigScreen } = configSlice.actions;
 
 export const loadConfig = createAction(configSlice.actions.loadConfig.type, () => {
   const theme = localStorage.getItem(StorageKey.Theme) ?? Theme.Dark;

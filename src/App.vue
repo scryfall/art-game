@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ScreenManager from "./components/ScreenManager.vue";
 import ThemeButton from "./components/ThemeButton.vue";
+import ViewSettingsButton from "./components/ViewSettingsButton.vue";
 import { useAppSelector } from "./store/hooks";
 
 const theme = useAppSelector((state) => state.config.theme);
@@ -9,12 +10,18 @@ const theme = useAppSelector((state) => state.config.theme);
 <template>
   <div class="app" :data-theme="theme">
     <header>
-      <a href="/">
-        <h1>
-          <img class="logo" src="/scryfall.svg" alt="Scryfall" />
-          <span>Art Game</span>
-        </h1>
-      </a>
+      <div class="left"></div>
+      <div class="middle">
+        <a href="/">
+          <h1>
+            <img class="logo" src="/scryfall.svg" alt="Scryfall" />
+            <span>Art Game</span>
+          </h1>
+        </a>
+      </div>
+      <div class="right">
+        <ViewSettingsButton />
+      </div>
     </header>
 
     <main>
@@ -24,11 +31,6 @@ const theme = useAppSelector((state) => state.config.theme);
     <footer>
       <div class="controls">
         <ThemeButton />
-      </div>
-      <div class="credit">
-        by
-        <a href="https://github.com/scarletcs/" target="_blank">scarletcs</a>
-        based on the MagicCards.info Art Game
       </div>
     </footer>
   </div>
@@ -59,25 +61,40 @@ const theme = useAppSelector((state) => state.config.theme);
 }
 
 header {
-  padding: 10px 0;
+  padding: 10px 20px;
   padding-bottom: 40px;
+  display: grid;
+  grid-template-areas: "left middle right";
+  grid-template-columns: 1fr 2fr 1fr;
 
-  h1 {
+  .middle {
+    grid-area: "middle";
     display: flex;
     justify-content: center;
-    align-items: center;
-    text-align: center;
-    gap: 10px;
-    margin: 0;
-    font-size: 24px;
+
+    a {
+      text-decoration: none;
+    }
+
+    h1 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .logo {
+      height: 32px;
+    }
   }
 
-  a {
-    text-decoration: none;
-  }
-
-  .logo {
-    height: 32px;
+  .right {
+    grid-area: "right";
+    display: flex;
+    justify-content: flex-end;
   }
 }
 
@@ -91,12 +108,6 @@ footer {
   align-items: flex-end;
   justify-content: space-between;
   padding: 20px;
-
-  .credit {
-    font-size: 12px;
-    font-style: italic;
-    opacity: 0.6;
-  }
 
   .controls {
     flex-shrink: 0;
