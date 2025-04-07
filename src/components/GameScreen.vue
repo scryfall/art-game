@@ -41,7 +41,7 @@ const submitGuess = (guess: string) => {
 
 <template>
   <div class="screen" :data-answer="card?.name">
-    <CardArt v-if="card" :card="card" />
+    <CardArt v-if="card" :card="card" :loadingNext="nextCardStatus" />
 
     <p class="error-loading" v-if="nextCardStatus === LoadingStatus.Failed">
       There was an error loading the next card. Check your internet connection and
@@ -79,7 +79,7 @@ const submitGuess = (guess: string) => {
 }
 
 .error-loading {
-  background-color: var(--error-loading-background);
+  text-align: center;
   color: var(--error-loading-color);
 }
 </style>

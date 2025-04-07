@@ -1,0 +1,30 @@
+.shape-x {
+  position: relative;
+  font-size: var(--size, 80px);
+  width: 1em;
+  height: 1em;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::before,
+  &::after {
+    content: "";
+    background: currentColor;
+    display: block;
+    height: calc(1em * 1.25);
+    width: 0.2em;
+    border-radius: 0.1em;
+
+    position: absolute;
+  }
+
+  &::before {
+    transform: rotate(-45deg);
+  }
+
+  &::after {
+    transform: rotate(45deg);
+  }
+}
