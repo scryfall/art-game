@@ -40,7 +40,7 @@ const theme = useAppSelector((state) => state.config.theme);
   font-family: var(--font-sans-serif);
   font-size: var(--font-size);
 
-  transition: color 0.25s ease, background-color 0.25s ease;
+  transition: background-color 0.25s ease;
 
   display: flex;
   flex-direction: column;
