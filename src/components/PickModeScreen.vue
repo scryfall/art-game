@@ -18,6 +18,7 @@ const start = (query: string) => {
 const commonCriteria = [
   "-t:basic",
   "-t:stickers",
+  "not:flavorname",
   "not:reversible",
   "not:transform",
   "not:fullart",
