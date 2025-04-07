@@ -2,7 +2,7 @@
 import { computed, ref, watch } from "vue";
 import type { ScryfallCard } from "../models/scryfall-card";
 import { LoadingStatus } from "../store";
-import Pulser from "./Pulser.vue";
+import LoadingPulser from "./LoadingPulser.vue";
 
 const props = defineProps<{ card: ScryfallCard; loadingNext: LoadingStatus }>();
 const imageUri = computed(() => props.card.image_uris.art_crop);
@@ -36,7 +36,7 @@ const showErrorOverlay = computed(() => {
       <div class="shape-x"></div>
     </div>
     <div v-else-if="showLoadingOverlay" class="overlay loading">
-      <Pulser class="pulser" />
+      <LoadingPulser class="pulser" />
     </div>
     <img
       alt=""
