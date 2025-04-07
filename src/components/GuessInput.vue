@@ -18,7 +18,6 @@ const submit = () => {
       type="text"
       class="input-large"
       v-model="guess"
-      v-focus-when-enabled
       autocomplete="off"
       autocorrect="off"
       autocapitalize="off"
