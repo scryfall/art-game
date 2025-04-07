@@ -20,6 +20,7 @@ const theme = useAppSelector((state) => state.config.theme);
         </a>
       </div>
       <div class="right">
+        <ThemeButton />
         <ViewSettingsButton />
       </div>
     </header>
@@ -27,12 +28,6 @@ const theme = useAppSelector((state) => state.config.theme);
     <main>
       <ScreenManager />
     </main>
-
-    <footer>
-      <div class="controls">
-        <ThemeButton />
-      </div>
-    </footer>
   </div>
 </template>
 
@@ -44,6 +39,8 @@ const theme = useAppSelector((state) => state.config.theme);
   color: var(--text-color);
   font-family: var(--font-sans-serif);
   font-size: var(--font-size);
+
+  transition: color 0.25s ease, background-color 0.25s ease;
 
   display: flex;
   flex-direction: column;
@@ -95,23 +92,12 @@ header {
     grid-area: "right";
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
   }
 }
 
 main {
   flex: 1;
-}
-
-footer {
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: flex-end;
-  justify-content: space-between;
-  padding: 20px;
-
-  .controls {
-    flex-shrink: 0;
-    margin-left: 10px;
-  }
 }
 </style>
