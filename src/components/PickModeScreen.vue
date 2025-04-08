@@ -21,7 +21,7 @@ const commonCriteria = [
   "not:flavorname",
   "not:reversible",
   "not:transform",
-  "not:fullart",
+  "not:poster",
   "not:extra",
 ];
 
