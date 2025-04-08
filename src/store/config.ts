@@ -40,17 +40,22 @@ export const loadConfig = createAction(configSlice.actions.loadConfig.type, () =
   };
 });
 
-export const setTheme = createAction(configSlice.actions.setTheme.type, (theme: Theme) => {
-  localStorage.setItem(StorageKey.Theme, theme);
+export const toggleTheme = createAction(
+  configSlice.actions.setTheme.type,
+  (currentTheme: Theme) => {
+    const theme = currentTheme === Theme.Dark ? Theme.Light : Theme.Dark;
+    localStorage.setItem(StorageKey.Theme, theme);
 
-  return {
-    payload: theme,
-  };
-});
+    return {
+      payload: theme,
+    };
+  }
+);
 
-export const setAutocomplete = createAction(
+export const toggleAutocomplete = createAction(
   configSlice.actions.setAutocomplete.type,
-  (on: boolean) => {
+  (currentValue: boolean) => {
+    const on = !currentValue;
     localStorage.setItem(StorageKey.Autocomplete, on ? "true" : "");
 
     return {

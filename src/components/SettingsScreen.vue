@@ -1,4 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useAppDispatch, useAppSelector, toggleAutocomplete } from "../store";
+
+const dispatch = useAppDispatch();
+const autocomplete = useAppSelector((state) => state.config.autocomplete);
+</script>
 
 <template>
   <div class="screen">
@@ -7,13 +12,22 @@
 
       <div class="settings-grid">
         <!-- Elements in this grid automatically alternate between left and right column. -->
-        <div>Allow autocomplete</div>
-        <div>
-          <button type="button" class="btn btn-small">On/off</button>
+        <!-- Descriptions are full width. -->
+        <div class="label">
+          Allow autocomplete
+          <div class="description">
+            If enabled, you'll see autocomplete suggestions for card names. They won't necessarily
+            be limited to cards in your chosen format.
+          </div>
         </div>
-        <div class="description">
-          If enabled, you'll see autocomplete suggestions for card names. They won't necessarily be
-          limited to cards in your chosen format.
+        <div class="option">
+          <button
+            type="button"
+            class="btn btn-small"
+            @click="() => dispatch(toggleAutocomplete(autocomplete))"
+          >
+            {{ autocomplete ? "On" : "Off" }}
+          </button>
         </div>
       </div>
     </section>
@@ -36,6 +50,7 @@
   flex-flow: column;
   align-items: center;
   gap: 40px;
+  padding: 0 16px;
 }
 
 h2 {
@@ -43,26 +58,30 @@ h2 {
   text-align: center;
 }
 
+section {
+  max-width: 100%;
+}
+
 .settings-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 3fr 1fr;
   grid-auto-rows: auto;
-  gap: 8px;
-  min-width: 400px;
-
-  > * {
-    display: flex;
-    align-items: center;
-  }
+  gap: 16px;
+  width: 400px;
+  max-width: 100%;
 
   .description {
-    grid-column: 1 / span 2;
     font-style: italic;
     opacity: 0.8;
     font-size: 80%;
     text-align: left;
     width: min-content;
     min-width: 100%;
+    padding-top: 8px;
+  }
+
+  .option {
+    text-align: right;
   }
 }
 
