@@ -6,14 +6,15 @@
       <h2>Settings</h2>
 
       <div class="settings-grid">
+        <!-- Elements in this grid automatically alternate between left and right column. -->
         <div>Allow autocomplete</div>
         <div>
           <button type="button" class="btn btn-small">On/off</button>
         </div>
-        <!-- <div>Allow autocomplete</div>
-        <div>
-          <button type="button" class="btn btn-small">On/off</button>
-        </div> -->
+        <div class="description">
+          If enabled, you'll see autocomplete suggestions for card names. They won't necessarily be
+          limited to cards in your chosen format.
+        </div>
       </div>
     </section>
 
@@ -34,24 +35,35 @@
   display: flex;
   flex-flow: column;
   align-items: center;
-  text-align: center;
   gap: 40px;
 }
 
 h2 {
   font-size: 20px;
+  text-align: center;
 }
 
 .settings-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   grid-auto-rows: auto;
   gap: 8px;
-}
+  min-width: 400px;
 
-.settings-grid > * {
-  display: flex;
-  align-items: center;
+  > * {
+    display: flex;
+    align-items: center;
+  }
+
+  .description {
+    grid-column: 1 / span 2;
+    font-style: italic;
+    opacity: 0.8;
+    font-size: 80%;
+    text-align: left;
+    width: min-content;
+    min-width: 100%;
+  }
 }
 
 .credits {
