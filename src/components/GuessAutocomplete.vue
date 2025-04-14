@@ -16,7 +16,10 @@ type AutocompleteResponse = {
 };
 
 const props = defineProps<{ guess: string }>();
+const emit = defineEmits(["pick"]);
 
+/** lastPick caches our last picked card, so that we don't re-look it up on a props change. */
+const lastPick = ref("");
 const autocompleteOptions = ref<AutocompleteResponse>({ timestamp: 0, options: [] });
 const AUTOCOMPLETE_DELAY = 500;
 
@@ -25,6 +28,10 @@ const setAutocomplete = (timestamp: number, options: string[]) => {
     timestamp,
     options,
   };
+};
+
+const clearAutocomplete = () => {
+  setAutocomplete(Date.now(), []);
 };
 
 const autocompleteCardName = debounce(
@@ -52,19 +59,36 @@ const autocompleteCardName = debounce(
 watch(
   () => props.guess,
   (value) => {
+    if (value === lastPick.value) {
+      // We picked a value. That value was set at the parent, then propagated down to us.
+      // We can ignore this.
+      return;
+    } else {
+      // The value was changed since our last pick, so we can forget our last pick.
+      lastPick.value = "";
+    }
+
     if (value.length >= 3) {
       autocompleteCardName(value);
     } else {
       console.debug("[Autocomplete]", "Reset to 0");
-      setAutocomplete(Date.now(), []);
+      clearAutocomplete();
     }
   }
 );
+
+const pick = (option: string) => {
+  lastPick.value = option;
+  emit("pick", option);
+  clearAutocomplete();
+};
 </script>
 
 <template>
   <div v-if="guess.length >= 3 && autocompleteOptions.options.length > 0">
-    {{ autocompleteOptions.options }}
+    <div v-for="option of autocompleteOptions.options" :key="option" @click="() => pick(option)">
+      {{ option }}
+    </div>
   </div>
 </template>
 

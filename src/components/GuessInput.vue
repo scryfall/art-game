@@ -13,6 +13,11 @@ const submit = () => {
   emit("submit", guess.value);
   guess.value = "";
 };
+
+const onAutocompletePick = (text: string) => {
+  guess.value = text;
+  submit();
+};
 </script>
 
 <template>
@@ -25,8 +30,9 @@ const submit = () => {
       autocorrect="off"
       autocapitalize="off"
       spellcheck="false"
+      aria-autocomplete="list"
     />
-    <GuessAutocomplete v-if="autocompleteEnabled" :guess="guess" />
+    <GuessAutocomplete v-if="autocompleteEnabled" :guess="guess" @pick="onAutocompletePick" />
     <button type="submit" class="vh" tabindex="-1">Check</button>
   </form>
 </template>
