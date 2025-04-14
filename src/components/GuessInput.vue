@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, useId, useTemplateRef, watch } from "vue";
+import { computed, ref, useId, useTemplateRef, watch, type Directive } from "vue";
 import { useAppSelector } from "../store";
 import GuessAutocompleteList from "./GuessAutocompleteList.vue";
 import GuessAutocompleteGenerator from "./GuessAutocompleteGenerator.vue";
@@ -94,6 +94,12 @@ const onSubmit = () => {
   submit(autocompleted ?? guess.value);
 };
 
+const vFocus: Directive<HTMLInputElement> = {
+  mounted: (el) => {
+    el.focus();
+  },
+};
+
 const autocompleteOpen = computed(() => Boolean(acOptions.value.length > 0 && focused));
 </script>
 
@@ -120,6 +126,7 @@ const autocompleteOpen = computed(() => Boolean(acOptions.value.length > 0 && fo
         'has-autocomplete': autocompleteOpen,
       }"
       v-model="guess"
+      v-focus="!disabled"
       autocomplete="off"
       autocorrect="off"
       autocapitalize="off"
