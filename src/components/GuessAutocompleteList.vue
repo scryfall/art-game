@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import type { Directive } from "vue";
+
 type Props = {
   /** The current list of options to display. */
   options: string[];
   /** Whether the guess input area is focused. This is used to control whether we show autocomplete. */
   focused: boolean;
+  /** Which item out of the autocomplete options the keyboard is focused on. */
+  keyboardFocusIndex: number;
 };
 
 type Emits = {
@@ -17,13 +21,23 @@ const emit = defineEmits<Emits>();
 const pick = (option: string) => {
   emit("pick", option);
 };
+
+const vScrollIntoView: Directive<HTMLElement, boolean> = {
+  updated: (el, binding) => {
+    if (binding.value && binding.value !== binding.oldValue) {
+      el.scrollIntoView({ behavior: "instant", block: "nearest" });
+    }
+  },
+};
 </script>
 
 <template>
   <div v-if="options.length > 0" class="options-list" v-show="focused">
     <button
-      v-for="option of options"
+      v-for="(option, index) of options"
       :key="option"
+      :class="{ active: index === keyboardFocusIndex }"
+      v-scroll-into-view="index === keyboardFocusIndex"
       @click="() => pick(option)"
       type="button"
       class="option btn-clear"

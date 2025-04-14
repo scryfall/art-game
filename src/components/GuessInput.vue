@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref, useTemplateRef } from "vue";
+import { ref, useTemplateRef, watch } from "vue";
 import { useAppSelector } from "../store";
 import GuessAutocompleteList from "./GuessAutocompleteList.vue";
 import GuessAutocompleteGenerator from "./GuessAutocompleteGenerator.vue";
+import { KeyCode } from "../utils/keyboard";
 
 type Props = {
   /** Whether this input control should be disabled. */
@@ -21,8 +22,9 @@ const form = useTemplateRef("form");
 const input = useTemplateRef("input");
 const guess = ref("");
 const focused = ref(false);
-const autocompleteEnabled = useAppSelector((state) => state.config.autocomplete);
-const autocompleteOptions = ref<string[]>([]);
+const acEnabled = useAppSelector((state) => state.config.autocomplete);
+const acOptions = ref<string[]>([]);
+const acKeyboardFocusIndex = ref(-1);
 
 const submit = (value: string) => {
   emit("submit", value);
@@ -30,13 +32,46 @@ const submit = (value: string) => {
 };
 
 const onAutocompleteUpdate = (options: string[]) => {
-  autocompleteOptions.value = options;
+  acOptions.value = options;
 };
 
 const onAutocompletePick = (text: string) => {
   submit(text);
   input.value?.focus();
 };
+
+const onKeypress = (event: KeyboardEvent) => {
+  if (!acEnabled.value) {
+    return;
+  }
+
+  switch (event.code) {
+    case KeyCode.Escape: {
+      acKeyboardFocusIndex.value = -1;
+      acOptions.value = [];
+      event.preventDefault();
+      break;
+    }
+    case KeyCode.ArrowUp: {
+      const min = -1;
+      acKeyboardFocusIndex.value = Math.max(acKeyboardFocusIndex.value - 1, min);
+      event.preventDefault();
+      break;
+    }
+    case KeyCode.ArrowDown: {
+      const max = acOptions.value.length - 1;
+      acKeyboardFocusIndex.value = Math.min(acKeyboardFocusIndex.value + 1, max);
+      event.preventDefault();
+      break;
+    }
+  }
+};
+
+watch(guess, () => {
+  console.debug("Guess changed, resetting autocomplete focus.");
+
+  acKeyboardFocusIndex.value = -1;
+});
 
 const onFocusOut = (event: FocusEvent) => {
   const newFocus = event.relatedTarget;
@@ -45,12 +80,19 @@ const onFocusOut = (event: FocusEvent) => {
     focused.value = false;
   }
 };
+
+const onSubmit = () => {
+  const focusAt = acKeyboardFocusIndex.value;
+  const autocompleted = focusAt >= 0 ? acOptions.value[focusAt] : undefined;
+
+  submit(autocompleted ?? guess.value);
+};
 </script>
 
 <template>
   <form
     ref="form"
-    @submit.prevent="() => submit(guess)"
+    @submit.prevent="onSubmit"
     @focusin="() => (focused = true)"
     @focusout="onFocusOut"
   >
@@ -64,17 +106,20 @@ const onFocusOut = (event: FocusEvent) => {
       autocapitalize="off"
       spellcheck="false"
       aria-autocomplete="list"
+      @keydown="onKeypress"
     />
     <GuessAutocompleteGenerator
-      v-if="autocompleteEnabled"
+      v-if="acEnabled"
       :guess="guess.trim()"
       @updated="onAutocompleteUpdate"
     />
     <GuessAutocompleteList
-      v-if="autocompleteEnabled"
+      v-if="acEnabled"
+      id="ac_list"
       class="autocomplete"
+      :keyboard-focus-index="acKeyboardFocusIndex"
       :focused="focused"
-      :options="autocompleteOptions"
+      :options="acOptions"
       @pick="onAutocompletePick"
     />
     <button type="submit" class="vh" tabindex="-1">Check</button>
