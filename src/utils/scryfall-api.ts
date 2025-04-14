@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { ScryfallCard } from "../models/scryfall-card";
+import type { ScryfallCatalog } from "@scryfall/api-types";
 
 export class ScryfallApi {
   /**
@@ -13,4 +14,14 @@ export class ScryfallApi {
     );
     return response.data;
   }
+
+  async autocomplete(name: string) {
+    const response = await axios.get<ScryfallCatalog>(
+      `https://api.scryfall.com/cards/autocomplete?q=${name}`
+    );
+    const catalog = response.data;
+    return catalog.data;
+  }
 }
+
+export const ScryfallApiInstance = new ScryfallApi();

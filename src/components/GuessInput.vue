@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { useAppSelector } from "../store";
+import GuessAutocomplete from "./GuessAutocomplete.vue";
 
 defineProps<{ disabled: boolean }>();
 const emit = defineEmits(["submit"]);
 
 const guess = ref("");
+const autocompleteEnabled = useAppSelector((state) => state.config.autocomplete);
 
 const submit = () => {
   emit("submit", guess.value);
@@ -23,6 +26,7 @@ const submit = () => {
       autocapitalize="off"
       spellcheck="false"
     />
+    <GuessAutocomplete v-if="autocompleteEnabled" :guess="guess" />
     <button type="submit" class="vh" tabindex="-1">Check</button>
   </form>
 </template>
