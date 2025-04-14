@@ -32,7 +32,12 @@ const vScrollIntoView: Directive<HTMLElement, boolean> = {
 </script>
 
 <template>
-  <div v-if="options.length > 0" class="options-list" v-show="focused">
+  <div
+    v-if="options.length > 0"
+    class="options-list"
+    v-show="focused"
+    :class="{ active: keyboardFocusIndex >= 0 }"
+  >
     <button
       v-for="(option, index) of options"
       :key="option"
@@ -53,8 +58,8 @@ const vScrollIntoView: Directive<HTMLElement, boolean> = {
   --v-padding: 8px;
   --bottom-radius: 4px;
   --top-radius: 0;
-  background: var(--page-background);
-  border: 1px solid currentColor;
+  background: var(--background);
+  border: var(--border);
   border-top-right-radius: var(--top-radius);
   border-top-left-radius: var(--top-radius);
   border-bottom-right-radius: var(--bottom-radius);
@@ -72,11 +77,19 @@ const vScrollIntoView: Directive<HTMLElement, boolean> = {
   text-align: left;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: var(--option-color);
+  background: var(--option-background);
+
+  .options-list.active &:not(.active) {
+    color: var(--option-inactive-color);
+    background: var(--option-inactive-background);
+  }
 
   &:hover,
   &:focus,
   &.active {
-    background-color: color-mix(in srgb, currentColor 15%, transparent);
+    color: var(--option-active-color);
+    background: var(--option-active-background);
   }
 }
 </style>

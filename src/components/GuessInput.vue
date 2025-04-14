@@ -78,6 +78,7 @@ const onFocusOut = (event: FocusEvent) => {
   const stillContainsFocus = newFocus && newFocus instanceof Node && form.value?.contains(newFocus);
   if (!stillContainsFocus) {
     focused.value = false;
+    acKeyboardFocusIndex.value = -1;
   }
 };
 
@@ -100,6 +101,10 @@ const onSubmit = () => {
       ref="input"
       type="text"
       class="input-large"
+      :class="{
+        'kb-focus': acKeyboardFocusIndex === -1,
+        'has-autocomplete': acOptions.length > 0 && focused,
+      }"
       v-model="guess"
       autocomplete="off"
       autocorrect="off"
@@ -117,6 +122,7 @@ const onSubmit = () => {
       v-if="acEnabled"
       id="ac_list"
       class="autocomplete"
+      :class="{ 'kb-focus': acKeyboardFocusIndex > -1 }"
       :keyboard-focus-index="acKeyboardFocusIndex"
       :focused="focused"
       :options="acOptions"
@@ -145,9 +151,20 @@ input {
   display: block;
   font-size: 18px;
   width: 400px;
+  color: currentColor;
 
   @include mixins.bp-large {
     font-size: 24px;
+  }
+
+  &.has-autocomplete {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &:not(.kb-focus) {
+    outline-width: 0;
+    color: color-mix(in srgb, currentColor 50%, transparent);
   }
 
   &:not(:focus) {
@@ -156,9 +173,22 @@ input {
 }
 
 .autocomplete {
+  --background: var(--page-background);
+  --border: 1px solid currentColor;
+  --option-inactive-color: color-mix(in srgb, currentColor 80%, transparent);
+  --option-active-background: color-mix(in srgb, currentColor 15%, transparent);
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
+
+  &.kb-focus,
+  &:hover {
+    outline: 2px solid var(--focus-outline-color);
+  }
+
+  &:not(.kb-focus):not(:hover) {
+    --option-color: color-mix(in srgb, currentColor 65%, transparent);
+  }
 }
 </style>
