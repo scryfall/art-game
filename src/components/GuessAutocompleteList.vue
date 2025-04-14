@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import type { Directive } from "vue";
+import { getAutocompleteOptionId } from "./GuessAutocompleteConfig";
 
 type Props = {
   /** The current list of options to display. */
   options: string[];
-  /** Whether the guess input area is focused. This is used to control whether we show autocomplete. */
-  focused: boolean;
   /** Which item out of the autocomplete options the keyboard is focused on. */
   keyboardFocusIndex: number;
 };
@@ -32,16 +31,12 @@ const vScrollIntoView: Directive<HTMLElement, boolean> = {
 </script>
 
 <template>
-  <div
-    v-if="options.length > 0"
-    class="options-list"
-    v-show="focused"
-    :class="{ active: keyboardFocusIndex >= 0 }"
-  >
+  <div v-if="options.length > 0" class="options-list" :class="{ active: keyboardFocusIndex >= 0 }">
     <button
       v-for="(option, index) of options"
       :key="option"
       :class="{ active: index === keyboardFocusIndex }"
+      :id="getAutocompleteOptionId(index)"
       v-scroll-into-view="index === keyboardFocusIndex"
       @click="() => pick(option)"
       type="button"
@@ -54,7 +49,7 @@ const vScrollIntoView: Directive<HTMLElement, boolean> = {
 
 <style scoped lang="scss">
 .options-list {
-  --count: 3;
+  --count: 4;
   --v-padding: 8px;
   --bottom-radius: 4px;
   --top-radius: 0;
