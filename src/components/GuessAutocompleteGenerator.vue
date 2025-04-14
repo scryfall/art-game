@@ -18,13 +18,11 @@ type AutocompleteResponse = {
 type Props = {
   /** The currently entered guess text. */
   guess: string;
-  /** Whether the guess input area is focused. This is used to control whether we show autocomplete. */
-  focused: boolean;
 };
 
 type Emits = {
-  /** The user has picked an answer from autocomplete. */
-  pick: [value: string];
+  /** The list of autocompletes has updated. */
+  updated: [list: string[]];
 };
 
 const props = defineProps<Props>();
@@ -129,58 +127,13 @@ watch(
   }
 );
 
-const pick = (option: string) => {
-  debug("[Pick]", "Picked", option);
-  emit("pick", option);
-  lastPick.value = option;
-  clearAutocomplete();
-};
+watch(autocompleteOptions, () => {
+  emit("updated", autocompleteOptions.value.options);
+});
 </script>
 
 <template>
-  <div v-if="autocompleteOptions.options.length > 0" class="options-list" v-show="focused">
-    <button
-      v-for="option of autocompleteOptions.options"
-      :key="option"
-      @click="() => pick(option)"
-      type="button"
-      class="option btn-clear"
-    >
-      {{ option }}
-    </button>
+  <div>
+    <!-- autocomplete generator-->
   </div>
 </template>
-
-<style scoped lang="scss">
-.options-list {
-  --count: 3;
-  --v-padding: 8px;
-  --bottom-radius: 4px;
-  --top-radius: 0;
-  background: var(--page-background);
-  border: 1px solid currentColor;
-  border-top-right-radius: var(--top-radius);
-  border-top-left-radius: var(--top-radius);
-  border-bottom-right-radius: var(--bottom-radius);
-  border-bottom-left-radius: var(--bottom-radius);
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: stretch;
-  max-height: calc((var(--count) + 0.6) * (1em + var(--v-padding) * 2));
-  overflow-y: scroll;
-}
-
-.option {
-  padding: var(--v-padding) 8px;
-  line-height: 1em;
-  text-align: left;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-
-  &:hover,
-  &:focus,
-  &.active {
-    background-color: color-mix(in srgb, currentColor 15%, transparent);
-  }
-}
-</style>
