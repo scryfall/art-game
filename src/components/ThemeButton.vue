@@ -22,10 +22,10 @@ const toggle = () => {
     @click="toggle"
     @keypress.enter="toggle"
   >
-    <div class="toggle" aria-hidden="true"></div>
     <div class="icon sun" aria-hidden="true">
       <SunOutlineSvg />
     </div>
+    <div class="toggle" aria-hidden="true"></div>
     <div class="icon moon" aria-hidden="true">
       <MoonSolidSvg />
     </div>
@@ -38,23 +38,30 @@ button {
   --color: currentColor;
   --inverted: var(--page-background);
   --size: 28px;
+  --toggle-size: 24px;
+  --toggle-inset: calc((var(--size) - var(--toggle-size)) / 2);
   --halfsize: calc(var(--size) / 2);
+  --gap: 8px;
+  --icon-size: 20px;
+  --at-left: 2px;
+  --at-right: calc(var(--icon-size) + var(--gap) + var(--toggle-inset));
 
   position: relative;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: var(--gap);
   border-radius: var(--halfsize);
   height: var(--size);
-  font-size: 20px;
   border-width: 0;
   background-color: var(--color);
+  padding: 4px;
 }
 
 .icon {
   display: flex;
+  font-size: 20px;
 }
 
 .icon {
