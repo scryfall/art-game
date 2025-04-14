@@ -1,27 +1,46 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, useTemplateRef } from "vue";
 import { useAppSelector } from "../store";
 import GuessAutocomplete from "./GuessAutocomplete.vue";
 
-defineProps<{ disabled: boolean }>();
+type Props = {
+  /** Whether this input control should be disabled. */
+  disabled: boolean;
+};
+
+defineProps<Props>();
 const emit = defineEmits(["submit"]);
 
+const form = useTemplateRef("form");
 const guess = ref("");
+const focused = ref(false);
 const autocompleteEnabled = useAppSelector((state) => state.config.autocomplete);
 
-const submit = () => {
-  emit("submit", guess.value);
+const submit = (value: string) => {
+  emit("submit", value);
   guess.value = "";
 };
 
 const onAutocompletePick = (text: string) => {
-  guess.value = text;
-  submit();
+  submit(text);
+};
+
+const onFocusOut = (event: FocusEvent) => {
+  const newFocus = event.relatedTarget;
+  const stillContainsFocus = newFocus && newFocus instanceof Node && form.value?.contains(newFocus);
+  if (!stillContainsFocus) {
+    focused.value = false;
+  }
 };
 </script>
 
 <template>
-  <form @submit.prevent="submit">
+  <form
+    ref="form"
+    @submit.prevent="() => submit(guess)"
+    @focusin="() => (focused = true)"
+    @focusout="onFocusOut"
+  >
     <input
       type="text"
       class="input-large"
@@ -32,7 +51,13 @@ const onAutocompletePick = (text: string) => {
       spellcheck="false"
       aria-autocomplete="list"
     />
-    <GuessAutocomplete v-if="autocompleteEnabled" :guess="guess" @pick="onAutocompletePick" />
+    <GuessAutocomplete
+      v-if="autocompleteEnabled"
+      class="autocomplete"
+      :focused="focused"
+      :guess="guess"
+      @pick="onAutocompletePick"
+    />
     <button type="submit" class="vh" tabindex="-1">Check</button>
   </form>
 </template>
@@ -43,6 +68,10 @@ const onAutocompletePick = (text: string) => {
 form,
 input {
   max-width: 100%;
+}
+
+form {
+  position: relative;
 }
 
 input {
@@ -60,5 +89,12 @@ input {
   &:not(:focus) {
     opacity: 0.6;
   }
+}
+
+.autocomplete {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
 }
 </style>

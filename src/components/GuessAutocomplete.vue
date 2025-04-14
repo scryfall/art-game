@@ -15,7 +15,14 @@ type AutocompleteResponse = {
   options: string[];
 };
 
-const props = defineProps<{ guess: string }>();
+type Props = {
+  /** The currently entered guess text. */
+  guess: string;
+  /** Whether the guess input area is focused. This is used to control whether we show autocomplete. */
+  focused: boolean;
+};
+
+const props = defineProps<Props>();
 const emit = defineEmits(["pick"]);
 
 /** lastPick caches our last picked card, so that we don't re-look it up on a props change. */
@@ -36,18 +43,10 @@ const clearAutocomplete = () => {
 
 const autocompleteCardName = debounce(
   async (text: string) => {
-    console.debug("[Autocomplete]", `Fetch (${text}): starting...`);
     const requestTime = Date.now();
     const options = await ScryfallApiInstance.autocomplete(text);
     if (requestTime > autocompleteOptions.value.timestamp) {
-      console.debug("[Autocomplete]", `Fetch (${text}): ${options.length} options found`);
       setAutocomplete(requestTime, options);
-    } else {
-      console.debug(
-        "[Autocomplete]",
-        `Fetch (${text}): ${options.length} options found`,
-        "(discarded due to being out of date)"
-      );
     }
   },
   AUTOCOMPLETE_DELAY,
@@ -71,25 +70,62 @@ watch(
     if (value.length >= 3) {
       autocompleteCardName(value);
     } else {
-      console.debug("[Autocomplete]", "Reset to 0");
       clearAutocomplete();
     }
   }
 );
 
 const pick = (option: string) => {
-  lastPick.value = option;
   emit("pick", option);
+  lastPick.value = option;
   clearAutocomplete();
 };
 </script>
 
 <template>
-  <div v-if="guess.length >= 3 && autocompleteOptions.options.length > 0">
-    <div v-for="option of autocompleteOptions.options" :key="option" @click="() => pick(option)">
+  <div v-if="autocompleteOptions.options.length > 0" class="options-list" v-show="focused">
+    <button
+      v-for="option of autocompleteOptions.options"
+      :key="option"
+      @click="() => pick(option)"
+      type="button"
+      class="option btn-clear"
+    >
       {{ option }}
-    </div>
+    </button>
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.options-list {
+  --count: 3;
+  --v-padding: 8px;
+  --bottom-radius: 4px;
+  --top-radius: 0;
+  background: var(--page-background);
+  border: 1px solid currentColor;
+  border-top-right-radius: var(--top-radius);
+  border-top-left-radius: var(--top-radius);
+  border-bottom-right-radius: var(--bottom-radius);
+  border-bottom-left-radius: var(--bottom-radius);
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+  max-height: calc((var(--count) + 0.6) * (1em + var(--v-padding) * 2));
+  overflow-y: scroll;
+}
+
+.option {
+  padding: var(--v-padding) 8px;
+  line-height: 1em;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:hover,
+  &:focus,
+  &.active {
+    background-color: color-mix(in srgb, currentColor 15%, transparent);
+  }
+}
+</style>
