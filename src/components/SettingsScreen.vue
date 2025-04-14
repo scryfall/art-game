@@ -1,18 +1,31 @@
 <script setup lang="ts">
 import { useId } from "vue";
-import { useAppDispatch, useAppSelector, toggleAutocomplete } from "../store";
+import { useAppDispatch, useAppSelector, toggleAutocomplete, setViewConfigScreen } from "../store";
+import { KeyCode } from "../utils/keyboard";
 
 const dispatch = useAppDispatch();
 const autocomplete = useAppSelector((state) => state.config.autocomplete);
 
 const autocompleteId = useId();
 const autocompleteDescId = useId();
+
+const onKeydown = (event: KeyboardEvent) => {
+  if (event.code === KeyCode.Escape) {
+    dispatch(setViewConfigScreen(false));
+    event.preventDefault();
+  }
+};
 </script>
 
 <template>
-  <div class="screen">
+  <div
+    class="screen"
+    role="application"
+    aria-description="Tab through options to see settings. Escape to exit."
+    @keydown="onKeydown"
+  >
     <section>
-      <h2 tabindex="0" aria-description="Tab through options to see settings">Settings</h2>
+      <h2 tabindex="0">Settings</h2>
 
       <div class="settings-grid">
         <!-- Elements in this grid automatically alternate between left and right column. -->

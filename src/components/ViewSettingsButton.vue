@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { setViewConfigScreen, useAppDispatch, useAppSelector } from "../store";
+import { KeyCode } from "../utils/keyboard";
 import CogOutlineSvg from "./Svg/CogOutlineSvg.vue";
 import CogSolidSvg from "./Svg/CogSolidSvg.vue";
 
@@ -13,15 +14,29 @@ const click = () => {
     dispatch(setViewConfigScreen(true));
   }
 };
+
+const onKeydown = (event: KeyboardEvent) => {
+  if (event.code === KeyCode.Escape) {
+    dispatch(setViewConfigScreen(false));
+  }
+};
 </script>
 
 <template>
-  <button type="button" class="settings btn-clear" @click="click">
-    <div class="icon">
+  <button
+    type="button"
+    class="settings btn-clear"
+    @click="click"
+    @keydown="onKeydown"
+    :aria-description="
+      isViewingSettings ? 'Open. Tab to view. Escape to exit.' : 'Press to open settings.'
+    "
+  >
+    <div class="icon" aria-hidden="true">
       <CogOutlineSvg v-if="isViewingSettings" />
       <CogSolidSvg v-else />
     </div>
-    <span class="vh">Settings</span>
+    <div class="vh">Settings</div>
   </button>
 </template>
 
