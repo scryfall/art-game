@@ -2,9 +2,9 @@
 import { computed, ref, useId, useTemplateRef, watch, type Directive } from "vue";
 import { useAppSelector } from "../store";
 import GuessAutocompleteList from "./GuessAutocompleteList.vue";
-import GuessAutocompleteGenerator from "./GuessAutocompleteGenerator.vue";
 import { KeyCode } from "../utils/keyboard";
 import { getActiveDescendent } from "./GuessAutocompleteConfig";
+import { useAutocomplete } from "../composables/useAutocomplete";
 
 type Props = {
   /** Whether this input control should be disabled. */
@@ -28,16 +28,12 @@ const input = useTemplateRef("input");
 const guess = ref("");
 const focused = ref(false);
 const acEnabled = useAppSelector((state) => state.config.autocomplete);
-const acOptions = ref<string[]>([]);
+const acOptions = useAutocomplete(guess);
 const acKeyboardFocusIndex = ref(AC_NO_SELECTION);
 
 const submit = (value: string) => {
   emit("submit", value);
   guess.value = "";
-};
-
-const onAutocompleteUpdate = (options: string[]) => {
-  acOptions.value = options;
 };
 
 const onAutocompletePick = (text: string) => {
@@ -137,11 +133,6 @@ const autocompleteOpen = computed(() => Boolean(acOptions.value.length > 0 && fo
       :aria-controls="autocompleteListId"
       :aria-expanded="autocompleteOpen"
       :aria-activedescendant="getActiveDescendent(acKeyboardFocusIndex)"
-    />
-    <GuessAutocompleteGenerator
-      v-if="acEnabled"
-      :guess="guess.trim()"
-      @updated="onAutocompleteUpdate"
     />
     <GuessAutocompleteList
       v-if="acEnabled"
