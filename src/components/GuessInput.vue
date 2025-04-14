@@ -105,6 +105,7 @@ const autocompleteOpen = computed(() => Boolean(acOptions.value.length > 0 && fo
     @focusout="onFocusOut"
   >
     <input
+      aria-label="Which card is this?"
       ref="input"
       type="text"
       :role="acEnabled ? 'combobox' : 'input'"
