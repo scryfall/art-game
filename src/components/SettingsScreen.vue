@@ -1,27 +1,32 @@
 <script setup lang="ts">
+import { useId } from "vue";
 import { useAppDispatch, useAppSelector, toggleAutocomplete } from "../store";
 
 const dispatch = useAppDispatch();
 const autocomplete = useAppSelector((state) => state.config.autocomplete);
+
+const autocompleteId = useId();
+const autocompleteDescId = useId();
 </script>
 
 <template>
   <div class="screen">
     <section>
-      <h2>Settings</h2>
+      <h2 tabindex="0" aria-description="Tab through options to see settings">Settings</h2>
 
       <div class="settings-grid">
         <!-- Elements in this grid automatically alternate between left and right column. -->
         <!-- Descriptions are full width. -->
-        <div class="label">
-          Allow autocomplete
-          <div class="description">
+        <div class="label" :id="autocompleteId">
+          <div>Allow autocomplete<span class="vh">.</span></div>
+          <div :id="autocompleteDescId" class="description">
             If enabled, you'll see autocomplete suggestions for card names. They won't necessarily
             be limited to cards in your chosen format.
           </div>
         </div>
         <div class="option">
           <button
+            :aria-describedby="autocompleteId"
             type="button"
             class="btn btn-small"
             @click="() => dispatch(toggleAutocomplete(autocomplete))"
@@ -33,7 +38,7 @@ const autocomplete = useAppSelector((state) => state.config.autocomplete);
     </section>
 
     <section class="credits">
-      <h2>Credits</h2>
+      <h2 tabindex="0" aria-description="This section is prose.">Credits</h2>
       <p>
         Made by
         <a href="https://github.com/scarletcs/" target="_blank">scarletcs</a>, with contributions

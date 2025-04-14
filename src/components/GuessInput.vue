@@ -100,12 +100,17 @@ const autocompleteOpen = computed(() => Boolean(acOptions.value.length > 0 && fo
 <template>
   <form
     ref="form"
+    role="application"
     @submit.prevent="onSubmit"
     @focusin="() => (focused = true)"
     @focusout="onFocusOut"
   >
     <input
-      aria-label="Which card is this?"
+      aria-label="Enter card name"
+      :aria-description="
+        acEnabled &&
+        'Enter the card name corresponding to the art shown, or pick from the autocomplete list below.'
+      "
       ref="input"
       type="text"
       :role="acEnabled ? 'combobox' : 'input'"
@@ -143,7 +148,7 @@ const autocompleteOpen = computed(() => Boolean(acOptions.value.length > 0 && fo
       :options="acOptions"
       @pick="onAutocompletePick"
     />
-    <button type="submit" class="vh" tabindex="-1">Check</button>
+    <button type="submit" class="vh" tabindex="-1">Submit guess</button>
   </form>
 </template>
 
