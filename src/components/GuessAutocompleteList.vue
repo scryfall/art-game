@@ -48,8 +48,10 @@ const vScrollIntoView: Directive<HTMLElement, boolean> = {
 </template>
 
 <style scoped lang="scss">
+@use "../styles/mixins";
+
 .options-list {
-  --count: 4;
+  --count: 3;
   --v-padding: 8px;
   --bottom-radius: 4px;
   --top-radius: 0;
@@ -64,6 +66,10 @@ const vScrollIntoView: Directive<HTMLElement, boolean> = {
   align-items: stretch;
   max-height: calc((var(--count) + 0.6) * (1em + var(--v-padding) * 2));
   overflow-y: scroll;
+
+  @include mixins.bp-large {
+    --count: 4;
+  }
 }
 
 .option {
