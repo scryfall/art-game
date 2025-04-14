@@ -8,8 +8,13 @@ type Props = {
   disabled: boolean;
 };
 
+type Emits = {
+  /** The user has submitted a card name for their guess. */
+  submit: [value: string];
+};
+
 defineProps<Props>();
-const emit = defineEmits(["submit"]);
+const emit = defineEmits<Emits>();
 
 const form = useTemplateRef("form");
 const guess = ref("");
@@ -55,7 +60,7 @@ const onFocusOut = (event: FocusEvent) => {
       v-if="autocompleteEnabled"
       class="autocomplete"
       :focused="focused"
-      :guess="guess"
+      :guess="guess.trim()"
       @pick="onAutocompletePick"
     />
     <button type="submit" class="vh" tabindex="-1">Check</button>

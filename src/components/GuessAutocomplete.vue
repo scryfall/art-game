@@ -22,13 +22,33 @@ type Props = {
   focused: boolean;
 };
 
+type Emits = {
+  /** The user has picked an answer from autocomplete. */
+  pick: [value: string];
+};
+
 const props = defineProps<Props>();
-const emit = defineEmits(["pick"]);
+const emit = defineEmits<Emits>();
 
 /** lastPick caches our last picked card, so that we don't re-look it up on a props change. */
 const lastPick = ref("");
 const autocompleteOptions = ref<AutocompleteResponse>({ timestamp: 0, options: [] });
 const AUTOCOMPLETE_DELAY = 500;
+/** Your guess must be at least this long to be autocompleted. */
+const MIN_AUTOCOMPLETE_LENGTH = 3;
+/** There's a lot of asynchronous stuff happening in here! Enable this for debug logging. */
+const ENABLE_LOGGING = false;
+
+/**
+ * Log something to the console. If {@link ENABLE_LOGGING} is false, these log lines are squashed.
+ *
+ * @param args Anything you want to log.
+ */
+const debug = (...args: unknown[]) => {
+  if (ENABLE_LOGGING) {
+    console.debug("[Autocomplete]", origin, Date.now(), ...args);
+  }
+};
 
 const setAutocomplete = (timestamp: number, options: string[]) => {
   autocompleteOptions.value = {
@@ -41,12 +61,45 @@ const clearAutocomplete = () => {
   setAutocomplete(Date.now(), []);
 };
 
+/**
+ * A debounced handler for running autocomplete requests.
+ *
+ * You should hit this handler with all changes to the input field, even if they won't be autocompleted, and even if you're clearing the autocomplete.
+ * This lets the debounced lookup remain up to date with whatever was last entered.
+ */
 const autocompleteCardName = debounce(
   async (text: string) => {
+    if (text.length < MIN_AUTOCOMPLETE_LENGTH) {
+      debug(
+        "[Debounce]",
+        "Text was too short. Skipping autocomplete.",
+        "(The watcher should have cleared autocomplete already.)"
+      );
+      return;
+    }
+
+    if (text === lastPick.value) {
+      debug(
+        "[Debounce]",
+        "Text matched the last pick. Skipping autocomplete.",
+        "(The watcher should have cleared autocomplete already.)"
+      );
+      return;
+    }
+
     const requestTime = Date.now();
+    debug("[Debounce]", "Fetching suggestions for", text);
     const options = await ScryfallApiInstance.autocomplete(text);
     if (requestTime > autocompleteOptions.value.timestamp) {
+      debug("[Debounce]", `Found ${options.length} suggestions for`, text);
       setAutocomplete(requestTime, options);
+    } else {
+      debug(
+        "[Debounce]",
+        `Found ${options.length} suggestions for`,
+        text,
+        "(discarded due to age)"
+      );
     }
   },
   AUTOCOMPLETE_DELAY,
@@ -58,24 +111,26 @@ const autocompleteCardName = debounce(
 watch(
   () => props.guess,
   (value) => {
+    autocompleteCardName(value);
+
+    // When we pick() an answer, the input might be set to that answer. We want to avoid then immediately re-looking-up that answer.
     if (value === lastPick.value) {
-      // We picked a value. That value was set at the parent, then propagated down to us.
-      // We can ignore this.
-      return;
+      debug("[Watch]", "Immediately clearing from lastpick match");
+      clearAutocomplete();
     } else {
-      // The value was changed since our last pick, so we can forget our last pick.
       lastPick.value = "";
     }
 
-    if (value.length >= 3) {
-      autocompleteCardName(value);
-    } else {
+    // Instantly clear short inputs.
+    if (value.length <= MIN_AUTOCOMPLETE_LENGTH) {
+      debug("[Watch]", "Immediately clearing from short guess input");
       clearAutocomplete();
     }
   }
 );
 
 const pick = (option: string) => {
+  debug("[Pick]", "Picked", option);
   emit("pick", option);
   lastPick.value = option;
   clearAutocomplete();
