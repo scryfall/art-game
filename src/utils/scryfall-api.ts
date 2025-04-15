@@ -23,9 +23,9 @@ export class ScryfallApi {
    * @param oracleId The oracle ID to request
    * @returns A card object
    */
-  async getRandomArt(oracleId: string) {
+  async getRandomArt(oracleId: string, query: string) {
     const url = new URL("https://api.scryfall.com/cards/random");
-    url.searchParams.set("q", `oracle_id:${oracleId} unique:art`);
+    url.searchParams.set("q", `${query} oracle_id:${oracleId} unique:art`);
 
     const card = await this.http.fetch<ScryfallCard>(url);
     return card;
