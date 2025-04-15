@@ -16,13 +16,7 @@ const start = (query: string) => {
   dispatch(startGame(query));
 };
 
-const commonCriteria = [
-  "-t:basic",
-  "-t:stickers",
-  "not:fullart",
-  "not:extra",
-  ...COMPATIBILITY_CRITERIA,
-];
+const commonCriteria = ["-t:basic", "-t:stickers", "not:extra", ...COMPATIBILITY_CRITERIA];
 
 function flatten(text: string[]) {
   return text.join(" ");
