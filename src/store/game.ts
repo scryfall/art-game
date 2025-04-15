@@ -3,6 +3,7 @@ import type { ScryfallCard } from "../models/scryfall-card";
 import { Outcome } from "../models/outcome";
 import { LoadingStatus } from "./common";
 import { ScryfallApiInstance } from "../utils/scryfall-api";
+import { wait } from "../utils/timer";
 
 export type GameGuess = { name: string; outcome: Outcome };
 
@@ -37,7 +38,9 @@ export const fetchNextCard = createAsyncThunk(
 
     const lookup = excludeOracleId ? `${query} -oracle_id:${excludeOracleId}` : query;
     const card = await ScryfallApiInstance.getRandomCard(lookup);
-    return card;
+    await wait(100);
+    const print = await ScryfallApiInstance.getRandomArt(card.oracle_id);
+    return print;
   }
 );
 
