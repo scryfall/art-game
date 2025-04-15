@@ -3,6 +3,7 @@ import { computed, ref } from "vue";
 import { startGame } from "../store";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { LoadingStatus } from "../store/common";
+import { COMPATIBILITY_CRITERIA } from "../config";
 
 const dispatch = useAppDispatch();
 const gameLoadStatus = useAppSelector((state) => state.game.status);
@@ -18,11 +19,9 @@ const start = (query: string) => {
 const commonCriteria = [
   "-t:basic",
   "-t:stickers",
-  "not:flavorname",
-  "not:reversible",
-  "not:transform",
   "not:fullart",
   "not:extra",
+  ...COMPATIBILITY_CRITERIA,
 ];
 
 function flatten(text: string[]) {
