@@ -4,9 +4,21 @@
   "type": "module",
   "description": "",
   "private": true,
-  "main": "index.js",
-  "author": "scarletcs",
-  "license": "UNLICENSED",
+  "license": "X11",
+  "contributors": [
+    {
+      "name": "Scryfall",
+      "url": "https://github.com/scryfall"
+    },
+    {
+      "name": "scarletcs",
+      "url": "https://github.com/scarletcs"
+    },
+    {
+      "name": "crookedneighbor",
+      "url": "https://github.com/crookedneighbor"
+    }
+  ],
   "engines": {
     "node": "^22"
   },
