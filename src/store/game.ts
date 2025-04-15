@@ -2,9 +2,7 @@ import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/tool
 import type { ScryfallCard } from "../models/scryfall-card";
 import { Outcome } from "../models/outcome";
 import { LoadingStatus } from "./common";
-import { ScryfallApi } from "../utils/scryfall-api";
-
-const scryfallApi = new ScryfallApi();
+import { ScryfallApiInstance } from "../utils/scryfall-api";
 
 export type GameGuess = { name: string; outcome: Outcome };
 
@@ -38,7 +36,7 @@ export const fetchNextCard = createAsyncThunk(
     const { query, excludeOracleId } = payload;
 
     const lookup = excludeOracleId ? `${query} -oracle_id:${excludeOracleId}` : query;
-    const card = await scryfallApi.getRandomCard(lookup);
+    const card = await ScryfallApiInstance.getRandomCard(lookup);
     return card;
   }
 );

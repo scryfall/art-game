@@ -13,8 +13,11 @@ const theme = useAppSelector((state) => state.config.theme);
       <div class="left"></div>
       <div class="middle">
         <a href="/">
-          <h1>
-            <img class="logo" src="/scryfall.svg" alt="Scryfall" />
+          <h1
+            aria-description="A game in which you guess the name of Magic cards based on their art."
+          >
+            <img class="logo" src="/scryfall.svg" alt="" />
+            <span class="vh">Scryfall</span>
             <span>Art Game</span>
           </h1>
         </a>

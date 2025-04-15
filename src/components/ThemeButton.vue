@@ -1,17 +1,14 @@
 <script setup lang="ts">
 import { Theme } from "../models/theme";
-import { useAppDispatch, useAppSelector, setTheme } from "../store";
 import MoonSolidSvg from "./Svg/MoonSolidSvg.vue";
 import SunOutlineSvg from "./Svg/SunOutlineSvg.vue";
+import { useAppDispatch, useAppSelector, toggleTheme } from "../store";
+import { capitalize } from "../utils/string";
 
 const dispatch = useAppDispatch();
 const theme = useAppSelector((state) => state.config.theme);
 const toggle = () => {
-  if (theme.value === Theme.Dark) {
-    dispatch(setTheme(Theme.Light));
-  } else {
-    dispatch(setTheme(Theme.Dark));
-  }
+  dispatch(toggleTheme(theme.value));
 };
 </script>
 
@@ -29,7 +26,7 @@ const toggle = () => {
     <div class="icon moon" aria-hidden="true">
       <MoonSolidSvg />
     </div>
-    <div class="vh">{{ theme }} theme. Press to toggle.</div>
+    <div class="vh">{{ capitalize(theme) }} theme. Press to toggle.</div>
   </button>
 </template>
 
