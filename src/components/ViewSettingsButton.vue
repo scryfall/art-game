@@ -23,7 +23,7 @@ const onKeydown = (event: KeyboardEvent) => {
 </script>
 
 <template>
-  <button type="button" class="settings btn-clear" @click="click" @keydown="onKeydown">
+  <button type="button" class="settings btn-icon" @click="click" @keydown="onKeydown">
     <div class="icon" aria-hidden="true">
       <CogOutlineSvg v-if="isViewingSettings" />
       <CogSolidSvg v-else />

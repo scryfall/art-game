@@ -4,39 +4,44 @@ import { startGame } from "../store";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { LoadingStatus } from "../store/common";
 import { COMPATIBILITY_CRITERIA } from "../config";
+import CustomGameSetup from "./CustomGameSetup.vue";
+
+type Preset = {
+  id: string;
+  label: string;
+  criteria: string[];
+};
 
 const dispatch = useAppDispatch();
 const gameLoadStatus = useAppSelector((state) => state.game.status);
 
-/**
- * Start the game with a given query.
- * @param query The format query to work with
- */
-const start = (query: string) => {
-  dispatch(startGame(query));
-};
-
-const commonCriteria = ["-t:basic", "-t:stickers", "not:extra", ...COMPATIBILITY_CRITERIA];
+const custom = ref(false);
 
 function flatten(text: string[]) {
   return text.join(" ");
 }
 
 /**
+ * Start the game with a given query.
+ * @param criteria The format query to work with
+ */
+const start = (criteria: string[]) => {
+  const query = flatten(criteria);
+  dispatch(startGame(query));
+};
+
+const formatCriteria = ["-t:basic", "-t:stickers", "not:extra", ...COMPATIBILITY_CRITERIA];
+
+/**
  * The supported formats in the art game.
  * This is the order they'll show up on the front page, too.
  */
-const presets = [
-  { id: "standard", label: "Standard", query: flatten(["f:standard", ...commonCriteria]) },
-  { id: "pioneer", label: "Pioneer", query: flatten(["f:pioneer", ...commonCriteria]) },
-  { id: "modern", label: "Modern", query: flatten(["f:modern", ...commonCriteria]) },
-  { id: "vintage", label: "Vintage", query: flatten(["f:vintage", ...commonCriteria]) },
+const presets: Preset[] = [
+  { id: "standard", label: "Standard", criteria: ["f:standard", ...formatCriteria] },
+  { id: "pioneer", label: "Pioneer", criteria: ["f:pioneer", ...formatCriteria] },
+  { id: "modern", label: "Modern", criteria: ["f:modern", ...formatCriteria] },
+  { id: "vintage", label: "Vintage", criteria: ["f:vintage", ...formatCriteria] },
 ];
-
-const customQuery = ref("");
-const customQueryFull = computed(() => {
-  return flatten([`(${customQuery.value})`, ...commonCriteria]);
-});
 
 const disabled = computed(() => {
   return gameLoadStatus.value !== LoadingStatus.Idle;
@@ -45,73 +50,94 @@ const disabled = computed(() => {
 
 <template>
   <div class="screen">
-    <p>Which format should we show cards from?</p>
+    <div class="subscreen" v-if="!custom">
+      <p>Which format should we show cards from?</p>
 
-    <div class="formats">
-      <button
-        v-for="(preset, index) in presets"
-        :id="`${preset.id}-format-button`"
-        :key="index"
-        type="button"
-        class="btn btn-large"
-        @click="start(preset.query)"
-        @keypress.enter="start(preset.query)"
-        :disabled="disabled"
-      >
-        {{ preset.label }}
-      </button>
+      <div class="options">
+        <button
+          v-for="(preset, index) in presets"
+          :id="`${preset.id}-format-button`"
+          :key="index"
+          type="button"
+          class="btn btn-large"
+          @click="start(preset.criteria)"
+          :disabled="disabled"
+        >
+          {{ preset.label }}
+        </button>
+
+        <div class="separator">or</div>
+
+        <button
+          type="button"
+          class="btn btn-large"
+          @click="() => (custom = true)"
+          :disabled="disabled"
+        >
+          Custom game
+        </button>
+      </div>
     </div>
 
-    <p>
-      or, use your own
-      <a href="https://scryfall.com/docs/syntax" target="_blank">Scryfall query</a>:
-    </p>
+    <CustomGameSetup
+      v-if="custom"
+      class="subscreen"
+      :disabled="disabled"
+      @cancel="() => (custom = false)"
+      @submit="(criteria) => start(criteria)"
+    />
 
-    <form class="custom" @submit.prevent="start(customQueryFull)">
-      <label class="vh" for="custom-query">Custom Scryfall Query</label>
-      <input
-        v-model="customQuery"
-        id="custom-query"
-        class="input-large"
-        type="text"
-        placeholder="set:dom type:creature"
-        :disabled="disabled"
-      />
-      <button
-        type="submit"
-        class="btn btn-large"
-        value="Start"
-        :disabled="disabled || customQuery.length === 0"
-      >
-        Start
-      </button>
-    </form>
+    <div v-if="gameLoadStatus === LoadingStatus.Pending" class="getting-ready">
+      <p>Getting your game ready...</p>
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 @use "../styles/mixins";
 
-.screen {
+.screen,
+.subscreen {
   display: flex;
   flex-flow: column;
   align-items: center;
 }
 
-.formats {
+.subscreen {
+  min-width: 200px;
+  max-width: min(400px, 90vw);
+}
+
+.options {
   display: flex;
   flex-flow: column;
   gap: 16px;
   min-width: 200px;
-  max-width: 90vw;
 }
 
 p {
   margin: 16px 0;
 }
 
-.custom {
+.separator {
+  position: relative;
+  text-align: center;
+  font-size: 90%;
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 8px;
+  font-style: italic;
+
+  &::before,
+  &::after {
+    content: "";
+    border-top: 1px solid currentColor;
+    flex: 1;
+    opacity: 50%;
+  }
+}
+
+.getting-ready {
+  text-align: center;
 }
 </style>

@@ -65,11 +65,6 @@ const onKeydown = (event: KeyboardEvent) => {
   padding: 0 16px;
 }
 
-h2 {
-  font-size: 20px;
-  text-align: center;
-}
-
 section {
   max-width: 100%;
 }
