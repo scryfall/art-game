@@ -41,7 +41,7 @@ const submitGuess = (guess: string) => {
 
 <template>
   <div class="screen" :data-answer="card?.name">
-    <CardArt v-if="card" :card="card" :loadingNext="nextCardStatus" />
+    <CardArt v-if="card" :card="card" :loading-next="nextCardStatus" />
 
     <p class="error-loading" v-if="nextCardStatus === LoadingStatus.Failed">
       There was an error loading the next card. Check your internet connection and

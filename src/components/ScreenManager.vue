@@ -3,12 +3,15 @@ import PickModeScreen from "./PickModeScreen.vue";
 import GettingReadyScreen from "./GettingReadyScreen.vue";
 import { LoadingStatus, useAppSelector } from "../store";
 import GameScreen from "./GameScreen.vue";
+import SettingsScreen from "./SettingsScreen.vue";
 
+const isViewingSettings = useAppSelector((state) => state.config.viewConfigScreen);
 const gameLoadStatus = useAppSelector((state) => state.game.status);
 </script>
 
 <template>
-  <PickModeScreen v-if="gameLoadStatus === LoadingStatus.Idle" />
+  <SettingsScreen v-if="isViewingSettings" />
+  <PickModeScreen v-else-if="gameLoadStatus === LoadingStatus.Idle" />
   <GettingReadyScreen v-else-if="gameLoadStatus === LoadingStatus.Pending" />
   <GameScreen v-else-if="gameLoadStatus === LoadingStatus.Success" />
 </template>
