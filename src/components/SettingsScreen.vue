@@ -18,14 +18,9 @@ const onKeydown = (event: KeyboardEvent) => {
 </script>
 
 <template>
-  <div
-    class="screen"
-    role="application"
-    aria-description="Tab through options to see settings. Escape to exit."
-    @keydown="onKeydown"
-  >
+  <div class="screen" aria-description="Escape to exit settings." @keydown="onKeydown">
     <section>
-      <h2 tabindex="0">Settings</h2>
+      <h2>Settings</h2>
 
       <div class="settings-grid">
         <!-- Elements in this grid automatically alternate between left and right column. -->
@@ -51,7 +46,7 @@ const onKeydown = (event: KeyboardEvent) => {
     </section>
 
     <section class="credits">
-      <h2 tabindex="0" aria-description="This section is prose.">Credits</h2>
+      <h2>Credits</h2>
       <p>
         Made by
         <a href="https://github.com/scarletcs/" target="_blank">scarletcs</a>, with contributions

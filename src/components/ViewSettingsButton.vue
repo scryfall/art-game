@@ -23,20 +23,13 @@ const onKeydown = (event: KeyboardEvent) => {
 </script>
 
 <template>
-  <button
-    type="button"
-    class="settings btn-clear"
-    @click="click"
-    @keydown="onKeydown"
-    :aria-description="
-      isViewingSettings ? 'Open. Tab to view. Escape to exit.' : 'Press to open settings.'
-    "
-  >
+  <button type="button" class="settings btn-clear" @click="click" @keydown="onKeydown">
     <div class="icon" aria-hidden="true">
       <CogOutlineSvg v-if="isViewingSettings" />
       <CogSolidSvg v-else />
     </div>
-    <div class="vh">Settings</div>
+    <div class="vh" v-if="isViewingSettings">Close settings</div>
+    <div class="vh" v-else>Open settings</div>
   </button>
 </template>
 
