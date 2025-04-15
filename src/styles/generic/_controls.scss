@@ -27,17 +27,18 @@ input:disabled {
   cursor: not-allowed;
 }
 
+*:focus {
+  outline: 2px solid var(--focus-outline-color);
+}
+
 button:focus,
 input:focus,
 a:focus {
   box-shadow: 0 0 6px var(--focus-outline-color);
 }
 
-*:focus {
-  outline: 2px solid var(--focus-outline-color);
-}
-
-a:link {
+a:link,
+.link {
   outline-offset: 2px;
   border-radius: 2px;
 }

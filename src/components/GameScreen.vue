@@ -51,12 +51,14 @@ const submitGuess = (guess: string) => {
     </p>
 
     <p>
-      Which card is this?
-      <span class="skip">
-        (<button type="button" class="skip link" @click.prevent="skip" @keypress.enter="skip">
-          skip</button
-        >)
-      </span>
+      Which card is this? (<button
+        type="button"
+        class="skip link"
+        @click.prevent="skip"
+        @keypress.enter="skip"
+      >
+        skip</button
+      >)
     </p>
 
     <GuessInput
