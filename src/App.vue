@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import ScreenManager from "./components/ScreenManager.vue";
 import ThemeButton from "./components/ThemeButton.vue";
 import ViewSettingsButton from "./components/ViewSettingsButton.vue";
 import { useAppSelector } from "./store/hooks";
 
 const theme = useAppSelector((state) => state.config.theme);
+const currentYear = ref(new Date().getFullYear());
 </script>
 
 <template>
@@ -31,6 +33,13 @@ const theme = useAppSelector((state) => state.config.theme);
     <main>
       <ScreenManager />
     </main>
+
+    <footer>
+      <div class="notice">
+        © {{ currentYear }} Scryfall, LLC &middot;
+        <a href="https://scryfall.com/docs/terms" target="_blank">Terms of Service</a>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -102,5 +111,17 @@ header {
 
 main {
   flex: 1;
+}
+
+footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+
+  .notice {
+    font-size: 12px;
+    font-style: italic;
+    opacity: 0.6;
+  }
 }
 </style>
