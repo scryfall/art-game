@@ -5,6 +5,7 @@ import { makeCard } from "../../models/__test__/card.util";
 
 vi.mock("axios", { spy: true });
 
+const expectUri = (text: string) => expect.stringContaining(encodeURI(text));
 const expectUriComponent = (text: string) => expect.stringContaining(encodeURIComponent(text));
 
 describe.sequential("ScryfallApi", () => {
@@ -26,7 +27,8 @@ describe.sequential("ScryfallApi", () => {
       const card = await api.getRandomCard(query);
 
       expect(card).toEqual(CARD);
-      expect(axios.get).toHaveBeenCalledExactlyOnceWith(expectUriComponent(query));
+      expect(axios.get).toHaveBeenCalledWith(expectUri("/random"));
+      expect(axios.get).toHaveBeenCalledWith(expectUriComponent(query));
     });
   });
 
@@ -43,8 +45,9 @@ describe.sequential("ScryfallApi", () => {
       const card = await api.getRandomArt(ORACLE_CARD.oracle_id, query);
 
       expect(card).toEqual(PRINT);
-      expect(axios.get).toHaveBeenCalledExactlyOnceWith(expectUriComponent(query));
-      expect(axios.get).toHaveBeenCalledExactlyOnceWith(
+      expect(axios.get).toHaveBeenCalledWith(expectUri("/random"));
+      expect(axios.get).toHaveBeenCalledWith(expectUriComponent(query));
+      expect(axios.get).toHaveBeenCalledWith(
         expectUriComponent(`oracle_id:${ORACLE_CARD.oracle_id}`)
       );
     });
