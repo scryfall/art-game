@@ -38,6 +38,8 @@ const currentYear = ref(new Date().getFullYear());
       <div class="notice">
         © {{ currentYear }} Scryfall, LLC &middot;
         <a href="https://scryfall.com/docs/terms" target="_blank">Terms of Service</a>
+        &middot;
+        <a href="https://scryfall.com/docs/privacy" target="_blank">Privacy & Security</a>
       </div>
     </footer>
   </div>
