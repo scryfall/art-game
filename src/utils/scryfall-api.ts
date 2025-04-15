@@ -21,6 +21,7 @@ export class ScryfallApi {
   /**
    * Get a random artwork for a given card.
    * @param oracleId The oracle ID to request
+   * @param query The query with constraints on the card art
    * @returns A card object
    */
   async getRandomArt(oracleId: string, query: string) {
