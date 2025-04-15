@@ -2,15 +2,18 @@
 import { Outcome } from "../models/outcome";
 import type { GameGuess } from "../store";
 import type { ScryfallCard } from "../models/scryfall-card";
+import { useCardUri } from "../composables/useCardLink";
 
-defineProps<{ guess: GameGuess; card: ScryfallCard }>();
+const props = defineProps<{ guess: GameGuess; card: ScryfallCard }>();
+
+const cardUri = useCardUri(props.card);
 </script>
 
 <template>
   <div class="guess-feedback">
-    <div class="figure">
+    <a :href="cardUri" target="_blank" class="figure">
       <img class="card-image" :src="card.image_uris.normal" :data-set="card.set" />
-    </div>
+    </a>
 
     <div class="outcome">
       <p>
@@ -18,7 +21,7 @@ defineProps<{ guess: GameGuess; card: ScryfallCard }>();
         <span v-else-if="guess.outcome === Outcome.Incorrect">Incorrect.</span>
         <span v-else-if="guess.outcome === Outcome.Skip">Skipped.</span>
         That was
-        <a :href="card.scryfall_uri" class="cardname" target="_blank">{{ card.name }}</a
+        <a :href="cardUri" class="cardname" target="_blank">{{ card.name }}</a
         >.
       </p>
       <p v-if="guess.outcome === Outcome.Incorrect">You guessed: {{ guess.name }}</p>
@@ -31,11 +34,11 @@ defineProps<{ guess: GameGuess; card: ScryfallCard }>();
   display: flex;
   align-items: center;
   margin: 0 auto;
+  gap: 20px;
 }
 
 .figure {
   flex-shrink: 0.5;
-  margin-right: 20px;
 
   display: flex;
   align-items: center;
