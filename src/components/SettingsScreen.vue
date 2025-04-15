@@ -26,10 +26,9 @@ const onKeydown = (event: KeyboardEvent) => {
         <!-- Elements in this grid automatically alternate between left and right column. -->
         <!-- Descriptions are full width. -->
         <div class="label" :id="autocompleteId">
-          <div>Allow autocomplete<span class="vh">.</span></div>
+          <div>Autocomplete card names<span class="vh">.</span></div>
           <div :id="autocompleteDescId" class="description">
-            If enabled, you'll see autocomplete suggestions for card names. They won't necessarily
-            be limited to cards in your chosen format.
+            Card name suggestions won't be limited to your chosen format. Choose wisely!
           </div>
         </div>
         <div class="option">
