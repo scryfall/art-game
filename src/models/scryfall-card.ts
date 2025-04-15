@@ -4,6 +4,7 @@ type CardFace = {
 };
 
 export type ScryfallCard = {
+  object: "card";
   id: string;
   oracle_id: string;
   name: string;

@@ -23,7 +23,6 @@
   "devDependencies": {
     "@reduxjs/toolkit": "^2.6.1",
     "@reduxjs/vue-redux": "^1.0.1",
-    "@scryfall/api-types": "^1.0.0-alpha.4",
     "@types/js-levenshtein": "^1.1.3",
     "@types/lodash.debounce": "^4.0.9",
     "@types/unorm": "^1.3.31",

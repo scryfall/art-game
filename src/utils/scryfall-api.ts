@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { ScryfallCard } from "../models/scryfall-card";
-import type { ScryfallCatalog } from "@scryfall/api-types";
+import type { ScryfallCatalog } from "../models/scryfall-catalog";
 
 export class ScryfallApi {
   /**
