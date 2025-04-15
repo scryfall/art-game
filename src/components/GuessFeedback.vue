@@ -2,11 +2,21 @@
 import { Outcome } from "../models/outcome";
 import type { GameGuess } from "../store";
 import type { ScryfallCard } from "../models/scryfall-card";
-import { useCardUri } from "../composables/useCardLink";
+import { ref, watch } from "vue";
 
 const props = defineProps<{ guess: GameGuess; card: ScryfallCard }>();
 
-const cardUri = useCardUri(props.card);
+function getNormalizedUri(card: ScryfallCard) {
+  const url = new URL(card.scryfall_uri);
+  url.searchParams.set("utm_source", "artgame");
+  return url.toString();
+}
+
+const cardUri = ref(getNormalizedUri(props.card));
+
+watch(props, (p) => {
+  cardUri.value = getNormalizedUri(p.card);
+});
 </script>
 
 <template>
