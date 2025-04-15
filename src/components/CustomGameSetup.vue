@@ -59,14 +59,14 @@ const onCancel = () => {
       Enter a search to find cards. You might need to use the
       <a href="https://scryfall.com/docs/syntax" target="_blank">Syntax reference</a>.
     </p>
-    <div>
+    <div class="additional">
       <label>
         <input type="checkbox" />
-        <span>Allow extras</span>
+        <span>Exclude extras</span>
       </label>
       <label>
         <input type="checkbox" />
-        <span>Allow stickers</span>
+        <span>Exclude stickers</span>
       </label>
     </div>
   </form>
@@ -103,5 +103,15 @@ header {
 
 .hint {
   padding: 0 10px;
+}
+
+.additional {
+  display: flex;
+
+  label {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+  }
 }
 </style>

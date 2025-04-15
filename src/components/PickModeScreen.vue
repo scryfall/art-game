@@ -30,7 +30,7 @@ const start = (criteria: string[]) => {
   dispatch(startGame(query));
 };
 
-const formatCriteria = ["-t:basic", "-t:stickers", "not:extra", ...COMPATIBILITY_CRITERIA];
+const formatCriteria = ["-t:stickers", "not:extra", ...COMPATIBILITY_CRITERIA];
 
 /**
  * The supported formats in the art game.
