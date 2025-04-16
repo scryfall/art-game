@@ -1,9 +1,19 @@
 import type { ScryfallCard } from "../models/scryfall-card";
 import type { ScryfallCatalog } from "../models/scryfall-catalog";
 import { Http } from "./http";
+import { wait } from "./timer";
 
 export class ScryfallApi {
   private readonly http = new Http();
+
+  /**
+   * Await this method to wait for a standard rate limit period between requests.
+   *
+   * @see {@link https://scryfall.com/docs/api#rate-limits-and-good-citizenship Rate limits and good citizenship}
+   */
+  async rateLimit() {
+    await wait(50);
+  }
 
   /**
    * Get a random card from the Random API.
