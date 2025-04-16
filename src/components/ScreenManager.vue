@@ -3,7 +3,7 @@ import PickModeScreen from "./PickModeScreen.vue";
 import GettingReadyScreen from "./GettingReadyScreen.vue";
 import { LoadingStatus, useAppSelector } from "../store";
 import GameScreen from "./GameScreen.vue";
-import SettingsScreen from "./SettingsScreen.vue";
+import SettingsScreen from "../pages/SettingsScreen.vue";
 
 const isViewingSettings = useAppSelector((state) => state.config.viewConfigScreen);
 const gameLoadStatus = useAppSelector((state) => state.game.status);

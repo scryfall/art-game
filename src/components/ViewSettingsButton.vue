@@ -1,36 +1,40 @@
 <script setup lang="ts">
-import { setViewConfigScreen, useAppDispatch, useAppSelector } from "../store";
+import { computed } from "vue";
+import { useRoute } from "vue-router";
+
 import { KeyCode } from "../utils/keyboard";
 import CogOutlineSvg from "./Svg/CogOutlineSvg.vue";
 import CogSolidSvg from "./Svg/CogSolidSvg.vue";
 
-const dispatch = useAppDispatch();
-const isViewingSettings = useAppSelector((state) => state.config.viewConfigScreen);
+const route = useRoute();
 
-const click = () => {
-  if (isViewingSettings.value) {
-    dispatch(setViewConfigScreen(false));
-  } else {
-    dispatch(setViewConfigScreen(true));
-  }
-};
+const isViewingSettings = computed(() => route.path === "/settings");
 
 const onKeydown = (event: KeyboardEvent) => {
   if (event.code === KeyCode.Escape) {
-    dispatch(setViewConfigScreen(false));
+    // TODO go to current path
   }
 };
+
+const link = computed(() => {
+  if (isViewingSettings.value) {
+    // TODO go to current path
+    return "/";
+  }
+
+  return "/settings";
+});
 </script>
 
 <template>
-  <button type="button" class="settings btn-clear" @click="click" @keydown="onKeydown">
+  <RouterLink :to="link" class="settings btn-clear">
     <div class="icon" aria-hidden="true">
       <CogOutlineSvg v-if="isViewingSettings" />
       <CogSolidSvg v-else />
     </div>
     <div class="vh" v-if="isViewingSettings">Close settings</div>
     <div class="vh" v-else>Open settings</div>
-  </button>
+  </RouterLink>
 </template>
 
 <style scoped lang="scss">
