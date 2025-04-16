@@ -4,7 +4,7 @@ import { Http } from "./http";
 import { wait } from "./timer";
 
 export class ScryfallApi {
-  private readonly http = new Http();
+  constructor(private readonly http = new Http()) {}
 
   /**
    * Await this method to wait for a standard rate limit period between requests.
