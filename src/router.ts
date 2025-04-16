@@ -1,6 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
 
-import ScreenManager from "./components/ScreenManager.vue";
+import ScreenManager from "./pages/ScreenManager.vue";
 import SettingsScreen from "./pages/SettingsScreen.vue";
 
 const routes = [
