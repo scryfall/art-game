@@ -24,7 +24,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc -b && vite build",
+    "build": "vue-tsc -b && vite build && cp dist/index.html dist/404.html",
     "preview": "vite preview",
     "test": "vitest",
     "lint": "eslint ."
