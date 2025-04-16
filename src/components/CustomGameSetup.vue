@@ -107,11 +107,13 @@ header {
 
 .additional {
   display: flex;
+  gap: 20px;
 
   label {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
+    gap: 8px;
   }
 }
 </style>
