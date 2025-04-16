@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useRoute } from "vue-router";
-
-import { KeyCode } from "../utils/keyboard";
 import CogOutlineSvg from "./Svg/CogOutlineSvg.vue";
 import CogSolidSvg from "./Svg/CogSolidSvg.vue";
 
@@ -10,15 +8,11 @@ const route = useRoute();
 
 const isViewingSettings = computed(() => route.path === "/settings");
 
-const onKeydown = (event: KeyboardEvent) => {
-  if (event.code === KeyCode.Escape) {
-    // TODO go to current path
-  }
-};
-
 const link = computed(() => {
   if (isViewingSettings.value) {
-    // TODO go to current path
+    // TODO when different formats have different urls
+    // this should go to the current game, rather than
+    // to the home route
     return "/";
   }
 

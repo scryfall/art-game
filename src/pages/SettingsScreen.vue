@@ -13,7 +13,9 @@ const autocompleteDescId = useId();
 const onKeydown = (event: KeyboardEvent) => {
   if (event.code === KeyCode.Escape) {
     event.preventDefault();
-    // TODO go to current app page
+    // TODO when different formats have different urls
+    // this should go to the current game, rather than
+    // to the home route
     router.push("/");
   }
 };
