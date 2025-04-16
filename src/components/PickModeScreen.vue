@@ -3,7 +3,7 @@ import { computed, ref } from "vue";
 import { startGame } from "../store";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { LoadingStatus } from "../store/common";
-import { COMPATIBILITY_CRITERIA } from "../config";
+import { AVOID_CRITERIA, COMPATIBILITY_CRITERIA } from "../config";
 import CustomGameSetup from "./CustomGameSetup.vue";
 
 type Preset = {
@@ -30,7 +30,7 @@ const start = (criteria: string[]) => {
   dispatch(startGame(query));
 };
 
-const formatCriteria = ["-t:stickers", "not:extra", ...COMPATIBILITY_CRITERIA];
+const formatCriteria = ["-t:stickers", "not:extra", ...COMPATIBILITY_CRITERIA, ...AVOID_CRITERIA];
 
 /**
  * The supported formats in the art game.
