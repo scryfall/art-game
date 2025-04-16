@@ -3,6 +3,7 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 import CogOutlineSvg from "./Svg/CogOutlineSvg.vue";
 import CogSolidSvg from "./Svg/CogSolidSvg.vue";
+import router from "../router";
 
 const route = useRoute();
 
@@ -10,10 +11,11 @@ const isViewingSettings = computed(() => route.path === "/settings");
 
 const link = computed(() => {
   if (isViewingSettings.value) {
-    // TODO when different formats have different urls
-    // this should go to the current game, rather than
-    // to the home route
-    return "/";
+    // if we're currently on the settings page and the settings
+    // link is pressed, then we want to go back to whatever the
+    // previous page was. And if /settings is the first page
+    // the user lands on, we go to /
+    return router.options.history.state.back?.toString() ?? "/";
   }
 
   return "/settings";
