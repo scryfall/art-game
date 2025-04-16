@@ -1,11 +1,12 @@
 import type { ScryfallCard } from "../scryfall-card";
+import { uuidv4 } from "../uuid";
 
 export function makeCard(overrides: Partial<ScryfallCard> = {}) {
   const card: ScryfallCard = {
     object: "card",
     name: "<card name>",
-    id: "<scryfall id>",
-    oracle_id: "<oracle id>",
+    id: uuidv4(),
+    oracle_id: uuidv4(),
     scryfall_uri: "<scryfall uri>",
     type_line: "<type line>",
     set: "<set code>",
