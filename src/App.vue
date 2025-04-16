@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import ScreenManager from "./components/ScreenManager.vue";
 import ThemeButton from "./components/ThemeButton.vue";
 import ViewSettingsButton from "./components/ViewSettingsButton.vue";
 import { useAppSelector } from "./store/hooks";
+import { RouterView } from "vue-router";
 
 const theme = useAppSelector((state) => state.config.theme);
 const currentYear = ref(new Date().getFullYear());
@@ -31,7 +31,7 @@ const currentYear = ref(new Date().getFullYear());
     </header>
 
     <main>
-      <ScreenManager />
+      <RouterView />
     </main>
 
     <footer>

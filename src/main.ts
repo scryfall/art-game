@@ -1,10 +1,11 @@
 import { createApp } from "vue";
 import "./styles/main.scss";
 import App from "./App.vue";
+import router from "./router";
 import { provideStoreToApp } from "@reduxjs/vue-redux";
 import { loadConfig, store } from "./store";
 
-const app = createApp(App);
+const app = createApp(App).use(router);
 store.dispatch(loadConfig());
 provideStoreToApp(app, { store });
 app.mount("#app");
