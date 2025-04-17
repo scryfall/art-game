@@ -118,7 +118,7 @@ describe("getCardNames", () => {
           "The Lost Valley",
         ],
       ],
-    ])("includes oracle and flavor name cards for", (_, card, expectedNames) => {
+    ])("includes oracle and flavor name cards for %s", (_, card, expectedNames) => {
       expect(getCardNames(card).sort()).toEqual(expectedNames.sort());
     });
   });
