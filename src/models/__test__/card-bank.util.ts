@@ -51,4 +51,11 @@ export const CardBank = {
     { name: "Kellan, the Fae-Blooded", type_line: "Legendary Creature — Human Faerie" },
     { name: "Birthright Boon", type_line: "Sorcery — Adventure" }
   ),
+
+  /** Touchdown!: basic card with flavor name */
+  Touchdown: makeCard({
+    name: "Approach of the Second Sun",
+    type_line: "Sorcery",
+    flavor_name: "Touchdown!",
+  }),
 };

@@ -72,4 +72,12 @@ describe("getCardNames", () => {
       expect(getCardNames(card).sort()).toEqual(expectedNames.sort());
     });
   });
+
+  describe("flavor names", () => {
+    test.each<[string, ScryfallCard, string[]]>([
+      ["basic cards", CardBank.Touchdown, ["Approach of the Second Sun", "Touchdown!"]],
+    ])("includes oracle and flavor name cards for", (_, card, expectedNames) => {
+      expect(getCardNames(card).sort()).toEqual(expectedNames.sort());
+    });
+  });
 });

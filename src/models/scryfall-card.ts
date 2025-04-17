@@ -1,5 +1,6 @@
 type CardFace = {
   name: string;
+  flavor_name?: string;
   type_line: string;
 };
 
@@ -8,6 +9,7 @@ export type ScryfallCard = {
   id: string;
   oracle_id: string;
   name: string;
+  flavor_name?: string;
   scryfall_uri: string;
   type_line: string;
   /** The set code. */
