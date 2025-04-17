@@ -57,15 +57,19 @@ function getValidNames(face: { name: string; type_line: string; flavor_name?: st
     names.push(properName, title, `the ${title}`, `of the ${title}`);
   };
 
-  if (face.name.indexOf(comma) > 0) {
-    const [properName, title] = face.name.split(comma);
-    push(properName, title);
-  } else if (face.name.indexOf(ofThe) > 0) {
-    const [properName, title] = face.name.split(ofThe);
-    push(properName, title);
-  } else if (face.name.indexOf(the) > 0) {
-    const [properName, title] = face.name.split(the);
-    push(properName, title);
+  const numberOfNames = names.length;
+  for (let i = 0; i < numberOfNames; i++) {
+    const name = names[i];
+    if (name.indexOf(comma) > 0) {
+      const [properName, title] = name.split(comma);
+      push(properName, title);
+    } else if (name.indexOf(ofThe) > 0) {
+      const [properName, title] = name.split(ofThe);
+      push(properName, title);
+    } else if (name.indexOf(the) > 0) {
+      const [properName, title] = name.split(the);
+      push(properName, title);
+    }
   }
 
   return names;

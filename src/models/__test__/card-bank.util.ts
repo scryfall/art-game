@@ -59,6 +59,13 @@ export const CardBank = {
     flavor_name: "Touchdown!",
   }),
 
+  /** Eleven: a legendary card with a flavor name */
+  Eleven: makeCard({
+    name: "Cecily, Haunted Mage",
+    flavor_name: "Eleven, the Mage",
+    type_line: "Legendary Creature - Human Wizard",
+  }),
+
   /** African Swallow // European Swallow: Reversible card with flavor names on both sides */
   SwallowsOfParadise: makeSplitCard(
     {

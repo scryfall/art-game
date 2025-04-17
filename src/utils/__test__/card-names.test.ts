@@ -77,6 +77,22 @@ describe("getCardNames", () => {
     test.each<[string, ScryfallCard, string[]]>([
       ["basic cards", CardBank.Touchdown, ["Approach of the Second Sun", "Touchdown!"]],
       [
+        "legendary card",
+        CardBank.Eleven,
+        [
+          "Cecily, Haunted Mage",
+          "Eleven, the Mage",
+          "Eleven",
+          "Mage",
+          "the Mage",
+          "of the Mage",
+          "Cecily",
+          "Haunted Mage",
+          "of the Haunted Mage",
+          "the Haunted Mage",
+        ],
+      ],
+      [
         "reversible cards",
         CardBank.SwallowsOfParadise,
         [
@@ -116,6 +132,10 @@ describe("getCardNames", () => {
           "the Sunken Ruin",
           "Heart of the Explorer",
           "The Lost Valley",
+          "Explorer",
+          "Heart",
+          "of the Explorer",
+          "the Explorer",
         ],
       ],
     ])("includes oracle and flavor name cards for %s", (_, card, expectedNames) => {
