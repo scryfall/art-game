@@ -58,4 +58,18 @@ export const CardBank = {
     type_line: "Sorcery",
     flavor_name: "Touchdown!",
   }),
+
+  /** African Swallow // European Swallow: Reversible card with flavor names on both sides */
+  SwallowsOfParadise: makeSplitCard(
+    {
+      name: "Birds of Paradise",
+      type_line: "Creature — Bird",
+      flavor_name: "African Swallow",
+    },
+    {
+      name: "Birds of Paradise",
+      type_line: "Creature — Bird",
+      flavor_name: "European Swallow",
+    }
+  ),
 };

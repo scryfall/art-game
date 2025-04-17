@@ -1,6 +1,12 @@
 import type { ScryfallCard } from "../scryfall-card";
 import { uuidv4 } from "../uuid";
 
+interface Face {
+  name: string;
+  flavor_name?: string;
+  type_line: string;
+}
+
 export function makeCard(overrides: Partial<ScryfallCard> = {}) {
   const card: ScryfallCard = {
     object: "card",
@@ -23,11 +29,7 @@ export function makeCard(overrides: Partial<ScryfallCard> = {}) {
   return card;
 }
 
-export function makeSplitCard(
-  face1: { name: string; type_line: string },
-  face2: { name: string; type_line: string },
-  overrides: Partial<ScryfallCard> = {}
-) {
+export function makeSplitCard(face1: Face, face2: Face, overrides: Partial<ScryfallCard> = {}) {
   return makeCard({
     name: `${face1.name} // ${face2.name}`,
     type_line: `${face1.type_line} // ${face2.type_line}`,
