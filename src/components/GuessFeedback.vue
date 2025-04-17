@@ -31,8 +31,12 @@ watch(props, (p) => {
         <span v-else-if="guess.outcome === Outcome.Incorrect">Incorrect.</span>
         <span v-else-if="guess.outcome === Outcome.Skip">Skipped.</span>
         That was
+        <span v-if="card.flavor_name">
+          <a :href="cardUri" class="cardname" target="_blank">{{ card.flavor_name }}</a> (also known
+          as
+        </span>
         <a :href="cardUri" class="cardname" target="_blank">{{ card.name }}</a
-        >.
+        ><span v-if="card.flavor_name">)</span>.
       </p>
       <p v-if="guess.outcome === Outcome.Incorrect">You guessed: {{ guess.name }}</p>
     </div>
