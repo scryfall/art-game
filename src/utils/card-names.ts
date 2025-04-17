@@ -52,7 +52,6 @@ function getValidNames(face: { name: string; type_line: string }) {
   if (face.name.indexOf(comma) > 0) {
     const [properName, title] = face.name.split(comma);
     push(properName, title);
-    return names;
   } else if (face.name.indexOf(ofThe) > 0) {
     const [properName, title] = face.name.split(ofThe);
     push(properName, title);
