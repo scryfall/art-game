@@ -12,3 +12,7 @@ export function capitalize(value: string) {
   value = String(value);
   return value[0].toUpperCase() + value.slice(1);
 }
+
+export function flattenSearchCriteria(criteria: (string | boolean)[]) {
+  return criteria.flat().filter(Boolean).join(" ");
+}

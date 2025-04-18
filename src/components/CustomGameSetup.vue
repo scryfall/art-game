@@ -2,25 +2,24 @@
 import { computed, ref } from "vue";
 import { AVOID_CRITERIA, COMPATIBILITY_CRITERIA } from "../config";
 import ChevronLeft from "./Svg/ChevronLeft.vue";
-
-type Props = {
-  disabled: boolean;
-};
+import { LoadingStatus, startGame, useAppDispatch } from "../store";
+import { flattenSearchCriteria } from "../utils/string";
+import { ScryfallApiInstance } from "../utils/scryfall-api";
 
 type Emits = {
-  submit: [criteria: (string | boolean)[]];
   cancel: [];
 };
 
-defineProps<Props>();
 const emit = defineEmits<Emits>();
-const customQuery = ref("");
+const dispatch = useAppDispatch();
+const query = ref("");
+const status = ref(LoadingStatus.Idle);
 const excludeBadArt = ref(true);
 const excludeExtras = ref(true);
 const excludeStickers = ref(true);
 
 const criteria = computed(() => {
-  const criteria = [`(${customQuery.value})`, ...COMPATIBILITY_CRITERIA];
+  const criteria = [`(${query.value})`, ...COMPATIBILITY_CRITERIA];
   if (excludeBadArt?.value) {
     criteria.push(...AVOID_CRITERIA);
   }
@@ -33,8 +32,34 @@ const criteria = computed(() => {
   return criteria;
 });
 
-const onSubmit = () => {
-  emit("submit", criteria.value);
+const disabled = computed(() => {
+  return status.value === LoadingStatus.Pending;
+});
+
+const onSubmit = async () => {
+  status.value = LoadingStatus.Pending;
+  const search = flattenSearchCriteria(criteria.value);
+  let singleCardMode = false;
+
+  // preflight checks
+  try {
+    const results = await ScryfallApiInstance.search(search);
+    if (results.total_cards === 1) {
+      singleCardMode = true;
+    }
+  } catch (ex) {
+    console.error("Preflight failed", ex);
+    status.value = LoadingStatus.Failed;
+    return;
+  }
+
+  await dispatch(
+    startGame({
+      search,
+      includeExtras: !excludeExtras.value,
+      singleCardMode,
+    })
+  );
 };
 
 const onCancel = () => {
@@ -57,7 +82,7 @@ const onCancel = () => {
       <div class="inputs">
         <label class="vh" for="custom-query">Custom Scryfall Query</label>
         <input
-          v-model="customQuery"
+          v-model="query"
           id="custom-query"
           class="input-large"
           type="text"
@@ -69,7 +94,7 @@ const onCancel = () => {
           type="submit"
           class="btn btn-large"
           value="Start"
-          :disabled="disabled || customQuery.length === 0"
+          :disabled="disabled || query.length === 0"
         >
           Start
         </button>
@@ -78,11 +103,17 @@ const onCancel = () => {
         Enter a search to find cards. You might need to use the
         <a href="https://scryfall.com/docs/syntax" target="_blank">Syntax reference</a>.
       </p>
+      <p class="error" v-if="status === LoadingStatus.Failed">
+        That search doesn't match return any cards. It might be contradicted by filters below.
+      </p>
     </section>
     <hr />
     <section class="filters">
       <h3>Filters</h3>
-      <p>These filters apply by default to all format searches. You can toggle them off here.</p>
+      <p>
+        These filters apply by default to all format searches. You can toggle them off here for your
+        custom game.
+      </p>
       <ul class="filters">
         <li>
           <label>
@@ -138,6 +169,11 @@ header {
   .spacer {
     width: 30px;
   }
+}
+
+.error {
+  font-weight: bold;
+  color: var(--c-salmon);
 }
 
 h3 {

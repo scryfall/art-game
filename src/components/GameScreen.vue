@@ -15,7 +15,11 @@ const prevGuess = useAppSelector((state) => state.game.guess);
 const query = useAppSelector((state) => state.game.query);
 
 const loadNextCard = () => {
-  dispatch(fetchNextCard({ query: query.value, excludeOracleId: card.value?.oracle_id }));
+  if (!query.value) {
+    throw Error("Somehow, no game query is loaded.");
+  }
+
+  dispatch(fetchNextCard({ query: query.value, previousOracleId: card.value?.oracle_id }));
 };
 
 const skip = () => {

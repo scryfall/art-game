@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { LoadingStatus } from "../store/common";
 import { AVOID_CRITERIA, COMPATIBILITY_CRITERIA } from "../config";
 import CustomGameSetup from "./CustomGameSetup.vue";
+import { flattenSearchCriteria } from "../utils/string";
 
 type Preset = {
   id: string;
@@ -16,17 +17,19 @@ const dispatch = useAppDispatch();
 const gameLoadStatus = useAppSelector((state) => state.game.status);
 const custom = ref(false);
 
-function flatten(text: string[]) {
-  return text.join(" ");
-}
-
 /**
  * Start the game with a given query.
  * @param criteria The format query to work with
  */
 const start = (criteria: string[]) => {
-  const query = flatten(criteria);
-  dispatch(startGame(query));
+  const search = flattenSearchCriteria(criteria);
+  dispatch(
+    startGame({
+      search,
+      includeExtras: false,
+      singleCardMode: false,
+    })
+  );
 };
 
 const formatCriteria = ["-t:stickers", "not:extra", ...COMPATIBILITY_CRITERIA, ...AVOID_CRITERIA];
@@ -78,17 +81,21 @@ const disabled = computed(() => {
       </div>
     </div>
 
+    <div v-if="!custom && gameLoadStatus === LoadingStatus.Pending" class="getting-ready">
+      <p>Getting your game ready...</p>
+    </div>
+
+    <!-- TODO(#101): This won't work until we can get routing in. -->
+    <div v-else-if="!custom && gameLoadStatus === LoadingStatus.Failed" class="getting-ready error">
+      <p>Couldn't start your game. Scryfall might be down for maintenance.</p>
+    </div>
+
     <CustomGameSetup
       v-if="custom"
       class="subscreen"
       :disabled="disabled"
       @cancel="() => (custom = false)"
-      @submit="(criteria) => start(criteria)"
     />
-
-    <div v-if="gameLoadStatus === LoadingStatus.Pending" class="getting-ready">
-      <p>Getting your game ready...</p>
-    </div>
   </div>
 </template>
 
@@ -138,5 +145,9 @@ p {
 
 .getting-ready {
   text-align: center;
+}
+
+.error {
+  color: var(--c-salmon);
 }
 </style>

@@ -6,10 +6,20 @@ import { ScryfallApiInstance } from "../utils/scryfall-api";
 
 export type GameGuess = { name: string; outcome: Outcome };
 
+export type GameQuery = {
+  /** The search string used for this game. */
+  search: string;
+  /** Whether extras are allowed. */
+  includeExtras: boolean;
+  /** Whether we're expecting only a single card to be returned. */
+  singleCardMode: boolean;
+};
+
 type GameSliceState = {
   status: LoadingStatus;
   nextCardStatus: LoadingStatus;
-  query: string;
+  /** The query for this game, if it's been started. */
+  query: undefined | GameQuery;
   score: number;
   guess: undefined | GameGuess;
   card: undefined | ScryfallCard;
@@ -19,25 +29,32 @@ type GameSliceState = {
 const initialState: GameSliceState = {
   status: LoadingStatus.Idle,
   nextCardStatus: LoadingStatus.Idle,
-  query: "",
+  query: undefined,
   score: 0,
   guess: undefined,
   card: undefined,
   previousCard: undefined,
 };
 
-export const startGame = createAsyncThunk("game/startGame", async (query: string, api) => {
+export const startGame = createAsyncThunk("game/startGame", async (query: GameQuery, api) => {
   await api.dispatch(fetchNextCard({ query }));
 });
 
+function constructSearch(query: GameQuery, previousOracleId?: string) {
+  if (previousOracleId && !query.singleCardMode) {
+    return `${query.search} -oracle_id:${previousOracleId}`;
+  }
+  return query.search;
+}
+
 export const fetchNextCard = createAsyncThunk(
   "game/fetchNextCard",
-  async (payload: { query: string; excludeOracleId?: string }) => {
-    const { query, excludeOracleId } = payload;
+  async (payload: { query: GameQuery; previousOracleId?: string }) => {
+    const { query, previousOracleId } = payload;
 
-    const cardQuery = excludeOracleId ? `${query} -oracle_id:${excludeOracleId}` : query;
-    const card = await ScryfallApiInstance.getRandomCard(cardQuery);
-    const print = await ScryfallApiInstance.getRandomArt(card.oracle_id, query);
+    const search = constructSearch(query, previousOracleId);
+    const card = await ScryfallApiInstance.getRandomCard(search);
+    const print = await ScryfallApiInstance.getRandomArt(card.oracle_id, search);
     return print;
   }
 );
