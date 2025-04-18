@@ -4,5 +4,4 @@
 export const COMPATIBILITY_CRITERIA = [
   // Flavornames give away the answer inside the art frame.
   "not:flavorname",
-  "not:reversible",
 ];
