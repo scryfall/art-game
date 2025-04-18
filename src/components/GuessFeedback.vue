@@ -29,7 +29,13 @@ watch(props, (p) => {
 <template>
   <div class="guess-feedback">
     <a :href="cardUri" target="_blank" class="figure">
-      <img v-for="imageUri in imageUris" class="card-image" :src="imageUri" :data-set="card.set" />
+      <img
+        v-for="imageUri in imageUris"
+        :key="imageUri"
+        class="card-image"
+        :src="imageUri"
+        :data-set="card.set"
+      />
     </a>
 
     <div class="outcome">
