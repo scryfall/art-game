@@ -11,3 +11,10 @@
     @content;
   }
 }
+
+@mixin list-reset {
+  padding: unset;
+  margin: unset;
+  list-style-type: none;
+  appearance: unset;
+}

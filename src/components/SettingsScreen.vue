@@ -77,7 +77,7 @@ section {
   width: 400px;
   max-width: 100%;
 
-  .description {
+  .desc {
     font-style: italic;
     opacity: 0.8;
     font-size: 80%;
