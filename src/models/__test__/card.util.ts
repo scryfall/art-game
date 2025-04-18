@@ -1,13 +1,15 @@
 import type { ScryfallCard, ScryfallCardFace, ScryfallImageUris } from "../scryfall-card";
 import { uuidv4 } from "../uuid";
 
-export function makeImageUris(): ScryfallImageUris {
+export function makeImageUris(label?: string): ScryfallImageUris {
+  const prefix = label ? `${label}.` : "";
+
   return {
-    small: `<image.small.${uuidv4()}>`,
-    normal: `<image.normal.${uuidv4()}>`,
-    large: `<image.large.${uuidv4()}>`,
-    png: `<image.png.${uuidv4()}>`,
-    art_crop: `<image.art_crop.${uuidv4()}>`,
+    small: `<${prefix}image.small>`,
+    normal: `<${prefix}image.normal>`,
+    large: `<${prefix}image.large>`,
+    png: `<${prefix}image.png>`,
+    art_crop: `<${prefix}image.art_crop>`,
   };
 }
 
@@ -55,11 +57,11 @@ export function makeDfcCard(
     type_line: `${face1.type_line} // ${face2.type_line}`,
     card_faces: [
       {
-        image_uris: makeImageUris(),
+        image_uris: makeImageUris("front"),
         ...face1,
       },
       {
-        image_uris: makeImageUris(),
+        image_uris: makeImageUris("back"),
         ...face2,
       },
     ],
@@ -79,12 +81,12 @@ export function makeReversibleCard(
     card_faces: [
       {
         oracle_id: uuidv4(),
-        image_uris: makeImageUris(),
+        image_uris: makeImageUris("front"),
         ...face1,
       },
       {
         oracle_id: uuidv4(),
-        image_uris: makeImageUris(),
+        image_uris: makeImageUris("back"),
         ...face2,
       },
     ],
