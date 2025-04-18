@@ -14,7 +14,6 @@ type Preset = {
 
 const dispatch = useAppDispatch();
 const gameLoadStatus = useAppSelector((state) => state.game.status);
-
 const custom = ref(false);
 
 function flatten(text: string[]) {

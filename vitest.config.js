@@ -8,8 +8,6 @@ export default defineConfig({
     include: ["**/*.test.ts"],
     globals: true,
     watch: false,
-    alias: {
-      axios: resolve("./__mocks__/axios.ts"),
-    },
+    clearMocks: true,
   },
 });

@@ -54,6 +54,7 @@ const submitGuess = (guess: string) => {
       Which card is this? (<button
         type="button"
         class="skip link"
+        :disabled="nextCardStatus === LoadingStatus.Pending"
         @click.prevent="skip"
         @keypress.enter="skip"
       >

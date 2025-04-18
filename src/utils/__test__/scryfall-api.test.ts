@@ -1,30 +1,52 @@
-import axios from "axios";
 import { ScryfallApi } from "../scryfall-api";
 import { vi } from "vitest";
 import { makeCard } from "../../models/__test__/card.util";
+import { Http } from "../http";
 
-vi.mock("axios", { spy: true });
+vi.mock("../http");
 
-describe("ScryfallApi", () => {
-  let api = new ScryfallApi();
+describe.sequential("ScryfallApi", () => {
+  let api: ScryfallApi;
+  let http: Http;
 
   beforeEach(() => {
-    api = new ScryfallApi();
+    http = new Http();
+    api = new ScryfallApi(http);
   });
 
   describe("getRandomCard", () => {
-    it("should call with the requested query", async () => {
-      const TEST_CARD = makeCard();
-      vi.mocked(axios.get).mockResolvedValue({
-        data: TEST_CARD,
-      });
+    it("should get a random art with the requested query", async () => {
+      const CARD = makeCard();
+      vi.mocked(http.fetch).mockResolvedValue(CARD);
 
       const query = "f:standard";
 
       const card = await api.getRandomCard(query);
 
-      expect(card).toEqual(TEST_CARD);
-      expect(axios.get).toHaveBeenCalledExactlyOnceWith(expect.stringContaining(query));
+      expect(card).toEqual(CARD);
+
+      const url = vi.mocked(http.fetch).mock.calls[0][0] as URL;
+      expect(url.href).toContain("/random");
+      expect(url.href).toContain(encodeURIComponent(query));
+    });
+  });
+
+  describe("getRandomArt", () => {
+    it("should get a random art with the requested query", async () => {
+      const ORACLE_CARD = makeCard();
+      const PRINT = makeCard();
+      vi.mocked(http.fetch).mockResolvedValue(PRINT);
+
+      const query = "f:standard";
+
+      const card = await api.getRandomArt(ORACLE_CARD.oracle_id, query);
+
+      expect(card).toEqual(PRINT);
+
+      const url = vi.mocked(http.fetch).mock.calls[0][0] as URL;
+      expect(url.href).toContain("/random");
+      expect(url.href).toContain(encodeURIComponent(query));
+      expect(url.href).toContain(encodeURIComponent(`oracle_id:${ORACLE_CARD.oracle_id}`));
     });
   });
 });

@@ -35,9 +35,10 @@ export const fetchNextCard = createAsyncThunk(
   async (payload: { query: string; excludeOracleId?: string }) => {
     const { query, excludeOracleId } = payload;
 
-    const lookup = excludeOracleId ? `${query} -oracle_id:${excludeOracleId}` : query;
-    const card = await ScryfallApiInstance.getRandomCard(lookup);
-    return card;
+    const cardQuery = excludeOracleId ? `${query} -oracle_id:${excludeOracleId}` : query;
+    const card = await ScryfallApiInstance.getRandomCard(cardQuery);
+    const print = await ScryfallApiInstance.getRandomArt(card.oracle_id, query);
+    return print;
   }
 );
 
