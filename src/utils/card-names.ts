@@ -6,7 +6,12 @@ import type { ScryfallCard } from "../models/scryfall-card";
  */
 export function getCardNames(card: ScryfallCard) {
   if (card.card_faces && card.card_faces?.length > 1) {
-    return [card.name, ...card.card_faces.flatMap((face) => getValidNames(face))];
+    const names = [card.name, ...card.card_faces.flatMap((face) => getValidNames(face))];
+    if (card.card_faces.every((face) => face.flavor_name)) {
+      const combinedFlavorName = card.card_faces.map((f) => f.flavor_name).join(" // ");
+      names.push(combinedFlavorName);
+    }
+    return names;
   } else {
     return getValidNames(card);
   }
@@ -31,8 +36,11 @@ export function getCardNames(card: ScryfallCard) {
  * @param face A face of a card
  * @returns The face's names
  */
-function getValidNames(face: { name: string; type_line: string }) {
+function getValidNames(face: { name: string; type_line: string; flavor_name?: string }) {
   const names = [face.name];
+  if (face.flavor_name) {
+    names.push(face.flavor_name);
+  }
   const legendary = face.type_line.toLowerCase().includes("legendary");
   if (!legendary) return names;
 
@@ -49,16 +57,19 @@ function getValidNames(face: { name: string; type_line: string }) {
     names.push(properName, title, `the ${title}`, `of the ${title}`);
   };
 
-  if (face.name.indexOf(comma) > 0) {
-    const [properName, title] = face.name.split(comma);
-    push(properName, title);
-    return names;
-  } else if (face.name.indexOf(ofThe) > 0) {
-    const [properName, title] = face.name.split(ofThe);
-    push(properName, title);
-  } else if (face.name.indexOf(the) > 0) {
-    const [properName, title] = face.name.split(the);
-    push(properName, title);
+  const numberOfNames = names.length;
+  for (let i = 0; i < numberOfNames; i++) {
+    const name = names[i];
+    if (name.indexOf(comma) > 0) {
+      const [properName, title] = name.split(comma);
+      push(properName, title);
+    } else if (name.indexOf(ofThe) > 0) {
+      const [properName, title] = name.split(ofThe);
+      push(properName, title);
+    } else if (name.indexOf(the) > 0) {
+      const [properName, title] = name.split(the);
+      push(properName, title);
+    }
   }
 
   return names;
