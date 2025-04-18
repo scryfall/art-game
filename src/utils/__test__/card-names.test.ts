@@ -46,7 +46,7 @@ describe("getCardNames", () => {
     });
   });
 
-  describe("double faced cards", () => {
+  describe("multi-part cards", () => {
     test.each<[string, ScryfallCard, string[]]>([
       ["split", CardBank.AliveAndWell, ["Alive // Well", "Alive", "Well"]],
       ["aftermath", CardBank.CommitToMemory, ["Commit // Memory", "Commit", "Memory"]],
