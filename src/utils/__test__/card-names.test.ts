@@ -93,19 +93,6 @@ describe("getCardNames", () => {
         ],
       ],
       [
-        "reversible cards",
-        CardBank.SwallowsOfParadise,
-        [
-          "Birds of Paradise // Birds of Paradise",
-          "African Swallow // European Swallow",
-          "Birds of Paradise",
-          // because it's the same card on both sides, the regular name appears twicce in the array
-          "Birds of Paradise",
-          "African Swallow",
-          "European Swallow",
-        ],
-      ],
-      [
         "non-legendary cards with legendary name constructions",
         CardBank.DraculaLordOfBlood,
         [

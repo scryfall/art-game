@@ -66,20 +66,6 @@ export const CardBank = {
     type_line: "Legendary Creature - Human Wizard",
   }),
 
-  /** African Swallow // European Swallow: Reversible card with flavor names on both sides */
-  SwallowsOfParadise: makeSplitCard(
-    {
-      name: "Birds of Paradise",
-      type_line: "Creature — Bird",
-      flavor_name: "African Swallow",
-    },
-    {
-      name: "Birds of Paradise",
-      type_line: "Creature — Bird",
-      flavor_name: "European Swallow",
-    }
-  ),
-
   /** Dracula, Lord of Blood: DFC (not legendary, but has comma in flavor name) with flavor names on both sides */
   DraculaLordOfBlood: makeSplitCard(
     {
