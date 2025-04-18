@@ -52,6 +52,7 @@ export const CardBank = {
     { name: "Birthright Boon", type_line: "Sorcery — Adventure" }
   ),
 
+  /** African Swallow // European Swallow: Reversible card with flavor names on both sides */
   AfricanSwallow: makeReversibleCard(
     {
       name: "Birds of Paradise",
