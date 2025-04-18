@@ -1,5 +1,6 @@
-type CardFace = {
+export type ScryfallCardFace = {
   name: string;
+  flavor_name?: string;
   type_line: string;
 };
 
@@ -8,6 +9,7 @@ export type ScryfallCard = {
   id: string;
   oracle_id: string;
   name: string;
+  flavor_name?: string;
   scryfall_uri: string;
   type_line: string;
   /** The set code. */
@@ -19,5 +21,5 @@ export type ScryfallCard = {
     png: string;
     art_crop: string;
   };
-  card_faces: undefined | CardFace[];
+  card_faces: undefined | ScryfallCardFace[];
 };
