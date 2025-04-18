@@ -22,6 +22,7 @@ export type ScryfallCard = {
   /** The oracle ID. This will be absent at the root level if it's a reversible card. */
   oracle_id?: string;
   name: string;
+  /** The card's flavor name. If this card has card_faces, the flavor names will be found there instead. */
   flavor_name?: string;
   scryfall_uri: string;
   /** The type line. This will be absent at the root level if it's a reversible card. */

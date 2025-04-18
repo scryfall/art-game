@@ -1,4 +1,4 @@
-import { makeCard, makeReversibleCard, makeSplitCard } from "./card.util";
+import { makeCard, makeDfcCard, makeReversibleCard, makeSplitCard } from "./card.util";
 
 export const CardBank = {
   /** Simple vanilla creature card. */
@@ -50,6 +50,34 @@ export const CardBank = {
   KellanTheFaeBlooded: makeSplitCard(
     { name: "Kellan, the Fae-Blooded", type_line: "Legendary Creature — Human Faerie" },
     { name: "Birthright Boon", type_line: "Sorcery — Adventure" }
+  ),
+
+  /** Dracula, Lord of Blood: DFC (not legendary, but has comma in flavor name) with flavor names on both sides */
+  DraculaLordOfBlood: makeDfcCard(
+    {
+      name: "Voldaren Bloodcaster",
+      type_line: "Creature — Vampire Wizard",
+      flavor_name: "Dracula, Lord of Blood",
+    },
+    {
+      name: "Bloodbat Summoner",
+      type_line: "Creature — Vampire Wizard",
+      flavor_name: "Dracula, Lord of Bats",
+    }
+  ),
+
+  /** Heart of the Explorer: Legencary DFC with flavor names on both sides */
+  HeartOfTheExplorer: makeDfcCard(
+    {
+      name: "Search for Azcanta",
+      type_line: "Legendary Enchantment",
+      flavor_name: "Heart of the Explorer",
+    },
+    {
+      name: "Azcanta, the Sunken Ruin",
+      type_line: "Legendary Land",
+      flavor_name: "The Lost Valley",
+    }
   ),
 
   /** African Swallow // European Swallow: Reversible card with flavor names on both sides */

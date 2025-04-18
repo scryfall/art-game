@@ -46,8 +46,8 @@ export function makeSplitCard(
  * Make a double-faced card.
  */
 export function makeDfcCard(
-  face1: { name: string; type_line: string },
-  face2: { name: string; type_line: string },
+  face1: ScryfallCardFace,
+  face2: ScryfallCardFace,
   overrides: Partial<ScryfallCard> = {}
 ) {
   const card = makeCard({
