@@ -1,9 +1,34 @@
 import type { ScryfallCard } from "../models/scryfall-card";
 import type { ScryfallCatalog } from "../models/scryfall-catalog";
 import { Http } from "./http";
+import { wait } from "./timer";
+
+class ScryfallApiHttp extends Http {
+  private rateLimitPromise = Promise.resolve();
+
+  async fetch<T>(url: string | URL) {
+    /**
+     * If a previous request has just happened, wait for it to finish and an additional 50ms
+     * before starting the next request
+     *
+     * @see {@link https://scryfall.com/docs/api#rate-limits-and-good-citizenship Rate limits and good citizenship}
+     */
+    await this.rateLimitPromise;
+
+    const response = super.fetch<T>(url);
+
+    // this makes it so if another request is made in quick succession
+    // we'll wait up to 50ms before actually making the request
+    // but since we're not awaiting on it here, the current request
+    // can finish without issue
+    this.rateLimitPromise = response.then(() => wait(50));
+
+    return response;
+  }
+}
 
 export class ScryfallApi {
-  constructor(private readonly http = new Http()) {}
+  constructor(private readonly http: Http = new ScryfallApiHttp()) {}
 
   /**
    * Get a random card from the Random API.
