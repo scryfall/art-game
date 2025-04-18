@@ -1,4 +1,4 @@
-import { makeCard, makeSplitCard } from "./card.util";
+import { makeCard, makeReversibleCard, makeSplitCard } from "./card.util";
 
 export const CardBank = {
   /** Simple vanilla creature card. */
@@ -50,5 +50,18 @@ export const CardBank = {
   KellanTheFaeBlooded: makeSplitCard(
     { name: "Kellan, the Fae-Blooded", type_line: "Legendary Creature — Human Faerie" },
     { name: "Birthright Boon", type_line: "Sorcery — Adventure" }
+  ),
+
+  AfricanSwallow: makeReversibleCard(
+    {
+      name: "Birds of Paradise",
+      type_line: "Creature — Bird",
+      flavor_name: "African Swallow",
+    },
+    {
+      name: "Birds of Paradise",
+      type_line: "Creature — Bird",
+      flavor_name: "European Swallow",
+    }
   ),
 };
