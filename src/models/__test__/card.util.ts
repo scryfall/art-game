@@ -71,6 +71,9 @@ export function makeDfcCard(
   return card;
 }
 
+/**
+ * Make a reversible card.
+ */
 export function makeReversibleCard(
   face1: ScryfallCardFace,
   face2: ScryfallCardFace,
