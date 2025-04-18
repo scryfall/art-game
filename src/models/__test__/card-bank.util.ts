@@ -66,6 +66,7 @@ export const CardBank = {
     type_line: "Legendary Creature - Human Wizard",
   }),
 
+  // TODO(#65): Move this to use the makeDfcCard layout
   /** Dracula, Lord of Blood: DFC (not legendary, but has comma in flavor name) with flavor names on both sides */
   DraculaLordOfBlood: makeSplitCard(
     {
@@ -80,6 +81,7 @@ export const CardBank = {
     }
   ),
 
+  // TODO(#65): Move this to use the makeDfcCard layout
   /** Heart of the Explorer: Legencary DFC with flavor names on both sides */
   HeartOfTheExplorer: makeSplitCard(
     {
