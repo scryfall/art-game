@@ -32,6 +32,7 @@ watch(props, (p) => {
         <span v-else-if="guess.outcome === Outcome.Skip">Skipped.</span>
         That was
         <span v-if="card.flavor_name">
+          <!-- TODO(#65): Flavor name lookup will need to change with DFCs, which will not have a root-level flavor name. -->
           <a :href="cardUri" class="cardname" target="_blank">{{ card.flavor_name }}</a> (also known
           as
         </span>

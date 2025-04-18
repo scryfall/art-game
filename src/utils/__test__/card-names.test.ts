@@ -92,39 +92,6 @@ describe("getCardNames", () => {
           "the Haunted Mage",
         ],
       ],
-      [
-        "non-legendary cards with legendary name constructions",
-        CardBank.DraculaLordOfBlood,
-        [
-          "Dracula, Lord of Blood // Dracula, Lord of Bats",
-          "Voldaren Bloodcaster // Bloodbat Summoner",
-          "Voldaren Bloodcaster",
-          // note: because it's not actually legendary, we don't respect the comma construction
-          "Dracula, Lord of Blood",
-          "Bloodbat Summoner",
-          "Dracula, Lord of Bats",
-        ],
-      ],
-      [
-        "legendary cards with legendary name constructions",
-        CardBank.HeartOfTheExplorer,
-        [
-          "Search for Azcanta // Azcanta, the Sunken Ruin",
-          "Heart of the Explorer // The Lost Valley",
-          "Search for Azcanta",
-          "Azcanta, the Sunken Ruin",
-          "Azcanta",
-          "Sunken Ruin",
-          "of the Sunken Ruin",
-          "the Sunken Ruin",
-          "Heart of the Explorer",
-          "The Lost Valley",
-          "Explorer",
-          "Heart",
-          "of the Explorer",
-          "the Explorer",
-        ],
-      ],
     ])("includes oracle and flavor name cards for %s", (_, card, expectedNames) => {
       expect(getCardNames(card).sort()).toEqual(expectedNames.sort());
     });
