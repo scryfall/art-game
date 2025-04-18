@@ -37,7 +37,6 @@ export const fetchNextCard = createAsyncThunk(
 
     const cardQuery = excludeOracleId ? `${query} -oracle_id:${excludeOracleId}` : query;
     const card = await ScryfallApiInstance.getRandomCard(cardQuery);
-    await ScryfallApiInstance.rateLimit();
     const print = await ScryfallApiInstance.getRandomArt(card.oracle_id, query);
     return print;
   }
