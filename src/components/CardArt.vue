@@ -5,7 +5,15 @@ import { LoadingStatus } from "../store";
 import LoadingPulser from "./LoadingPulser.vue";
 
 const props = defineProps<{ card: ScryfallCard; loadingNext: LoadingStatus }>();
-const imageUri = computed(() => props.card.image_uris.art_crop);
+const imageUri = computed(() => {
+  if (props.card.card_faces) {
+    const randomIndex = Math.floor(Math.random() * props.card.card_faces.length);
+    const randomFace = props.card.card_faces[randomIndex];
+    return randomFace.image_uris.art_crop;
+  }
+
+  return props.card.image_uris.art_crop;
+});
 
 const status = ref(LoadingStatus.Pending);
 
@@ -38,13 +46,7 @@ const showErrorOverlay = computed(() => {
     <div v-else-if="showLoadingOverlay" class="overlay loading">
       <LoadingPulser class="pulser" />
     </div>
-    <img
-      alt=""
-      class="vh preload"
-      :src="card.image_uris.art_crop"
-      :onload="onLoad"
-      :onerror="onError"
-    />
+    <img alt="" class="vh preload" :src="imageUri" :onload="onLoad" :onerror="onError" />
     <img :src="imageUri" />
   </div>
 </template>

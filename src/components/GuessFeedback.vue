@@ -2,7 +2,7 @@
 import { Outcome } from "../models/outcome";
 import type { GameGuess } from "../store";
 import type { ScryfallCard } from "../models/scryfall-card";
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 
 const props = defineProps<{ guess: GameGuess; card: ScryfallCard }>();
 
@@ -13,6 +13,13 @@ function getNormalizedUri(card: ScryfallCard) {
 }
 
 const cardUri = ref(getNormalizedUri(props.card));
+const imageUris = computed(() => {
+  if (props.card.card_faces) {
+    return props.card.card_faces.map((f) => f.image_uris.normal);
+  }
+
+  return [props.card.image_uris.normal];
+});
 
 watch(props, (p) => {
   cardUri.value = getNormalizedUri(p.card);
@@ -22,7 +29,7 @@ watch(props, (p) => {
 <template>
   <div class="guess-feedback">
     <a :href="cardUri" target="_blank" class="figure">
-      <img class="card-image" :src="card.image_uris.normal" :data-set="card.set" />
+      <img v-for="imageUri in imageUris" class="card-image" :src="imageUri" :data-set="card.set" />
     </a>
 
     <div class="outcome">

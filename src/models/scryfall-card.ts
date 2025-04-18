@@ -1,6 +1,14 @@
+type ImageUris = {
+  small: string;
+  normal: string;
+  large: string;
+  png: string;
+  art_crop: string;
+};
 type CardFace = {
   name: string;
   type_line: string;
+  image_uris: ImageUris;
 };
 
 export type ScryfallCard = {
@@ -12,12 +20,6 @@ export type ScryfallCard = {
   type_line: string;
   /** The set code. */
   set: string;
-  image_uris: {
-    small: string;
-    normal: string;
-    large: string;
-    png: string;
-    art_crop: string;
-  };
+  image_uris: ImageUris;
   card_faces: undefined | CardFace[];
 };
