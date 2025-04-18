@@ -1,4 +1,4 @@
-type CardFace = {
+export type ScryfallCardFace = {
   name: string;
   flavor_name?: string;
   type_line: string;
@@ -21,5 +21,5 @@ export type ScryfallCard = {
     png: string;
     art_crop: string;
   };
-  card_faces: undefined | CardFace[];
+  card_faces: undefined | ScryfallCardFace[];
 };
