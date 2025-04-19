@@ -14,6 +14,8 @@ const emit = defineEmits<Emits>();
 const dispatch = useAppDispatch();
 const query = ref("");
 const status = ref(LoadingStatus.Idle);
+
+// Filters
 const excludeBadArt = ref(true);
 const excludeExtras = ref(true);
 const excludeStickers = ref(true);
@@ -39,13 +41,12 @@ const disabled = computed(() => {
 const onSubmit = async () => {
   status.value = LoadingStatus.Pending;
   const search = flattenSearchCriteria(criteria.value);
-  let singleCardMode = false;
 
   // preflight checks
   try {
     const results = await ScryfallApiInstance.search(search);
-    if (results.total_cards === 1) {
-      singleCardMode = true;
+    if (results.total_cards < 2) {
+      status.value = LoadingStatus.Failed;
     }
   } catch (ex) {
     console.error("Preflight failed", ex);
@@ -57,7 +58,6 @@ const onSubmit = async () => {
     startGame({
       search,
       includeExtras: !excludeExtras.value,
-      singleCardMode,
     })
   );
 };
@@ -104,7 +104,7 @@ const onCancel = () => {
         <a href="https://scryfall.com/docs/syntax" target="_blank">Syntax reference</a>.
       </p>
       <p class="error" v-if="status === LoadingStatus.Failed">
-        That search doesn't match return any cards. It might be contradicted by filters below.
+        Your search must match at least two cards. It might be contradicted by filters below.
       </p>
     </section>
     <hr />

@@ -27,7 +27,6 @@ const start = (criteria: string[]) => {
     startGame({
       search,
       includeExtras: false,
-      singleCardMode: false,
     })
   );
 };

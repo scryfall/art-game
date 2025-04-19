@@ -11,8 +11,6 @@ export type GameQuery = {
   search: string;
   /** Whether extras are allowed. */
   includeExtras: boolean;
-  /** Whether we're expecting only a single card to be returned. */
-  singleCardMode: boolean;
 };
 
 type GameSliceState = {
@@ -41,7 +39,7 @@ export const startGame = createAsyncThunk("game/startGame", async (query: GameQu
 });
 
 function constructSearch(query: GameQuery, previousOracleId?: string) {
-  if (previousOracleId && !query.singleCardMode) {
+  if (previousOracleId) {
     return `${query.search} -oracle_id:${previousOracleId}`;
   }
   return query.search;
