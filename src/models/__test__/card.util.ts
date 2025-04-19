@@ -1,5 +1,5 @@
 import {
-  type DFCScryfallCard,
+  type DfcScryfallCard,
   type SplitScryfallCard,
   type ScryfallCard,
   type ScryfallImageUris,
@@ -57,9 +57,9 @@ export function makeSplitCard(
 export function makeDfcCard(
   face1: Omit<ScryfallDFCCardFace, "image_uris">,
   face2: Omit<ScryfallDFCCardFace, "image_uris">,
-  overrides: Partial<DFCScryfallCard> = {}
+  overrides: Partial<DfcScryfallCard> = {}
 ) {
-  const card = makeCard<DFCScryfallCard>({
+  const card = makeCard<DfcScryfallCard>({
     name: `${face1.name} // ${face2.name}`,
     type_line: `${face1.type_line} // ${face2.type_line}`,
     card_faces: [

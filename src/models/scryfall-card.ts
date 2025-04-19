@@ -48,7 +48,7 @@ export type SplitScryfallCard = {
   card_faces: ScryfallSplitCardFace[];
 };
 
-export type DFCScryfallCard = {
+export type DfcScryfallCard = {
   object: "card";
   id: string;
   oracle_id: string;
@@ -61,4 +61,4 @@ export type DFCScryfallCard = {
   flavor_name?: never;
 };
 
-export type ScryfallCard = DefaultScryfallCard | SplitScryfallCard | DFCScryfallCard;
+export type ScryfallCard = DefaultScryfallCard | SplitScryfallCard | DfcScryfallCard;
