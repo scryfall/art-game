@@ -1,12 +1,17 @@
-export type ScryfallCardFace = {
+export type ScryfallDFCCardFace = {
   name: string;
   flavor_name?: string;
   type_line: string;
-  /** The face's oracle ID. This will be present only if it's a reversible card. */
-  oracle_id?: string;
-  /** The face's imagery. This will be present only if it's a DFC or reversible card. */
-  image_uris?: ScryfallImageUris;
+  image_uris: ScryfallImageUris;
 };
+
+export type ScryfallSplitCardFace = {
+  name: string;
+  type_line: string;
+  image_uris?: never;
+};
+
+export type ScryfallCardFace = ScryfallDFCCardFace | ScryfallSplitCardFace;
 
 export type ScryfallImageUris = {
   small: string;
@@ -16,20 +21,42 @@ export type ScryfallImageUris = {
   art_crop: string;
 };
 
-export type ScryfallCard = {
+export type DefaultScryfallCard = {
   object: "card";
   id: string;
-  /** The oracle ID. This will be absent at the root level if it's a reversible card. */
-  oracle_id?: string;
+  oracle_id: string;
   name: string;
-  /** The card's flavor name. If this card has card_faces, the flavor names will be found there instead. */
   flavor_name?: string;
   scryfall_uri: string;
-  /** The type line. This will be absent at the root level if it's a reversible card. */
-  type_line?: string;
-  /** The set code. */
+  type_line: string;
   set: string;
-  /** Image URIs for the card. This will be absent at the root level if it's a reversible card. */
-  image_uris?: ScryfallImageUris;
-  card_faces?: ScryfallCardFace[];
+  image_uris: ScryfallImageUris;
+  card_faces?: never;
 };
+
+export type SplitScryfallCard = {
+  object: "card";
+  id: string;
+  oracle_id: string;
+  name: string;
+  scryfall_uri: string;
+  type_line: string;
+  set: string;
+  image_uris: ScryfallImageUris;
+  card_faces: ScryfallSplitCardFace[];
+};
+
+export type DFCScryfallCard = {
+  object: "card";
+  id: string;
+  oracle_id: string;
+  name: string;
+  scryfall_uri: string;
+  type_line: string;
+  set: string;
+  card_faces: ScryfallCardFace[];
+  image_uris?: never;
+  flavor_name?: never;
+};
+
+export type ScryfallCard = DefaultScryfallCard | SplitScryfallCard | DFCScryfallCard;

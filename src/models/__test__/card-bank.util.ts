@@ -1,4 +1,4 @@
-import { makeCard, makeDfcCard, makeReversibleCard, makeSplitCard } from "./card.util";
+import { makeCard, makeDfcCard, makeSplitCard } from "./card.util";
 
 export const CardBank = {
   /** Simple vanilla creature card. */
@@ -77,20 +77,6 @@ export const CardBank = {
       name: "Azcanta, the Sunken Ruin",
       type_line: "Legendary Land",
       flavor_name: "The Lost Valley",
-    }
-  ),
-
-  /** African Swallow // European Swallow: Reversible card with flavor names on both sides */
-  AfricanSwallow: makeReversibleCard(
-    {
-      name: "Birds of Paradise",
-      type_line: "Creature — Bird",
-      flavor_name: "African Swallow",
-    },
-    {
-      name: "Birds of Paradise",
-      type_line: "Creature — Bird",
-      flavor_name: "European Swallow",
     }
   ),
 };

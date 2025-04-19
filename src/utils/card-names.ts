@@ -5,7 +5,7 @@ import type { ScryfallCard } from "../models/scryfall-card";
  * @returns The card's names
  */
 export function getCardNames(card: ScryfallCard) {
-  if (card.card_faces && card.card_faces?.length > 1) {
+  if (card.card_faces) {
     return [card.name, ...card.card_faces.flatMap((face) => getValidNames(face))];
   } else {
     return getValidNames(card);

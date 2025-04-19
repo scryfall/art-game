@@ -6,13 +6,12 @@ import LoadingPulser from "./LoadingPulser.vue";
 
 const props = defineProps<{ card: ScryfallCard; loadingNext: LoadingStatus }>();
 const imageUri = computed(() => {
-  if (props.card.card_faces) {
-    const randomIndex = Math.floor(Math.random() * props.card.card_faces.length);
-    const randomFace = props.card.card_faces[randomIndex];
-    return randomFace.image_uris.art_crop;
+  if (props.card.image_uris) {
+    return props.card.image_uris.art_crop;
   }
-
-  return props.card.image_uris.art_crop;
+  const randomIndex = Math.floor(Math.random() * props.card.card_faces.length);
+  const randomFace = props.card.card_faces[randomIndex];
+  return randomFace.image_uris?.art_crop;
 });
 
 const status = ref(LoadingStatus.Pending);

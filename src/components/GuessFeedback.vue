@@ -14,11 +14,10 @@ function getNormalizedUri(card: ScryfallCard) {
 
 const cardUri = ref(getNormalizedUri(props.card));
 const imageUris = computed(() => {
-  if (props.card.card_faces) {
-    return props.card.card_faces.map((f) => f.image_uris.normal);
+  if (props.card.image_uris) {
+    return [props.card.image_uris.normal];
   }
-
-  return [props.card.image_uris.normal];
+  return props.card.card_faces.map((f) => f.image_uris?.normal);
 });
 
 watch(props, (p) => {
