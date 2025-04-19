@@ -7,7 +7,7 @@ import type { ScryfallCard } from "../models/scryfall-card";
 export function getCardNames(card: ScryfallCard) {
   if (card.card_faces) {
     const names = [card.name, ...card.card_faces.flatMap((face) => getValidNames(face))];
-    if (card.card_faces.every((face) => face?.flavor_name)) {
+    if (card.card_faces.every((face) => face.flavor_name)) {
       const combinedFlavorName = card.card_faces.map((f) => f.flavor_name).join(" // ");
       names.push(combinedFlavorName);
     }
