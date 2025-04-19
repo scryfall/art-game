@@ -73,6 +73,7 @@ export function makeDfcCard(
       },
     ],
     ...overrides,
+    image_uris: undefined,
   });
   return card;
 }
