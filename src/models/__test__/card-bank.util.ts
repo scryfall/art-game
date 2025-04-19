@@ -52,6 +52,20 @@ export const CardBank = {
     { name: "Birthright Boon", type_line: "Sorcery — Adventure" }
   ),
 
+  /** Touchdown!: basic card with flavor name */
+  Touchdown: makeCard({
+    name: "Approach of the Second Sun",
+    type_line: "Sorcery",
+    flavor_name: "Touchdown!",
+  }),
+
+  /** Eleven: a legendary card with a flavor name */
+  Eleven: makeCard({
+    name: "Cecily, Haunted Mage",
+    flavor_name: "Eleven, the Mage",
+    type_line: "Legendary Creature - Human Wizard",
+  }),
+
   /** Dracula, Lord of Blood: DFC (not legendary, but has comma in flavor name) with flavor names on both sides */
   DraculaLordOfBlood: makeDfcCard(
     {

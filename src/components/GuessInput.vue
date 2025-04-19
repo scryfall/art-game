@@ -16,7 +16,7 @@ type Emits = {
   submit: [value: string];
 };
 
-defineProps<Props>();
+const { disabled } = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
 /** The autocomplete has no selection. */
@@ -84,6 +84,10 @@ const onFocusOut = (event: FocusEvent) => {
 };
 
 const onSubmit = () => {
+  if (disabled) {
+    // prevent submitting twice accidentally
+    return;
+  }
   const focusAt = acKeyboardFocusIndex.value;
   const autocompleted = focusAt >= 0 ? acOptions.value[focusAt] : undefined;
 

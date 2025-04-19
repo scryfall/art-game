@@ -45,6 +45,7 @@ const showErrorOverlay = computed(() => {
     <div v-else-if="showLoadingOverlay" class="overlay loading">
       <LoadingPulser class="pulser" />
     </div>
+    <div class="flavor-mask" v-if="card.flavor_name">Hint: this print has a flavor name.</div>
     <img alt="" class="vh preload" :src="imageUri" :onload="onLoad" :onerror="onError" />
     <img :src="imageUri" />
   </div>
@@ -86,5 +87,19 @@ img {
   border-radius: 4px;
   max-height: min(60vh, $default-art-height);
   max-width: min(100%, $default-art-width);
+}
+
+.flavor-mask {
+  background: var(--page-background);
+  border-radius: 0 0 4px 4px;
+  font-size: 0.9em;
+  text-align: center;
+  width: 80%;
+  height: 1.75rem;
+  position: absolute;
+  top: -2px;
+  border-left: 2px solid var(--art-frame-border-color);
+  border-right: 2px solid var(--art-frame-border-color);
+  border-bottom: 2px solid var(--art-frame-border-color);
 }
 </style>

@@ -9,6 +9,7 @@ export type ScryfallSplitCardFace = {
   name: string;
   type_line: string;
   image_uris?: never;
+  flavor_name?: never;
 };
 
 export type ScryfallCardFace = ScryfallDFCCardFace | ScryfallSplitCardFace;
@@ -39,6 +40,7 @@ export type SplitScryfallCard = {
   id: string;
   oracle_id: string;
   name: string;
+  flavor_name?: string;
   scryfall_uri: string;
   type_line: string;
   set: string;
