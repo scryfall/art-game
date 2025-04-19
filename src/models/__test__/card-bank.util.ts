@@ -1,4 +1,4 @@
-import { makeCard, makeSplitCard } from "./card.util";
+import { makeCard, makeDfcCard, makeSplitCard } from "./card.util";
 
 export const CardBank = {
   /** Simple vanilla creature card. */
@@ -65,4 +65,32 @@ export const CardBank = {
     flavor_name: "Eleven, the Mage",
     type_line: "Legendary Creature - Human Wizard",
   }),
+
+  /** Dracula, Lord of Blood: DFC (not legendary, but has comma in flavor name) with flavor names on both sides */
+  DraculaLordOfBlood: makeDfcCard(
+    {
+      name: "Voldaren Bloodcaster",
+      type_line: "Creature — Vampire Wizard",
+      flavor_name: "Dracula, Lord of Blood",
+    },
+    {
+      name: "Bloodbat Summoner",
+      type_line: "Creature — Vampire Wizard",
+      flavor_name: "Dracula, Lord of Bats",
+    }
+  ),
+
+  /** Heart of the Explorer: Legencary DFC with flavor names on both sides */
+  HeartOfTheExplorer: makeDfcCard(
+    {
+      name: "Search for Azcanta",
+      type_line: "Legendary Enchantment",
+      flavor_name: "Heart of the Explorer",
+    },
+    {
+      name: "Azcanta, the Sunken Ruin",
+      type_line: "Legendary Land",
+      flavor_name: "The Lost Valley",
+    }
+  ),
 };

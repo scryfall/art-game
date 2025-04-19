@@ -92,6 +92,39 @@ describe("getCardNames", () => {
           "the Haunted Mage",
         ],
       ],
+      [
+        "legendary DFC with flavor name in legendary style",
+        CardBank.HeartOfTheExplorer,
+        [
+          "Azcanta",
+          "Azcanta, the Sunken Ruin",
+          "Explorer",
+          "Heart",
+          "Heart of the Explorer",
+          "Heart of the Explorer // The Lost Valley",
+          "Search for Azcanta",
+          "Search for Azcanta // Azcanta, the Sunken Ruin",
+          "Sunken Ruin",
+          "The Lost Valley",
+          "of the Explorer",
+          "of the Sunken Ruin",
+          "the Explorer",
+          "the Sunken Ruin",
+        ],
+      ],
+      [
+        "DFC with flavor name in legendary style",
+        CardBank.DraculaLordOfBlood,
+        [
+          "Voldaren Bloodcaster // Bloodbat Summoner",
+          "Voldaren Bloodcaster",
+          "Bloodbat Summoner",
+          // does not give it the legendary treatment of allowing just Dracula
+          "Dracula, Lord of Blood // Dracula, Lord of Bats",
+          "Dracula, Lord of Bats",
+          "Dracula, Lord of Blood",
+        ],
+      ],
     ])("includes oracle and flavor name cards for %s", (_, card, expectedNames) => {
       expect(getCardNames(card).sort()).toEqual(expectedNames.sort());
     });
