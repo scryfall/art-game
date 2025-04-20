@@ -1,8 +1,27 @@
-import type { ScryfallCard, ScryfallCardFace } from "../scryfall-card";
+import {
+  type DfcScryfallCard,
+  type SplitScryfallCard,
+  type ScryfallCard,
+  type ScryfallImageUris,
+  type ScryfallSplitCardFace,
+  type ScryfallDFCCardFace,
+} from "../scryfall-card";
 import { uuidv4 } from "../uuid";
 
-export function makeCard(overrides: Partial<ScryfallCard> = {}) {
-  const card: ScryfallCard = {
+export function makeImageUris(label?: string): ScryfallImageUris {
+  const prefix = label ? `${label}.` : "";
+
+  return {
+    small: `<${prefix}image.small>`,
+    normal: `<${prefix}image.normal>`,
+    large: `<${prefix}image.large>`,
+    png: `<${prefix}image.png>`,
+    art_crop: `<${prefix}image.art_crop>`,
+  };
+}
+
+export function makeCard<T extends ScryfallCard>(overrides: Partial<T> = {}): T {
+  const card = {
     object: "card",
     name: "<card name>",
     id: uuidv4(),
@@ -10,28 +29,51 @@ export function makeCard(overrides: Partial<ScryfallCard> = {}) {
     scryfall_uri: "<scryfall uri>",
     type_line: "<type line>",
     set: "<set code>",
-    image_uris: {
-      small: "<image.small>",
-      normal: "<image.normal>",
-      large: "<image.large>",
-      png: "<image.png>",
-      art_crop: "<image.art_crop>",
-    },
-    card_faces: undefined,
+    image_uris: makeImageUris(),
     ...overrides,
   };
-  return card;
+  return card as T;
 }
 
+/**
+ * Make a single-faced split card.
+ */
 export function makeSplitCard(
-  face1: ScryfallCardFace,
-  face2: ScryfallCardFace,
-  overrides: Partial<ScryfallCard> = {}
+  face1: ScryfallSplitCardFace,
+  face2: ScryfallSplitCardFace,
+  overrides: Partial<SplitScryfallCard> = {}
 ) {
-  return makeCard({
+  return makeCard<SplitScryfallCard>({
     name: `${face1.name} // ${face2.name}`,
     type_line: `${face1.type_line} // ${face2.type_line}`,
     card_faces: [face1, face2],
     ...overrides,
   });
+}
+
+/**
+ * Make a double-faced card.
+ */
+export function makeDfcCard(
+  face1: Omit<ScryfallDFCCardFace, "image_uris">,
+  face2: Omit<ScryfallDFCCardFace, "image_uris">,
+  overrides: Partial<DfcScryfallCard> = {}
+) {
+  const card = makeCard<DfcScryfallCard>({
+    name: `${face1.name} // ${face2.name}`,
+    type_line: `${face1.type_line} // ${face2.type_line}`,
+    card_faces: [
+      {
+        ...face1,
+        image_uris: makeImageUris("front"),
+      },
+      {
+        ...face2,
+        image_uris: makeImageUris("back"),
+      },
+    ],
+    ...overrides,
+    image_uris: undefined,
+  });
+  return card;
 }

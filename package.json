@@ -24,13 +24,14 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc -b && vite build",
+    "build": "vue-tsc -b && vite build && cp dist/index.html dist/404.html",
     "preview": "vite preview",
     "test": "vitest",
     "lint": "eslint ."
   },
   "dependencies": {
-    "vue": "^3.5.13"
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
     "@reduxjs/toolkit": "^2.6.1",

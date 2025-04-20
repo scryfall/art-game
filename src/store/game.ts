@@ -73,6 +73,10 @@ export const gameSlice = createSlice({
     builder.addCase(startGame.pending, (state, action) => {
       state.status = LoadingStatus.Pending;
       state.query = action.meta.arg;
+      state.score = 0;
+      state.guess = undefined;
+      state.previousCard = undefined;
+      state.card = undefined;
     });
 
     builder.addCase(startGame.fulfilled, (state) => {

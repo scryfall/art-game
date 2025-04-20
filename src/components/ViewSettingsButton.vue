@@ -1,36 +1,36 @@
 <script setup lang="ts">
-import { setViewConfigScreen, useAppDispatch, useAppSelector } from "../store";
-import { KeyCode } from "../utils/keyboard";
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 import CogOutlineSvg from "./Svg/CogOutlineSvg.vue";
 import CogSolidSvg from "./Svg/CogSolidSvg.vue";
+import router from "../router";
 
-const dispatch = useAppDispatch();
-const isViewingSettings = useAppSelector((state) => state.config.viewConfigScreen);
+const route = useRoute();
 
-const click = () => {
+const isViewingSettings = computed(() => route.path === "/settings");
+
+const link = computed(() => {
   if (isViewingSettings.value) {
-    dispatch(setViewConfigScreen(false));
-  } else {
-    dispatch(setViewConfigScreen(true));
+    // if we're currently on the settings page and the settings
+    // link is pressed, then we want to go back to whatever the
+    // previous page was. And if /settings is the first page
+    // the user lands on, we go to /
+    return router.options.history.state.back?.toString() ?? "/";
   }
-};
 
-const onKeydown = (event: KeyboardEvent) => {
-  if (event.code === KeyCode.Escape) {
-    dispatch(setViewConfigScreen(false));
-  }
-};
+  return "/settings";
+});
 </script>
 
 <template>
-  <button type="button" class="settings btn-icon" @click="click" @keydown="onKeydown">
+  <RouterLink :to="link" class="settings btn-icon">
     <div class="icon" aria-hidden="true">
       <CogOutlineSvg v-if="isViewingSettings" />
       <CogSolidSvg v-else />
     </div>
     <div class="vh" v-if="isViewingSettings">Close settings</div>
     <div class="vh" v-else>Open settings</div>
-  </button>
+  </RouterLink>
 </template>
 
 <style scoped lang="scss">

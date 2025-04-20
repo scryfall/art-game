@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { useId } from "vue";
-import { useAppDispatch, useAppSelector, toggleAutocomplete, setViewConfigScreen } from "../store";
+import { onBeforeUnmount, onMounted, useId } from "vue";
+import { useAppDispatch, useAppSelector, toggleAutocomplete } from "../store";
 import { KeyCode } from "../utils/keyboard";
+import router from "../router";
 
 const dispatch = useAppDispatch();
 const autocomplete = useAppSelector((state) => state.config.autocomplete);
@@ -11,14 +12,24 @@ const autocompleteDescId = useId();
 
 const onKeydown = (event: KeyboardEvent) => {
   if (event.code === KeyCode.Escape) {
-    dispatch(setViewConfigScreen(false));
     event.preventDefault();
+    if (router.options.history.state.back) {
+      // only attempt to go back if there is history to go back to
+      router.back();
+    }
   }
 };
+
+onMounted(() => {
+  document.addEventListener("keydown", onKeydown);
+});
+onBeforeUnmount(() => {
+  document.removeEventListener("keydown", onKeydown);
+});
 </script>
 
 <template>
-  <div class="screen" aria-description="Escape to exit settings." @keydown="onKeydown">
+  <div class="screen" aria-description="Escape to exit settings.">
     <section>
       <h2>Settings</h2>
 
