@@ -7,12 +7,7 @@ import { flattenSearchCriteria } from "../utils/string";
 import { ScryfallApiInstance } from "../utils/scryfall-api";
 import { useRoute } from "vue-router";
 
-type Emits = {
-  cancel: [];
-};
-
 const route = useRoute();
-const emit = defineEmits<Emits>();
 const dispatch = useAppDispatch();
 const query = ref("");
 const status = ref(LoadingStatus.Idle);
@@ -49,7 +44,6 @@ const onSubmit = async () => {
     const results = await ScryfallApiInstance.search(search);
     if (results.total_cards < 2) {
       status.value = LoadingStatus.Failed;
-      console.log("hey");
     }
   } catch (ex) {
     console.error("Preflight failed", ex);
@@ -57,17 +51,12 @@ const onSubmit = async () => {
     return;
   }
 
-  console.log("dispatching");
   await dispatch(
     startGame({
       search,
       includeExtras: !excludeExtras.value,
     })
   );
-};
-
-const onCancel = () => {
-  emit("cancel");
 };
 
 onMounted(() => {
