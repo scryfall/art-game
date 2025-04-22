@@ -1,47 +1,27 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { startGame } from "../store";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { useAppSelector } from "../store/hooks";
 import { LoadingStatus } from "../store/common";
-import { AVOID_CRITERIA, COMPATIBILITY_CRITERIA } from "../config";
-import CustomGameSetup from "./CustomGameSetup.vue";
-import { flattenSearchCriteria } from "../utils/string";
+import CustomGameSetup from "../components/CustomGameSetup.vue";
 
 type Preset = {
   id: string;
   label: string;
-  criteria: string[];
+  link: string;
 };
 
-const dispatch = useAppDispatch();
 const gameLoadStatus = useAppSelector((state) => state.game.status);
 const custom = ref(false);
-
-/**
- * Start the game with a given query.
- * @param criteria The format query to work with
- */
-const start = (criteria: string[]) => {
-  const search = flattenSearchCriteria(criteria);
-  dispatch(
-    startGame({
-      search,
-      includeExtras: false,
-    })
-  );
-};
-
-const formatCriteria = ["-t:stickers", "not:extra", ...COMPATIBILITY_CRITERIA, ...AVOID_CRITERIA];
 
 /**
  * The supported formats in the art game.
  * This is the order they'll show up on the front page, too.
  */
 const presets: Preset[] = [
-  { id: "standard", label: "Standard", criteria: ["f:standard", ...formatCriteria] },
-  { id: "pioneer", label: "Pioneer", criteria: ["f:pioneer", ...formatCriteria] },
-  { id: "modern", label: "Modern", criteria: ["f:modern", ...formatCriteria] },
-  { id: "vintage", label: "Vintage", criteria: ["f:vintage", ...formatCriteria] },
+  { id: "standard", label: "Standard", link: "/format/standard" },
+  { id: "pioneer", label: "Pioneer", link: "/format/pioneer" },
+  { id: "modern", label: "Modern", link: "/format/modern" },
+  { id: "vintage", label: "Vintage", link: "/format/vintage" },
 ];
 
 const disabled = computed(() => {
@@ -55,17 +35,17 @@ const disabled = computed(() => {
       <p>Which format should we show cards from?</p>
 
       <div class="options">
-        <button
+        <RouterLink
           v-for="(preset, index) in presets"
           :id="`${preset.id}-format-button`"
           :key="index"
           type="button"
           class="btn btn-large"
-          @click="start(preset.criteria)"
           :disabled="disabled"
+          :to="preset.link"
         >
           {{ preset.label }}
-        </button>
+        </RouterLink>
 
         <div class="separator">or</div>
 
@@ -108,6 +88,11 @@ const disabled = computed(() => {
   align-items: center;
 }
 
+.btn {
+  text-align: center;
+  text-decoration: none;
+}
+
 .subscreen {
   min-width: 200px;
   max-width: min(400px, 90vw);
@@ -140,10 +125,6 @@ p {
     flex: 1;
     opacity: 50%;
   }
-}
-
-.getting-ready {
-  text-align: center;
 }
 
 .error {

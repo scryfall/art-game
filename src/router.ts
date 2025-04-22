@@ -1,12 +1,34 @@
 import { createWebHistory, createRouter } from "vue-router";
 
-import ScreenManager from "./pages/ScreenManager.vue";
 import SettingsScreen from "./pages/SettingsScreen.vue";
 import NotFound from "./pages/NotFound.vue";
+import Format from "./pages/Format.vue";
+import PickModeScreen from "./pages/PickModeScreen.vue";
 
 const routes = [
-  { path: "/", component: ScreenManager },
+  { path: "/", component: PickModeScreen },
   { path: "/settings", component: SettingsScreen },
+  {
+    path: "/format/",
+    children: [
+      {
+        path: "standard",
+        component: Format,
+      },
+      {
+        path: "pioneer",
+        component: Format,
+      },
+      {
+        path: "modern",
+        component: Format,
+      },
+      {
+        path: "vintage",
+        component: Format,
+      },
+    ],
+  },
   { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
 ];
 
