@@ -4,6 +4,7 @@ import SettingsScreen from "./pages/SettingsScreen.vue";
 import NotFound from "./pages/NotFound.vue";
 import Format from "./pages/Format.vue";
 import PickModeScreen from "./pages/PickModeScreen.vue";
+import CustomGame from "./pages/CustomGame.vue";
 
 const routes = [
   { path: "/", component: PickModeScreen },
@@ -29,6 +30,11 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/custom",
+    component: CustomGame,
+  },
+
   { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
 ];
 

@@ -2,7 +2,6 @@
 import { computed, ref } from "vue";
 import { useAppSelector } from "../store/hooks";
 import { LoadingStatus } from "../store/common";
-import CustomGameSetup from "../components/CustomGameSetup.vue";
 
 type Preset = {
   id: string;
@@ -11,7 +10,6 @@ type Preset = {
 };
 
 const gameLoadStatus = useAppSelector((state) => state.game.status);
-const custom = ref(false);
 
 /**
  * The supported formats in the art game.
@@ -31,7 +29,7 @@ const disabled = computed(() => {
 
 <template>
   <div class="screen">
-    <div class="subscreen" v-if="!custom">
+    <div class="subscreen">
       <p>Which format should we show cards from?</p>
 
       <div class="options">
@@ -49,32 +47,9 @@ const disabled = computed(() => {
 
         <div class="separator">or</div>
 
-        <button
-          type="button"
-          class="btn btn-large"
-          @click="() => (custom = true)"
-          :disabled="disabled"
-        >
-          Custom game
-        </button>
+        <RouterLink to="/custom" class="btn btn-large" :disabled="disabled">Custom game</RouterLink>
       </div>
     </div>
-
-    <div v-if="!custom && gameLoadStatus === LoadingStatus.Pending" class="getting-ready">
-      <p>Getting your game ready...</p>
-    </div>
-
-    <!-- TODO(#101): This won't work until we can get routing in. -->
-    <div v-else-if="!custom && gameLoadStatus === LoadingStatus.Failed" class="getting-ready error">
-      <p>Couldn't start your game. Scryfall might be down for maintenance.</p>
-    </div>
-
-    <CustomGameSetup
-      v-if="custom"
-      class="subscreen"
-      :disabled="disabled"
-      @cancel="() => (custom = false)"
-    />
   </div>
 </template>
 
