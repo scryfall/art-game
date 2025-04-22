@@ -6,6 +6,7 @@ import { LoadingStatus, startGame, useAppDispatch } from "../store";
 import { flattenSearchCriteria } from "../utils/string";
 import { ScryfallApiInstance } from "../utils/scryfall-api";
 import { useRoute } from "vue-router";
+import router from "../router";
 
 const route = useRoute();
 const dispatch = useAppDispatch();
@@ -50,6 +51,12 @@ const onSubmit = async () => {
     status.value = LoadingStatus.Failed;
     return;
   }
+
+  router.replace({
+    query: {
+      q: query.value,
+    },
+  });
 
   await dispatch(
     startGame({
