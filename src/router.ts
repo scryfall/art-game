@@ -2,7 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 
 import SettingsScreen from "./pages/SettingsScreen.vue";
 import NotFound from "./pages/NotFound.vue";
-import Format from "./pages/Format.vue";
+import FormatGame from "./pages/FormatGame.vue";
 import PickModeScreen from "./pages/PickModeScreen.vue";
 import CustomGame from "./pages/CustomGame.vue";
 
@@ -14,19 +14,19 @@ const routes = [
     children: [
       {
         path: "standard",
-        component: Format,
+        component: FormatGame,
       },
       {
         path: "pioneer",
-        component: Format,
+        component: FormatGame,
       },
       {
         path: "modern",
-        component: Format,
+        component: FormatGame,
       },
       {
         path: "vintage",
-        component: Format,
+        component: FormatGame,
       },
     ],
   },
