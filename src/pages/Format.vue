@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import GameScreen from "../components/GameScreen.vue";
-import { LoadingStatus, startGame } from "../store";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { startGame } from "../store";
+import { useAppDispatch } from "../store/hooks";
 import { useRoute } from "vue-router";
 import { flattenSearchCriteria } from "../utils/string";
 import { AVOID_CRITERIA, COMPATIBILITY_CRITERIA } from "../config";
-
-const gameLoadStatus = useAppSelector((state) => state.game.status);
 
 const route = useRoute();
 const dispatch = useAppDispatch();
