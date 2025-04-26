@@ -1,12 +1,45 @@
 import { createWebHistory, createRouter } from "vue-router";
 
-import ScreenManager from "./pages/ScreenManager.vue";
 import SettingsScreen from "./pages/SettingsScreen.vue";
 import NotFound from "./pages/NotFound.vue";
+import FormatGame from "./pages/FormatGame.vue";
+import PickModeScreen from "./pages/PickModeScreen.vue";
+import CustomGame from "./pages/CustomGame.vue";
+import CustomGameSetup from "./pages/CustomGameSetup.vue";
 
 const routes = [
-  { path: "/", component: ScreenManager },
+  { path: "/", component: PickModeScreen },
   { path: "/settings", component: SettingsScreen },
+  {
+    path: "/game/",
+    children: [
+      {
+        path: "standard",
+        component: FormatGame,
+      },
+      {
+        path: "pioneer",
+        component: FormatGame,
+      },
+      {
+        path: "modern",
+        component: FormatGame,
+      },
+      {
+        path: "vintage",
+        component: FormatGame,
+      },
+      {
+        path: "custom",
+        component: CustomGame,
+      },
+    ],
+  },
+  {
+    path: "/custom",
+    component: CustomGameSetup,
+  },
+
   { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
 ];
 

@@ -1,5 +1,6 @@
 import type { ScryfallCard } from "../models/scryfall-card";
 import type { ScryfallCatalog } from "../models/scryfall-catalog";
+import type { ScryfallCardList } from "../models/scryfall-list";
 import { Http } from "./http";
 import { wait } from "./timer";
 
@@ -21,23 +22,32 @@ class ScryfallApiHttp extends Http {
     // we'll wait up to 50ms before actually making the request
     // but since we're not awaiting on it here, the current request
     // can finish without issue
-    this.rateLimitPromise = response.then(() => wait(50));
+    this.rateLimitPromise = response.then(() => wait(50)).catch(() => wait(50));
 
     return response;
   }
 }
+
+type SearchParams = {
+  includeExtras?: boolean;
+};
 
 export class ScryfallApi {
   constructor(private readonly http: Http = new ScryfallApiHttp()) {}
 
   /**
    * Get a random card from the Random API.
+   *
    * @param query The query to send to Scryfall's random API endpoint
+   * @param params Additional paraameters for the search
    * @returns A card object
    */
-  async getRandomCard(query: string) {
+  async getRandomCard(query: string, params: SearchParams = {}) {
     const url = new URL("https://api.scryfall.com/cards/random");
     url.searchParams.set("q", query);
+    if (params.includeExtras) {
+      url.searchParams.set("include_extras", "true");
+    }
 
     const card = await this.http.fetch<ScryfallCard>(url);
     return card;
@@ -45,16 +55,40 @@ export class ScryfallApi {
 
   /**
    * Get a random artwork for a given card.
+   *
    * @param oracleId The oracle ID to request
    * @param query The query with constraints on the card art
+   * @param params Additional paraameters for the search
    * @returns A card object
    */
-  async getRandomArt(oracleId: string, query: string) {
+  async getRandomArt(oracleId: string, query: string, params: SearchParams = {}) {
     const url = new URL("https://api.scryfall.com/cards/random");
-    url.searchParams.set("q", `${query} oracle_id:${oracleId} unique:art`);
+    url.searchParams.set("q", `${query} oracle_id:${oracleId}`);
+    url.searchParams.set("unique", "art");
+    if (params.includeExtras) {
+      url.searchParams.set("include_extras", "true");
+    }
 
     const card = await this.http.fetch<ScryfallCard>(url);
     return card;
+  }
+
+  /**
+   * Run a normal Scryfall search for a range of cards that meet a query.
+   *
+   * @param query The search query to run
+   * @param params Additional paraameters for the search
+   * @returns The results list object.
+   */
+  async search(query: string, params: SearchParams = {}) {
+    const url = new URL("https://api.scryfall.com/cards/search");
+    url.searchParams.set("q", query);
+    if (params.includeExtras) {
+      url.searchParams.set("include_extras", "true");
+    }
+
+    const list = await this.http.fetch<ScryfallCardList>(url);
+    return list;
   }
 
   /**

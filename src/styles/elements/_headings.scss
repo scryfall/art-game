@@ -1,0 +1,14 @@
+:root {
+  --h2-size: 20px;
+  --h3-size: 18px;
+}
+
+h2 {
+  font-size: var(--h2-size);
+  text-align: center;
+}
+
+h3 {
+  font-size: var(--h3-size);
+  text-align: center;
+}

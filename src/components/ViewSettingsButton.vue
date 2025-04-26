@@ -23,7 +23,7 @@ const link = computed(() => {
 </script>
 
 <template>
-  <RouterLink :to="link" class="settings btn-clear">
+  <RouterLink :to="link" class="settings btn-icon">
     <div class="icon" aria-hidden="true">
       <CogOutlineSvg v-if="isViewingSettings" />
       <CogSolidSvg v-else />

@@ -5,6 +5,7 @@ import CardArt from "./CardArt.vue";
 import GuessInput from "./GuessInput.vue";
 import { isGuessOk } from "../utils/guess";
 import GuessFeedback from "./GuessFeedback.vue";
+import LoadingHammer from "./LoadingHammer.vue";
 
 const dispatch = useAppDispatch();
 const nextCardStatus = useAppSelector((state) => state.game.nextCardStatus);
@@ -13,9 +14,14 @@ const score = useAppSelector((state) => state.game.score);
 const prevCard = useAppSelector((state) => state.game.previousCard);
 const prevGuess = useAppSelector((state) => state.game.guess);
 const query = useAppSelector((state) => state.game.query);
+const gameLoadStatus = useAppSelector((state) => state.game.status);
 
 const loadNextCard = () => {
-  dispatch(fetchNextCard({ query: query.value, excludeOracleId: card.value?.oracle_id }));
+  if (!query.value) {
+    throw Error("Somehow, no game query is loaded.");
+  }
+
+  dispatch(fetchNextCard({ query: query.value, previousOracleId: card.value?.oracle_id }));
 };
 
 const skip = () => {
@@ -40,7 +46,11 @@ const submitGuess = (guess: string) => {
 </script>
 
 <template>
-  <div class="screen" :data-answer="card?.name">
+  <p v-if="gameLoadStatus === LoadingStatus.Pending" class="loading">
+    <LoadingHammer />
+    <span> Getting your game ready... </span>
+  </p>
+  <div class="screen" :data-answer="card?.name" v-else>
     <CardArt v-if="card" :card="card" :loading-next="nextCardStatus" />
 
     <p class="error-loading" v-if="nextCardStatus === LoadingStatus.Failed">
@@ -79,6 +89,14 @@ const submitGuess = (guess: string) => {
   display: flex;
   flex-flow: column;
   align-items: center;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-style: italic;
 }
 
 .error-loading {

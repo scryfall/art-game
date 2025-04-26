@@ -37,3 +37,11 @@
   padding: 0;
   text-decoration: underline;
 }
+
+.btn-icon {
+  @extend .btn-clear;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}

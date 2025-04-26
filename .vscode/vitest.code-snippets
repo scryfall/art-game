@@ -30,7 +30,7 @@
     "scope": "typescript",
     "prefix": "beforeEach",
     "body": [
-      "beforeEach(\"$1\", () => {",
+      "beforeEach(() => {",
       "  $0",
       "});"
     ],
