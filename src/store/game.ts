@@ -9,8 +9,8 @@ export type GameGuess = { name: string; outcome: Outcome };
 export type GameQuery = {
   /** The search string used for this game. */
   search: string;
-  /** Whether extras are allowed. */
-  includeExtras: boolean;
+  /** Whether extras are allowed. Defaults to false. */
+  includeExtras?: boolean;
 };
 
 type GameSliceState = {
@@ -51,7 +51,9 @@ export const fetchNextCard = createAsyncThunk(
     const { query, previousOracleId } = payload;
 
     const search = constructSearch(query, previousOracleId);
-    const card = await ScryfallApiInstance.getRandomCard(search);
+    const card = await ScryfallApiInstance.getRandomCard(search, {
+      includeExtras: query.includeExtras,
+    });
     const print = await ScryfallApiInstance.getRandomArt(card.oracle_id, search);
     return print;
   }

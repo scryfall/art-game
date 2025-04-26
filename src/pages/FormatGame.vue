@@ -22,6 +22,7 @@ const start = (criteria: string[]) => {
 };
 
 onMounted(() => {
+  // TODO patch trailing slash
   const format = route.path.split("/").pop();
   const criteria = [`f:${format}`, ...formatCriteria];
   start(criteria);

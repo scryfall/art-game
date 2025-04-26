@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 import { AVOID_CRITERIA, COMPATIBILITY_CRITERIA } from "../config";
-import ChevronLeft from "./Svg/ChevronLeft.vue";
-import { LoadingStatus, startGame, useAppDispatch } from "../store";
+import ChevronLeft from "../components/Svg/ChevronLeft.vue";
+import { LoadingStatus } from "../store";
 import { flattenSearchCriteria } from "../utils/string";
 import { ScryfallApiInstance } from "../utils/scryfall-api";
 import { useRoute } from "vue-router";
 import router from "../router";
 
 const route = useRoute();
-const dispatch = useAppDispatch();
 const query = ref("");
 const status = ref(LoadingStatus.Idle);
 
@@ -53,17 +52,12 @@ const onSubmit = async () => {
   }
 
   router.replace({
+    path: "/game/custom",
     query: {
       q: query.value,
+      include_extras: !excludeExtras.value ? "true" : undefined,
     },
   });
-
-  await dispatch(
-    startGame({
-      search,
-      includeExtras: !excludeExtras.value,
-    })
-  );
 };
 
 onMounted(() => {
@@ -72,7 +66,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <form @submit.prevent="onSubmit">
+  <form class="screen" @submit.prevent="onSubmit">
     <header>
       <RouterLink to="/" class="btn-icon cancel" title="Cancel">
         <ChevronLeft />
@@ -153,7 +147,7 @@ onMounted(() => {
 <style scoped lang="scss">
 @use "../styles/mixins";
 
-form {
+.screen {
   display: flex;
   flex-flow: column;
   align-items: center;

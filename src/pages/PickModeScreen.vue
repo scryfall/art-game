@@ -16,10 +16,10 @@ const gameLoadStatus = useAppSelector((state) => state.game.status);
  * This is the order they'll show up on the front page, too.
  */
 const presets: Preset[] = [
-  { id: "standard", label: "Standard", link: "/format/standard" },
-  { id: "pioneer", label: "Pioneer", link: "/format/pioneer" },
-  { id: "modern", label: "Modern", link: "/format/modern" },
-  { id: "vintage", label: "Vintage", link: "/format/vintage" },
+  { id: "standard", label: "Standard", link: "/game/standard" },
+  { id: "pioneer", label: "Pioneer", link: "/game/pioneer" },
+  { id: "modern", label: "Modern", link: "/game/modern" },
+  { id: "vintage", label: "Vintage", link: "/game/vintage" },
 ];
 
 const disabled = computed(() => {

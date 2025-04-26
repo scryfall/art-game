@@ -5,12 +5,13 @@ import NotFound from "./pages/NotFound.vue";
 import FormatGame from "./pages/FormatGame.vue";
 import PickModeScreen from "./pages/PickModeScreen.vue";
 import CustomGame from "./pages/CustomGame.vue";
+import CustomGameSetup from "./pages/CustomGameSetup.vue";
 
 const routes = [
   { path: "/", component: PickModeScreen },
   { path: "/settings", component: SettingsScreen },
   {
-    path: "/format/",
+    path: "/game/",
     children: [
       {
         path: "standard",
@@ -28,11 +29,15 @@ const routes = [
         path: "vintage",
         component: FormatGame,
       },
+      {
+        path: "custom",
+        component: CustomGame,
+      },
     ],
   },
   {
     path: "/custom",
-    component: CustomGame,
+    component: CustomGameSetup,
   },
 
   { path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound },
