@@ -13,6 +13,7 @@ const score = useAppSelector((state) => state.game.score);
 const prevCard = useAppSelector((state) => state.game.previousCard);
 const prevGuess = useAppSelector((state) => state.game.guess);
 const query = useAppSelector((state) => state.game.query);
+const gameLoadStatus = useAppSelector((state) => state.game.status);
 
 const loadNextCard = () => {
   if (!query.value) {
@@ -44,7 +45,10 @@ const submitGuess = (guess: string) => {
 </script>
 
 <template>
-  <div class="screen" :data-answer="card?.name">
+  <p v-if="gameLoadStatus === LoadingStatus.Pending" class="getting-ready">
+    Getting your game ready...
+  </p>
+  <div class="screen" :data-answer="card?.name" v-else>
     <CardArt v-if="card" :card="card" :loading-next="nextCardStatus" />
 
     <p class="error-loading" v-if="nextCardStatus === LoadingStatus.Failed">
@@ -88,5 +92,9 @@ const submitGuess = (guess: string) => {
 .error-loading {
   text-align: center;
   color: var(--error-loading-color);
+}
+
+.getting-ready {
+  text-align: center;
 }
 </style>

@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { AVOID_CRITERIA, COMPATIBILITY_CRITERIA } from "../config";
 import ChevronLeft from "./Svg/ChevronLeft.vue";
 import { LoadingStatus, startGame, useAppDispatch } from "../store";
 import { flattenSearchCriteria } from "../utils/string";
 import { ScryfallApiInstance } from "../utils/scryfall-api";
+import { useRoute } from "vue-router";
+import router from "../router";
 
-type Emits = {
-  cancel: [];
-};
-
-const emit = defineEmits<Emits>();
+const route = useRoute();
 const dispatch = useAppDispatch();
 const query = ref("");
 const status = ref(LoadingStatus.Idle);
@@ -54,6 +52,12 @@ const onSubmit = async () => {
     return;
   }
 
+  router.replace({
+    query: {
+      q: query.value,
+    },
+  });
+
   await dispatch(
     startGame({
       search,
@@ -62,18 +66,18 @@ const onSubmit = async () => {
   );
 };
 
-const onCancel = () => {
-  emit("cancel");
-};
+onMounted(() => {
+  query.value = route.query.q?.toString() ?? "";
+});
 </script>
 
 <template>
   <form @submit.prevent="onSubmit">
     <header>
-      <button type="button" class="btn-icon cancel" title="Cancel" @click="onCancel">
+      <RouterLink to="/" class="btn-icon cancel" title="Cancel">
         <ChevronLeft />
         <span class="vh">Cancel</span>
-      </button>
+      </RouterLink>
       <h2>Custom game</h2>
       <div class="spacer"></div>
     </header>
@@ -148,6 +152,15 @@ const onCancel = () => {
 
 <style scoped lang="scss">
 @use "../styles/mixins";
+
+form {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  min-width: 200px;
+  max-width: min(400px, 90vw);
+  margin: auto;
+}
 
 header {
   display: flex;

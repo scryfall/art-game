@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import PickModeScreen from "../components/PickModeScreen.vue";
-import { LoadingStatus, useAppSelector } from "../store";
 import GameScreen from "../components/GameScreen.vue";
+import { LoadingStatus } from "../store";
+import { useAppSelector } from "../store/hooks";
+import CustomGameSetup from "../components/CustomGameSetup.vue";
 
 const gameLoadStatus = useAppSelector((state) => state.game.status);
 </script>
 
 <template>
   <GameScreen v-if="gameLoadStatus === LoadingStatus.Success" />
-  <PickModeScreen v-else />
+  <CustomGameSetup v-else />
 </template>
-
-<style scoped lang="scss"></style>
