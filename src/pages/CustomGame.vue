@@ -7,7 +7,7 @@ import { useRoute, useRouter } from "vue-router";
 
 type QueryParams = {
   q: string;
-  include_extras?: "true";
+  include_extras?: "true" | "false";
 };
 
 const route = useRoute();
@@ -26,7 +26,7 @@ const start = (search: string, includeExtras?: boolean) => {
 onMounted(() => {
   const query = route.query as QueryParams;
   if (query.q) {
-    start(query.q, Boolean(query.include_extras));
+    start(query.q, query.include_extras === "true");
   } else {
     router.replace({
       path: "/custom",
