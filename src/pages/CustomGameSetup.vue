@@ -7,6 +7,7 @@ import { flattenSearchCriteria } from "../utils/string";
 import { ScryfallApiInstance } from "../utils/scryfall-api";
 import { useRoute } from "vue-router";
 import router from "../router";
+import UrzasLegacy from "../components/Svg/UrzasLegacy.vue";
 
 const route = useRoute();
 const query = ref("");
@@ -96,6 +97,10 @@ onMounted(() => {
       <p class="hint">
         Enter a search to find cards. You might need to use the
         <a href="https://scryfall.com/docs/syntax" target="_blank">Syntax reference</a>.
+      </p>
+      <p class="loading" v-if="status === LoadingStatus.Pending">
+        <UrzasLegacy class="hammer" />
+        <span>Loading your game ...</span>
       </p>
       <p class="error" v-if="status === LoadingStatus.Failed">
         Your search must match at least two cards. It might be contradicted by filters below.
@@ -201,6 +206,29 @@ hr {
 
   input {
     flex: 1;
+  }
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-style: italic;
+
+  .hammer {
+    transform-origin: 95% 70%;
+    animation: hammer 0.5s alternate ease-in infinite;
+  }
+}
+
+@keyframes hammer {
+  0% {
+    transform: scale(2) rotate(15deg);
+  }
+
+  100% {
+    transform: scale(2) rotate(-10deg);
   }
 }
 
