@@ -44,6 +44,7 @@ const onSubmit = async () => {
     const results = await ScryfallApiInstance.search(search);
     if (results.total_cards < 2) {
       status.value = LoadingStatus.Failed;
+      return;
     }
   } catch (ex) {
     console.error("Preflight failed", ex);
@@ -88,12 +89,7 @@ onMounted(() => {
           required
           :disabled="disabled"
         />
-        <button
-          type="submit"
-          class="btn btn-large"
-          value="Start"
-          :disabled="disabled || query.length === 0"
-        >
+        <button type="submit" class="btn btn-large" :disabled="disabled || query.length === 0">
           Start
         </button>
       </div>
