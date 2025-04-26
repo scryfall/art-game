@@ -1,4 +1,4 @@
-import { naturalize } from "../string";
+import { capitalize, naturalize, trimTrailingSlash } from "../string";
 
 describe("naturalize", () => {
   [
@@ -17,5 +17,21 @@ describe("naturalize", () => {
     it(`naturalizes ${scenario.in} as expected`, () => {
       expect(naturalize(scenario.in)).toBe(scenario.out);
     });
+  });
+});
+
+describe("capitalize", () => {
+  it("capitalizes the first letter of text", () => {
+    expect(capitalize("foo")).toEqual("Foo");
+  });
+});
+
+describe("trimTrailingSlash", () => {
+  it("strips the final trailing slash from text", () => {
+    expect(trimTrailingSlash("path/to/")).toEqual("path/to");
+  });
+
+  it("doesn't alter text that has no trailing slash", () => {
+    expect(trimTrailingSlash("path/to")).toEqual("path/to");
   });
 });

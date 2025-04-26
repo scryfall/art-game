@@ -4,7 +4,7 @@ import GameScreen from "../components/GameScreen.vue";
 import { startGame } from "../store";
 import { useAppDispatch } from "../store/hooks";
 import { useRoute } from "vue-router";
-import { flattenSearchCriteria } from "../utils/string";
+import { flattenSearchCriteria, trimTrailingSlash } from "../utils/string";
 import { AVOID_CRITERIA, COMPATIBILITY_CRITERIA } from "../config";
 
 const route = useRoute();
@@ -22,8 +22,8 @@ const start = (criteria: string[]) => {
 };
 
 onMounted(() => {
-  // TODO patch trailing slash
-  const format = route.path.split("/").pop();
+  const path = trimTrailingSlash(route.path);
+  const format = path.split("/").pop();
   const criteria = [`f:${format}`, ...formatCriteria];
   start(criteria);
 });

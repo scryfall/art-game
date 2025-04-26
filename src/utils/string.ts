@@ -7,6 +7,11 @@ export function naturalize(value: string) {
   return value;
 }
 
+/**
+ * Capitalize the first letter of a piece of text.
+ *
+ * @param value The text to capitalize
+ */
 export function capitalize(value: string) {
   if (!value) return "";
   value = String(value);
@@ -15,4 +20,12 @@ export function capitalize(value: string) {
 
 export function flattenSearchCriteria(criteria: (string | boolean)[]) {
   return criteria.flat().filter(Boolean).join(" ");
+}
+
+/** If there's a trailing slash, get the string back without one. */
+export function trimTrailingSlash(str: string) {
+  if (str.at(-1) === "/") {
+    return str.slice(0, -1);
+  }
+  return str;
 }
