@@ -6,7 +6,7 @@ import { LoadingStatus } from "../store";
 import { flattenSearchCriteria } from "../utils/string";
 import { ScryfallApiInstance } from "../utils/scryfall-api";
 import router from "../router";
-import UrzasLegacy from "../components/Svg/UrzasLegacy.vue";
+import LoadingHammer from "../components/LoadingHammer.vue";
 
 const query = ref("");
 const status = ref(LoadingStatus.Idle);
@@ -93,7 +93,7 @@ const onSubmit = async () => {
         <a href="https://scryfall.com/docs/syntax" target="_blank">Syntax reference</a>.
       </p>
       <p class="loading" v-if="status === LoadingStatus.Pending">
-        <UrzasLegacy class="hammer" />
+        <LoadingHammer />
         <span>Loading your game ...</span>
       </p>
       <p class="error" v-if="status === LoadingStatus.Failed">
@@ -209,21 +209,6 @@ hr {
   justify-content: center;
   gap: 8px;
   font-style: italic;
-
-  .hammer {
-    transform-origin: 95% 70%;
-    animation: hammer 0.5s alternate ease-in infinite;
-  }
-}
-
-@keyframes hammer {
-  0% {
-    transform: scale(2) rotate(15deg);
-  }
-
-  100% {
-    transform: scale(2) rotate(-10deg);
-  }
 }
 
 .filters {

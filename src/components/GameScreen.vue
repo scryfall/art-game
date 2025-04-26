@@ -5,6 +5,7 @@ import CardArt from "./CardArt.vue";
 import GuessInput from "./GuessInput.vue";
 import { isGuessOk } from "../utils/guess";
 import GuessFeedback from "./GuessFeedback.vue";
+import LoadingHammer from "./LoadingHammer.vue";
 
 const dispatch = useAppDispatch();
 const nextCardStatus = useAppSelector((state) => state.game.nextCardStatus);
@@ -45,8 +46,9 @@ const submitGuess = (guess: string) => {
 </script>
 
 <template>
-  <p v-if="gameLoadStatus === LoadingStatus.Pending" class="getting-ready">
-    Getting your game ready...
+  <p v-if="gameLoadStatus === LoadingStatus.Pending" class="loading">
+    <LoadingHammer />
+    <span> Getting your game ready... </span>
   </p>
   <div class="screen" :data-answer="card?.name" v-else>
     <CardArt v-if="card" :card="card" :loading-next="nextCardStatus" />
@@ -89,12 +91,16 @@ const submitGuess = (guess: string) => {
   align-items: center;
 }
 
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-style: italic;
+}
+
 .error-loading {
   text-align: center;
   color: var(--error-loading-color);
-}
-
-.getting-ready {
-  text-align: center;
 }
 </style>
