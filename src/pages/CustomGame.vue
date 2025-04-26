@@ -4,6 +4,8 @@ import GameScreen from "../components/GameScreen.vue";
 import { startGame } from "../store";
 import { useAppDispatch } from "../store/hooks";
 import { useRoute, useRouter } from "vue-router";
+import { flattenSearchCriteria } from "../utils/string";
+import { COMPATIBILITY_CRITERIA } from "../config";
 
 type QueryParams = {
   q: string;
@@ -14,7 +16,9 @@ const route = useRoute();
 const router = useRouter();
 const dispatch = useAppDispatch();
 
-const start = (search: string, includeExtras?: boolean) => {
+const start = (criteria: string, includeExtras?: boolean) => {
+  const search = flattenSearchCriteria([criteria, ...COMPATIBILITY_CRITERIA]);
+
   dispatch(
     startGame({
       search,

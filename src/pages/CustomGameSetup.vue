@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { AVOID_CRITERIA, COMPATIBILITY_CRITERIA } from "../config";
+import { AVOID_CRITERIA } from "../config";
 import ChevronLeft from "../components/Svg/ChevronLeft.vue";
 import { LoadingStatus } from "../store";
 import { flattenSearchCriteria } from "../utils/string";
@@ -17,7 +17,7 @@ const excludeExtras = ref(true);
 const excludeStickers = ref(true);
 
 const criteria = computed(() => {
-  const criteria = [`(${query.value})`, ...COMPATIBILITY_CRITERIA];
+  const criteria = [`(${query.value})`];
   if (excludeBadArt?.value) {
     criteria.push(...AVOID_CRITERIA);
   }
@@ -54,7 +54,7 @@ const onSubmit = async () => {
   router.replace({
     path: "/game/custom",
     query: {
-      q: query.value,
+      q: search,
       include_extras: !excludeExtras.value ? "true" : undefined,
     },
   });
