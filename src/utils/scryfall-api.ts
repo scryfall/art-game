@@ -63,7 +63,8 @@ export class ScryfallApi {
    */
   async getRandomArt(oracleId: string, query: string, params: SearchParams = {}) {
     const url = new URL("https://api.scryfall.com/cards/random");
-    url.searchParams.set("q", `${query} oracle_id:${oracleId} unique:art`);
+    url.searchParams.set("q", `${query} oracle_id:${oracleId}`);
+    url.searchParams.set("unique", "art");
     if (params.includeExtras) {
       url.searchParams.set("include_extras", "true");
     }
