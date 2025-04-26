@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 import { AVOID_CRITERIA, COMPATIBILITY_CRITERIA } from "../config";
 import ChevronLeft from "../components/Svg/ChevronLeft.vue";
 import { LoadingStatus } from "../store";
 import { flattenSearchCriteria } from "../utils/string";
 import { ScryfallApiInstance } from "../utils/scryfall-api";
-import { useRoute } from "vue-router";
 import router from "../router";
 import UrzasLegacy from "../components/Svg/UrzasLegacy.vue";
 
-const route = useRoute();
 const query = ref("");
 const status = ref(LoadingStatus.Idle);
 
@@ -61,10 +59,6 @@ const onSubmit = async () => {
     },
   });
 };
-
-onMounted(() => {
-  query.value = route.query.q?.toString() ?? "";
-});
 </script>
 
 <template>
