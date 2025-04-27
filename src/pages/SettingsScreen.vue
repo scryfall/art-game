@@ -38,7 +38,7 @@ onBeforeUnmount(() => {
         <!-- Descriptions are full width. -->
         <div class="label" :id="autocompleteId">
           <div>Autocomplete card names<span class="vh">.</span></div>
-          <div :id="autocompleteDescId" class="description">
+          <div :id="autocompleteDescId" class="desc">
             Card name suggestions won't be limited to your chosen format. Choose wisely!
           </div>
         </div>
