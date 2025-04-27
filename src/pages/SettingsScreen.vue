@@ -63,6 +63,11 @@ onBeforeUnmount(() => {
         from <a href="https://github.com/crookedneighbor" target="_blank">crookedneighbor</a>.
       </p>
       <p>This game is based on the MagicCards.info Art Game.</p>
+      <p>
+        <a href="https://github.com/scryfall/art-game" target="_blank">
+          View this project on Github.
+        </a>
+      </p>
     </section>
   </div>
 </template>
