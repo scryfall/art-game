@@ -85,6 +85,7 @@ const onSubmit = async () => {
 
     <section class="search">
       <div class="inputs">
+        <div class="input-field">
           <label class="vh" for="custom-query">Custom Scryfall Query</label>
           <input
             v-model="query"
@@ -96,6 +97,10 @@ const onSubmit = async () => {
             :maxlength="MAX_QUERY_LENGTH"
             :disabled="disabled"
           />
+          <div class="max-length" :class="{ visible: query.length > MAX_QUERY_LENGTH - 200 }">
+            {{ query.length }} / {{ MAX_QUERY_LENGTH }}
+          </div>
+        </div>
         <button type="submit" class="btn btn-large" :disabled="disabled || query.length === 0">
           Start
         </button>
@@ -207,12 +212,27 @@ hr {
 .search {
   .inputs {
     display: flex;
+    align-items: flex-start;
     gap: 12px;
     width: 100%;
   }
 
-  input {
+  .input-field {
     flex: 1;
+    display: flex;
+    flex-flow: column;
+  }
+
+  .max-length {
+    font-size: 80%;
+    opacity: 0.8;
+    margin-top: 4px;
+    font-style: italic;
+    text-align: right;
+
+    &:not(.visible) {
+      visibility: hidden;
+    }
   }
 }
 
