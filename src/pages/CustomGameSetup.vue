@@ -11,6 +11,17 @@ import LoadingHammer from "../components/LoadingHammer.vue";
 const query = ref("");
 const status = ref(LoadingStatus.Idle);
 
+/**
+ * The maximum length of a custom game query.
+ *
+ * This accounts for:
+ * - The 1000 character limit on the `/cards/search?q=` parameter.
+ * - ~100 characters for compatibility or quality criteria.
+ * - ~100 characters for additional bits and pieces like an included or excluded oracle_id.
+ * - Some fuzziness for some characters being URL-encoded.
+ */
+const MAX_QUERY_LENGTH = 800;
+
 // Filters
 const excludeBadArt = ref(true);
 const excludeExtras = ref(true);
@@ -74,16 +85,17 @@ const onSubmit = async () => {
 
     <section class="search">
       <div class="inputs">
-        <label class="vh" for="custom-query">Custom Scryfall Query</label>
-        <input
-          v-model="query"
-          id="custom-query"
-          class="input-large"
-          type="text"
-          placeholder="set:dom type:creature"
-          required
-          :disabled="disabled"
-        />
+          <label class="vh" for="custom-query">Custom Scryfall Query</label>
+          <input
+            v-model="query"
+            id="custom-query"
+            class="input-large"
+            type="text"
+            placeholder="set:dom type:creature"
+            required
+            :maxlength="MAX_QUERY_LENGTH"
+            :disabled="disabled"
+          />
         <button type="submit" class="btn btn-large" :disabled="disabled || query.length === 0">
           Start
         </button>
