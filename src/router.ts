@@ -1,6 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
 
-import SettingsScreen from "./pages/SettingsScreen.vue";
 import NotFound from "./pages/NotFound.vue";
 import FormatGame from "./pages/FormatGame.vue";
 import PickModeScreen from "./pages/PickModeScreen.vue";
@@ -9,7 +8,6 @@ import CustomGameSetup from "./pages/CustomGameSetup.vue";
 
 const routes = [
   { path: "/", component: PickModeScreen },
-  { path: "/settings", component: SettingsScreen },
   {
     path: "/game/",
     children: [
