@@ -22,6 +22,10 @@ const status = ref(LoadingStatus.Idle);
  */
 const MAX_QUERY_LENGTH = 800;
 
+const showQueryLengthHint = computed(() => {
+  return query.value.length >= MAX_QUERY_LENGTH * 0.75;
+});
+
 // Filters
 const excludeBadArt = ref(true);
 const excludeExtras = ref(true);
@@ -97,7 +101,7 @@ const onSubmit = async () => {
             :maxlength="MAX_QUERY_LENGTH"
             :disabled="disabled"
           />
-          <div class="max-length" :class="{ visible: query.length > MAX_QUERY_LENGTH - 200 }">
+          <div class="max-length" v-if="showQueryLengthHint">
             {{ query.length }} / {{ MAX_QUERY_LENGTH }}
           </div>
         </div>
@@ -229,10 +233,6 @@ hr {
     margin-top: 4px;
     font-style: italic;
     text-align: right;
-
-    &:not(.visible) {
-      visibility: hidden;
-    }
   }
 }
 
