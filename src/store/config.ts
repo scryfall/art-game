@@ -20,8 +20,13 @@ export const configSlice = createSlice({
     setAutocomplete(state, action: PayloadAction<boolean>) {
       state.autocomplete = action.payload;
     },
+    setViewConfigScreen(state, action: PayloadAction<boolean>) {
+      state.viewConfigScreen = action.payload;
+    },
   },
 });
+
+export const { setViewConfigScreen } = configSlice.actions;
 
 export const loadConfig = createAction(configSlice.actions.loadConfig.type, () => {
   const theme = localStorage.getItem(StorageKey.Theme) ?? Theme.Dark;

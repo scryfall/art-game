@@ -4,9 +4,11 @@ import ThemeButton from "./components/ThemeButton.vue";
 import ViewSettingsButton from "./components/ViewSettingsButton.vue";
 import { useAppSelector } from "./store/hooks";
 import { RouterView } from "vue-router";
+import SettingsScreen from "./pages/SettingsScreen.vue";
 
 const theme = useAppSelector((state) => state.config.theme);
 const currentYear = ref(new Date().getFullYear());
+const viewConfigScreen = useAppSelector((state) => state.config.viewConfigScreen);
 </script>
 
 <template>
@@ -31,7 +33,8 @@ const currentYear = ref(new Date().getFullYear());
     </header>
 
     <main>
-      <RouterView />
+      <SettingsScreen v-show="viewConfigScreen" />
+      <RouterView v-show="!viewConfigScreen" />
     </main>
 
     <footer>
