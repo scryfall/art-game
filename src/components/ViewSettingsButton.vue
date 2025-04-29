@@ -7,11 +7,7 @@ const dispatch = useAppDispatch();
 const isViewingSettings = useAppSelector((state) => state.config.viewConfigScreen);
 
 const click = () => {
-  if (isViewingSettings.value) {
-    dispatch(setViewConfigScreen(false));
-  } else {
-    dispatch(setViewConfigScreen(true));
-  }
+  dispatch(setViewConfigScreen(!isViewingSettings.value));
 };
 </script>
 
