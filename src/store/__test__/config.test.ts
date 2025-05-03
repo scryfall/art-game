@@ -29,8 +29,12 @@ describe("Config Store", () => {
       expect(config.theme).toEqual(Theme.Light);
     });
 
-    // not yet implemented
-    it.todo("defaults to Dark theme if local storage theme is invalid");
+    it("defaults to Dark theme if local storage theme is invalid", () => {
+      localStorage.setItem(StorageKey.Theme, "invalid-theme");
+      const config = useConfigStore();
+
+      expect(config.theme).toEqual(Theme.Dark);
+    });
 
     it("uses autocomplete setting from local storage if available", () => {
       localStorage.setItem(StorageKey.Autocomplete, "true");
