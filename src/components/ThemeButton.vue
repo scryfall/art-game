@@ -25,7 +25,7 @@ const { theme } = storeToRefs(config);
     <div class="icon moon" aria-hidden="true">
       <MoonSolidSvg />
     </div>
-    <div class="vh">{{ capitalize(config.theme) }} theme. Press to toggle.</div>
+    <div class="vh">{{ capitalize(theme) }} theme. Press to toggle.</div>
   </button>
 </template>
 
