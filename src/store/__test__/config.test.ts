@@ -39,7 +39,12 @@ describe("Config Store", () => {
       expect(config.autocomplete).toEqual(true);
     });
 
-    it.todo("defaults to false when autocomplete value is invalid in local storage");
+    it("defaults to false when autocomplete value is invalid in local storage", () => {
+      localStorage.setItem(StorageKey.Autocomplete, "a truthy value");
+      const config = useConfigStore();
+
+      expect(config.autocomplete).toEqual(false);
+    });
   });
 
   describe("toggleTheme", () => {

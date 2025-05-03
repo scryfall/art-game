@@ -5,7 +5,7 @@ import { ref } from "vue";
 
 export const useConfigStore = defineStore("config", () => {
   const theme = ref(localStorage.getItem(StorageKey.Theme) ?? Theme.Dark);
-  const autocomplete = ref(Boolean(localStorage.getItem(StorageKey.Autocomplete)));
+  const autocomplete = ref(localStorage.getItem(StorageKey.Autocomplete) === "true");
   const viewConfigScreen = ref(false);
 
   function toggleTheme() {
