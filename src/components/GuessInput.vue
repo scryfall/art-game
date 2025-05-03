@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { computed, ref, useId, useTemplateRef, watch, type Directive } from "vue";
-import { useAppSelector } from "../store";
+import { useConfigStore } from "../store/config";
 import GuessAutocompleteList from "./GuessAutocompleteList.vue";
 import { KeyCode } from "../utils/keyboard";
 import { getActiveDescendent } from "./GuessAutocompleteConfig";
 import { useAutocomplete } from "../composables/useAutocomplete";
+import { storeToRefs } from "pinia";
 
 type Props = {
   /** Whether this input control should be disabled. */
@@ -16,6 +17,8 @@ type Emits = {
   submit: [value: string];
 };
 
+const config = useConfigStore();
+const { autocomplete } = storeToRefs(config);
 const { disabled } = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
@@ -27,7 +30,6 @@ const form = useTemplateRef("form");
 const input = useTemplateRef("input");
 const guess = ref("");
 const focused = ref(false);
-const acEnabled = useAppSelector((state) => state.config.autocomplete);
 const acOptions = useAutocomplete(guess);
 const acKeyboardFocusIndex = ref(AC_NO_SELECTION);
 
@@ -42,7 +44,7 @@ const onAutocompletePick = (text: string) => {
 };
 
 const onKeypress = (event: KeyboardEvent) => {
-  if (!acEnabled.value) {
+  if (!autocomplete) {
     return;
   }
 
@@ -114,12 +116,12 @@ const autocompleteOpen = computed(() => Boolean(acOptions.value.length > 0 && fo
     <input
       aria-label="Enter card name"
       :aria-description="
-        acEnabled &&
+        autocomplete &&
         'Enter the card name corresponding to the art shown, or pick from the autocomplete list below.'
       "
       ref="input"
       type="text"
-      :role="acEnabled ? 'combobox' : 'input'"
+      :role="autocomplete ? 'combobox' : 'input'"
       class="input-large"
       :class="{
         'kb-focus': acKeyboardFocusIndex === AC_NO_SELECTION,
@@ -139,7 +141,7 @@ const autocompleteOpen = computed(() => Boolean(acOptions.value.length > 0 && fo
       :aria-activedescendant="getActiveDescendent(acKeyboardFocusIndex)"
     />
     <GuessAutocompleteList
-      v-if="acEnabled"
+      v-if="autocomplete"
       v-show="autocompleteOpen"
       :id="autocompleteListId"
       role="listbox"

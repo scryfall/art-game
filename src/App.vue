@@ -2,13 +2,14 @@
 import { ref } from "vue";
 import ThemeButton from "./components/ThemeButton.vue";
 import ViewSettingsButton from "./components/ViewSettingsButton.vue";
-import { useAppSelector } from "./store/hooks";
 import { RouterView } from "vue-router";
 import SettingsScreen from "./pages/SettingsScreen.vue";
+import { useConfigStore } from "./store/config";
+import { storeToRefs } from "pinia";
 
-const theme = useAppSelector((state) => state.config.theme);
+const config = useConfigStore();
+const { theme, viewConfigScreen } = storeToRefs(config);
 const currentYear = ref(new Date().getFullYear());
-const viewConfigScreen = useAppSelector((state) => state.config.viewConfigScreen);
 </script>
 
 <template>

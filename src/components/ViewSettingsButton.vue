@@ -1,23 +1,21 @@
 <script setup lang="ts">
 import CogOutlineSvg from "./Svg/CogOutlineSvg.vue";
 import CogSolidSvg from "./Svg/CogSolidSvg.vue";
-import { setViewConfigScreen, useAppDispatch, useAppSelector } from "../store";
+import { useConfigStore } from "../store/config";
 
-const dispatch = useAppDispatch();
-const isViewingSettings = useAppSelector((state) => state.config.viewConfigScreen);
-
+const config = useConfigStore();
 const click = () => {
-  dispatch(setViewConfigScreen(!isViewingSettings.value));
+  config.viewConfigScreen = !config.viewConfigScreen;
 };
 </script>
 
 <template>
   <button type="button" class="settings btn-icon" @click="click">
     <div class="icon" aria-hidden="true">
-      <CogOutlineSvg v-if="isViewingSettings" />
+      <CogOutlineSvg v-if="config.viewConfigScreen" />
       <CogSolidSvg v-else />
     </div>
-    <div class="vh" v-if="isViewingSettings">Close settings</div>
+    <div class="vh" v-if="config.viewConfigScreen">Close settings</div>
     <div class="vh" v-else>Open settings</div>
   </button>
 </template>

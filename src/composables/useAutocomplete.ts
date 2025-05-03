@@ -1,7 +1,8 @@
 import { ref, watch, type Ref } from "vue";
 import debounce from "lodash.debounce";
 import { ScryfallApiInstance } from "../utils/scryfall-api";
-import { useAppSelector } from "../store";
+import { useConfigStore } from "../store/config";
+import { storeToRefs } from "pinia";
 
 /** The debounce time before doing autocomplete. */
 const AUTOCOMPLETE_DELAY = 500;
@@ -19,8 +20,9 @@ const ENABLE_LOGGING = false;
  * @returns A ref to a list of options valid for autocomplete.
  */
 export function useAutocomplete(guess: Ref<string>) {
+  const config = useConfigStore();
+  const { autocomplete } = storeToRefs(config);
   /** Is autocomplete enabled? */
-  const acEnabled = useAppSelector((state) => state.config.autocomplete);
   /** The autocomplete options available. */
   const options = ref<string[]>([]);
   /** The last time options were updataed. */
@@ -84,7 +86,7 @@ export function useAutocomplete(guess: Ref<string>) {
     }
   );
 
-  watch(acEnabled, (enabled) => {
+  watch(autocomplete, (enabled) => {
     if (!enabled) {
       clearAutocomplete();
     }
@@ -93,7 +95,7 @@ export function useAutocomplete(guess: Ref<string>) {
   watch(
     () => guess.value.trim(),
     (value) => {
-      if (!acEnabled) {
+      if (!autocomplete) {
         return;
       }
 

@@ -2,22 +2,21 @@
 import { Theme } from "../models/theme";
 import MoonSolidSvg from "./Svg/MoonSolidSvg.vue";
 import SunOutlineSvg from "./Svg/SunOutlineSvg.vue";
-import { useAppDispatch, useAppSelector, toggleTheme } from "../store";
+import { useConfigStore } from "../store/config";
 import { capitalize } from "../utils/string";
+import { storeToRefs } from "pinia";
 
-const dispatch = useAppDispatch();
-const theme = useAppSelector((state) => state.config.theme);
-const toggle = () => {
-  dispatch(toggleTheme(theme.value));
-};
+const config = useConfigStore();
+const { toggleTheme } = config;
+const { theme } = storeToRefs(config);
 </script>
 
 <template>
   <button
     type="button"
     :class="{ light: theme === Theme.Light, dark: theme === Theme.Dark }"
-    @click="toggle"
-    @keypress.enter="toggle"
+    @click="toggleTheme"
+    @keypress.enter="toggleTheme"
   >
     <div class="icon sun" aria-hidden="true">
       <SunOutlineSvg />
@@ -26,7 +25,7 @@ const toggle = () => {
     <div class="icon moon" aria-hidden="true">
       <MoonSolidSvg />
     </div>
-    <div class="vh">{{ capitalize(theme) }} theme. Press to toggle.</div>
+    <div class="vh">{{ capitalize(config.theme) }} theme. Press to toggle.</div>
   </button>
 </template>
 
