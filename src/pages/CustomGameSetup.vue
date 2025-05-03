@@ -11,6 +11,21 @@ import LoadingHammer from "../components/LoadingHammer.vue";
 const query = ref("");
 const status = ref(LoadingStatus.Idle);
 
+/**
+ * The maximum length of a custom game query.
+ *
+ * This accounts for:
+ * - The 1000 character limit on the `/cards/search?q=` parameter.
+ * - ~100 characters for compatibility or quality criteria.
+ * - ~100 characters for additional bits and pieces like an included or excluded oracle_id.
+ * - Some fuzziness for some characters being URL-encoded.
+ */
+const MAX_QUERY_LENGTH = 800;
+
+const showQueryLengthHint = computed(() => {
+  return query.value.length >= MAX_QUERY_LENGTH * 0.75;
+});
+
 // Filters
 const excludeBadArt = ref(true);
 const excludeExtras = ref(true);
@@ -74,16 +89,22 @@ const onSubmit = async () => {
 
     <section class="search">
       <div class="inputs">
-        <label class="vh" for="custom-query">Custom Scryfall Query</label>
-        <input
-          v-model="query"
-          id="custom-query"
-          class="input-large"
-          type="text"
-          placeholder="set:dom type:creature"
-          required
-          :disabled="disabled"
-        />
+        <div class="input-field">
+          <label class="vh" for="custom-query">Custom Scryfall Query</label>
+          <input
+            v-model="query"
+            id="custom-query"
+            class="input-large"
+            type="text"
+            placeholder="set:dom type:creature"
+            required
+            :maxlength="MAX_QUERY_LENGTH"
+            :disabled="disabled"
+          />
+          <div class="max-length" v-if="showQueryLengthHint">
+            {{ query.length }} / {{ MAX_QUERY_LENGTH }}
+          </div>
+        </div>
         <button type="submit" class="btn btn-large" :disabled="disabled || query.length === 0">
           Start
         </button>
@@ -195,12 +216,23 @@ hr {
 .search {
   .inputs {
     display: flex;
+    align-items: flex-start;
     gap: 12px;
     width: 100%;
   }
 
-  input {
+  .input-field {
     flex: 1;
+    display: flex;
+    flex-flow: column;
+  }
+
+  .max-length {
+    font-size: 80%;
+    opacity: 0.8;
+    margin-top: 4px;
+    font-style: italic;
+    text-align: right;
   }
 }
 
