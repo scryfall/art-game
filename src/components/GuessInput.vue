@@ -18,7 +18,7 @@ type Emits = {
 };
 
 const config = useConfigStore();
-const { autocomplete } = storeToRefs(config);
+const { autocomplete: acEnabled } = storeToRefs(config);
 const { disabled } = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
@@ -44,7 +44,7 @@ const onAutocompletePick = (text: string) => {
 };
 
 const onKeypress = (event: KeyboardEvent) => {
-  if (!autocomplete) {
+  if (!acEnabled.value) {
     return;
   }
 
@@ -116,12 +116,12 @@ const autocompleteOpen = computed(() => Boolean(acOptions.value.length > 0 && fo
     <input
       aria-label="Enter card name"
       :aria-description="
-        autocomplete &&
+        acEnabled &&
         'Enter the card name corresponding to the art shown, or pick from the autocomplete list below.'
       "
       ref="input"
       type="text"
-      :role="autocomplete ? 'combobox' : 'input'"
+      :role="acEnabled ? 'combobox' : 'input'"
       class="input-large"
       :class="{
         'kb-focus': acKeyboardFocusIndex === AC_NO_SELECTION,
@@ -141,7 +141,7 @@ const autocompleteOpen = computed(() => Boolean(acOptions.value.length > 0 && fo
       :aria-activedescendant="getActiveDescendent(acKeyboardFocusIndex)"
     />
     <GuessAutocompleteList
-      v-if="autocomplete"
+      v-if="acEnabled"
       v-show="autocompleteOpen"
       :id="autocompleteListId"
       role="listbox"
