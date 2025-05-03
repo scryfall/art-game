@@ -2,20 +2,22 @@
 import CogOutlineSvg from "./Svg/CogOutlineSvg.vue";
 import CogSolidSvg from "./Svg/CogSolidSvg.vue";
 import { useConfigStore } from "../store/config";
+import { storeToRefs } from "pinia";
 
 const config = useConfigStore();
+const { viewConfigScreen: isViewingSettings } = storeToRefs(config);
 const click = () => {
-  config.viewConfigScreen = !config.viewConfigScreen;
+  isViewingSettings.value = !isViewingSettings.value;
 };
 </script>
 
 <template>
   <button type="button" class="settings btn-icon" @click="click">
     <div class="icon" aria-hidden="true">
-      <CogOutlineSvg v-if="config.viewConfigScreen" />
+      <CogOutlineSvg v-if="isViewingSettings" />
       <CogSolidSvg v-else />
     </div>
-    <div class="vh" v-if="config.viewConfigScreen">Close settings</div>
+    <div class="vh" v-if="isViewingSettings">Close settings</div>
     <div class="vh" v-else>Open settings</div>
   </button>
 </template>
