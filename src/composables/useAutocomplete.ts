@@ -21,7 +21,7 @@ const ENABLE_LOGGING = false;
  */
 export function useAutocomplete(guess: Ref<string>) {
   const config = useConfigStore();
-  const { autocomplete } = storeToRefs(config);
+  const { autocomplete: acEnabled } = storeToRefs(config);
   /** Is autocomplete enabled? */
   /** The autocomplete options available. */
   const options = ref<string[]>([]);
@@ -86,7 +86,7 @@ export function useAutocomplete(guess: Ref<string>) {
     }
   );
 
-  watch(autocomplete, (enabled) => {
+  watch(acEnabled, (enabled) => {
     if (!enabled) {
       clearAutocomplete();
     }
@@ -95,7 +95,7 @@ export function useAutocomplete(guess: Ref<string>) {
   watch(
     () => guess.value.trim(),
     (value) => {
-      if (!autocomplete) {
+      if (!acEnabled) {
         return;
       }
 
