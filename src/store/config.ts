@@ -12,7 +12,7 @@ function parseTheme() {
 }
 
 export const useConfigStore = defineStore("config", () => {
-  const theme = ref(parseTheme());
+  const theme = ref<Theme>(parseTheme());
   const autocomplete = ref(localStorage.getItem(StorageKey.Autocomplete) === "true");
   const viewConfigScreen = ref(false);
 

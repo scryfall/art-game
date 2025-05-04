@@ -19,7 +19,7 @@ const ENABLE_LOGGING = false;
  * @returns A ref to a list of options valid for autocomplete.
  */
 export function useAutocomplete(guess: Ref<string>) {
-  const { autocomplete: acEnabled } = useConfigRefs(config);
+  const { autocomplete: acEnabled } = useConfigRefs();
   /** Is autocomplete enabled? */
   /** The autocomplete options available. */
   const options = ref<string[]>([]);
