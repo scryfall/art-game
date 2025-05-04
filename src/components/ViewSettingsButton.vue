@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import CogOutlineSvg from "./Svg/CogOutlineSvg.vue";
 import CogSolidSvg from "./Svg/CogSolidSvg.vue";
-import { useConfigStore } from "../store/config";
-import { storeToRefs } from "pinia";
+import { useConfigRefs } from "../store/config";
 
-const config = useConfigStore();
-const { viewConfigScreen: isViewingSettings } = storeToRefs(config);
+const { viewConfigScreen: isViewingSettings } = useConfigRefs();
 const click = () => {
   isViewingSettings.value = !isViewingSettings.value;
 };

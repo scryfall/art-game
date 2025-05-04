@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { computed, ref, useId, useTemplateRef, watch, type Directive } from "vue";
-import { useConfigStore } from "../store/config";
+import { useConfigRefs } from "../store/config";
 import GuessAutocompleteList from "./GuessAutocompleteList.vue";
 import { KeyCode } from "../utils/keyboard";
 import { getActiveDescendent } from "./GuessAutocompleteConfig";
 import { useAutocomplete } from "../composables/useAutocomplete";
-import { storeToRefs } from "pinia";
 
 type Props = {
   /** Whether this input control should be disabled. */
@@ -17,8 +16,7 @@ type Emits = {
   submit: [value: string];
 };
 
-const config = useConfigStore();
-const { autocomplete: acEnabled } = storeToRefs(config);
+const { autocomplete: acEnabled } = useConfigRefs();
 const { disabled } = defineProps<Props>();
 const emit = defineEmits<Emits>();
 

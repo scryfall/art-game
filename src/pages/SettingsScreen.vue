@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, useId } from "vue";
-import { useConfigStore } from "../store/config";
+import { useConfigRefs, useConfigStore } from "../store/config";
 import { KeyCode } from "../utils/keyboard";
 import router from "../router";
-import { storeToRefs } from "pinia";
 
 const autocompleteId = useId();
 const autocompleteDescId = useId();
-const config = useConfigStore();
-const { toggleAutocomplete } = config;
-const { autocomplete } = storeToRefs(config);
+const { toggleAutocomplete } = useConfigStore();
+const { autocomplete } = useConfigRefs();
 
 const onKeydown = (event: KeyboardEvent) => {
   if (event.code === KeyCode.Escape) {

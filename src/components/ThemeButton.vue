@@ -2,13 +2,11 @@
 import { Theme } from "../models/theme";
 import MoonSolidSvg from "./Svg/MoonSolidSvg.vue";
 import SunOutlineSvg from "./Svg/SunOutlineSvg.vue";
-import { useConfigStore } from "../store/config";
+import { useConfigRefs, useConfigStore } from "../store/config";
 import { capitalize } from "../utils/string";
-import { storeToRefs } from "pinia";
 
-const config = useConfigStore();
-const { toggleTheme } = config;
-const { theme } = storeToRefs(config);
+const { toggleTheme } = useConfigStore();
+const { theme } = useConfigRefs();
 </script>
 
 <template>

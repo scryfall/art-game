@@ -1,6 +1,6 @@
 import { Theme } from "../models/theme";
 import { StorageKey } from "../models/storage-key";
-import { defineStore } from "pinia";
+import { defineStore, storeToRefs } from "pinia";
 import { ref } from "vue";
 
 function parseTheme() {
@@ -33,3 +33,8 @@ export const useConfigStore = defineStore("config", () => {
     toggleAutocomplete,
   };
 });
+
+export function useConfigRefs() {
+  const config = useConfigStore();
+  return storeToRefs(config);
+}

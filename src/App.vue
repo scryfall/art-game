@@ -4,11 +4,9 @@ import ThemeButton from "./components/ThemeButton.vue";
 import ViewSettingsButton from "./components/ViewSettingsButton.vue";
 import { RouterView } from "vue-router";
 import SettingsScreen from "./pages/SettingsScreen.vue";
-import { useConfigStore } from "./store/config";
-import { storeToRefs } from "pinia";
+import { useConfigRefs } from "./store/config";
 
-const config = useConfigStore();
-const { theme, viewConfigScreen } = storeToRefs(config);
+const { theme, viewConfigScreen } = useConfigRefs();
 const currentYear = ref(new Date().getFullYear());
 </script>
 
