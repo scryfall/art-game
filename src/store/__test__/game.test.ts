@@ -1,5 +1,5 @@
 import { createPinia, setActivePinia } from "pinia";
-import { useGameStore } from "../game-pinia";
+import { useGameStore } from "../game";
 import { LoadingStatus } from "../common";
 import { ScryfallApiInstance } from "../../utils/scryfall-api";
 import { CardBank } from "../../models/__test__/card-bank.util";
