@@ -4,7 +4,7 @@ import GameScreen from "../components/GameScreen.vue";
 import { useRoute, useRouter } from "vue-router";
 import { flattenSearchCriteria } from "../utils/string";
 import { COMPATIBILITY_CRITERIA } from "../config";
-import { useGameStore } from "../store/game";
+import { useGameStore } from "../store";
 
 type QueryParams = {
   q: string;

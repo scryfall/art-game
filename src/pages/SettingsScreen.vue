@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, useId } from "vue";
-import { useConfigRefs, useConfigStore } from "../store/config";
+import { useConfigRefs, useConfigStore } from "../store";
 import { KeyCode } from "../utils/keyboard";
 import router from "../router";
 

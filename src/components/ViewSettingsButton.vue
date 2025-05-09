@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import CogOutlineSvg from "./Svg/CogOutlineSvg.vue";
 import CogSolidSvg from "./Svg/CogSolidSvg.vue";
-import { useConfigRefs } from "../store/config";
+import { useConfigRefs } from "../store";
 
 const { viewConfigScreen: isViewingSettings } = useConfigRefs();
 const click = () => {

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { LoadingStatus } from "../store/common";
-import { useGameRefs } from "../store/game";
+import { LoadingStatus, useGameRefs } from "../store";
 
 type Preset = {
   id: string;

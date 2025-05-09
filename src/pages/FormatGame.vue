@@ -4,7 +4,7 @@ import GameScreen from "../components/GameScreen.vue";
 import { useRoute } from "vue-router";
 import { flattenSearchCriteria, trimTrailingSlash } from "../utils/string";
 import { AVOID_CRITERIA, COMPATIBILITY_CRITERIA } from "../config";
-import { useGameStore } from "../store/game";
+import { useGameStore } from "../store";
 
 const { startGame } = useGameStore();
 const route = useRoute();

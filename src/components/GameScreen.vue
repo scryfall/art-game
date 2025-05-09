@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { Outcome } from "../models/outcome";
-import { LoadingStatus } from "../store";
+import { LoadingStatus, useGameRefs, useGameStore } from "../store";
 import CardArt from "./CardArt.vue";
 import GuessInput from "./GuessInput.vue";
 import { isGuessOk } from "../utils/guess";
 import GuessFeedback from "./GuessFeedback.vue";
 import LoadingHammer from "./LoadingHammer.vue";
-import { useGameRefs, useGameStore } from "../store/game";
 
 const {
   nextCardStatus,

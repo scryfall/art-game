@@ -1,7 +1,7 @@
 import { ref, watch, type Ref } from "vue";
 import debounce from "lodash.debounce";
 import { ScryfallApiInstance } from "../utils/scryfall-api";
-import { useConfigRefs } from "../store/config";
+import { useConfigRefs } from "../store";
 
 /** The debounce time before doing autocomplete. */
 const AUTOCOMPLETE_DELAY = 500;

@@ -2,7 +2,7 @@
 import { Theme } from "../models/theme";
 import MoonSolidSvg from "./Svg/MoonSolidSvg.vue";
 import SunOutlineSvg from "./Svg/SunOutlineSvg.vue";
-import { useConfigRefs, useConfigStore } from "../store/config";
+import { useConfigRefs, useConfigStore } from "../store";
 import { capitalize } from "../utils/string";
 
 const { toggleTheme } = useConfigStore();

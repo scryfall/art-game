@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, useId, useTemplateRef, watch, type Directive } from "vue";
-import { useConfigRefs } from "../store/config";
+import { useConfigRefs } from "../store";
 import GuessAutocompleteList from "./GuessAutocompleteList.vue";
 import { KeyCode } from "../utils/keyboard";
 import { getActiveDescendent } from "./GuessAutocompleteConfig";

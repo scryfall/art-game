@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/vue";
 import ThemeButton from "../ThemeButton.vue";
 import { createTestingPinia } from "@pinia/testing";
-import { useConfigStore } from "../../store/config";
+import { useConfigStore } from "../../store";
 import { Theme } from "../../models/theme";
 import { nextTick } from "vue";
 

@@ -4,7 +4,7 @@ import ThemeButton from "./components/ThemeButton.vue";
 import ViewSettingsButton from "./components/ViewSettingsButton.vue";
 import { RouterView } from "vue-router";
 import SettingsScreen from "./pages/SettingsScreen.vue";
-import { useConfigRefs } from "./store/config";
+import { useConfigRefs } from "./store";
 
 const { theme, viewConfigScreen } = useConfigRefs();
 const currentYear = ref(new Date().getFullYear());
