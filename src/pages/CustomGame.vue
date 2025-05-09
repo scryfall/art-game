@@ -1,30 +1,27 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import GameScreen from "../components/GameScreen.vue";
-import { startGame } from "../store";
-import { useAppDispatch } from "../store/hooks";
 import { useRoute, useRouter } from "vue-router";
 import { flattenSearchCriteria } from "../utils/string";
 import { COMPATIBILITY_CRITERIA } from "../config";
+import { useGameStore } from "../store/game";
 
 type QueryParams = {
   q: string;
   include_extras?: "true" | "false";
 };
 
+const { startGame } = useGameStore();
 const route = useRoute();
 const router = useRouter();
-const dispatch = useAppDispatch();
 
 const start = (criteria: string, includeExtras?: boolean) => {
   const search = flattenSearchCriteria([criteria, ...COMPATIBILITY_CRITERIA]);
 
-  dispatch(
-    startGame({
-      search,
-      includeExtras,
-    })
-  );
+  startGame({
+    search,
+    includeExtras,
+  });
 };
 
 onMounted(() => {

@@ -1,24 +1,21 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import GameScreen from "../components/GameScreen.vue";
-import { startGame } from "../store";
-import { useAppDispatch } from "../store/hooks";
 import { useRoute } from "vue-router";
 import { flattenSearchCriteria, trimTrailingSlash } from "../utils/string";
 import { AVOID_CRITERIA, COMPATIBILITY_CRITERIA } from "../config";
+import { useGameStore } from "../store/game";
 
+const { startGame } = useGameStore();
 const route = useRoute();
-const dispatch = useAppDispatch();
 const formatCriteria = ["-t:stickers", "not:extra", ...COMPATIBILITY_CRITERIA, ...AVOID_CRITERIA];
 
 const start = (criteria: string[]) => {
   const search = flattenSearchCriteria(criteria);
-  dispatch(
-    startGame({
-      search,
-      includeExtras: false,
-    })
-  );
+  startGame({
+    search,
+    includeExtras: false,
+  });
 };
 
 onMounted(() => {

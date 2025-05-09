@@ -1,7 +1,8 @@
-import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { defineStore, storeToRefs } from "pinia";
+import { LoadingStatus } from "./common";
+import { ref } from "vue";
 import type { ScryfallCard } from "../models/scryfall-card";
 import { Outcome } from "../models/outcome";
-import { LoadingStatus } from "./common";
 import { ScryfallApiInstance } from "../utils/scryfall-api";
 
 export type GameGuess = { name: string; outcome: Outcome };
@@ -13,31 +14,6 @@ export type GameQuery = {
   includeExtras?: boolean;
 };
 
-type GameSliceState = {
-  status: LoadingStatus;
-  nextCardStatus: LoadingStatus;
-  /** The query for this game, if it's been started. */
-  query: undefined | GameQuery;
-  score: number;
-  guess: undefined | GameGuess;
-  card: undefined | ScryfallCard;
-  previousCard: undefined | ScryfallCard;
-};
-
-const initialState: GameSliceState = {
-  status: LoadingStatus.Idle,
-  nextCardStatus: LoadingStatus.Idle,
-  query: undefined,
-  score: 0,
-  guess: undefined,
-  card: undefined,
-  previousCard: undefined,
-};
-
-export const startGame = createAsyncThunk("game/startGame", async (query: GameQuery, api) => {
-  await api.dispatch(fetchNextCard({ query }));
-});
-
 function constructSearch(query: GameQuery, previousOracleId?: string) {
   if (previousOracleId) {
     return `${query.search} -oracle_id:${previousOracleId}`;
@@ -45,64 +21,78 @@ function constructSearch(query: GameQuery, previousOracleId?: string) {
   return query.search;
 }
 
-export const fetchNextCard = createAsyncThunk(
-  "game/fetchNextCard",
-  async (payload: { query: GameQuery; previousOracleId?: string }) => {
-    const { query, previousOracleId } = payload;
+export const useGameStore = defineStore("game", () => {
+  const status = ref<LoadingStatus>(LoadingStatus.Idle);
+  const nextCardStatus = ref<LoadingStatus>(LoadingStatus.Idle);
+  const query = ref<GameQuery>({ search: "" });
+  const score = ref(0);
+  const guess = ref<undefined | GameGuess>();
+  const card = ref<undefined | ScryfallCard>();
+  const previousCard = ref<undefined | ScryfallCard>();
 
-    const search = constructSearch(query, previousOracleId);
-    const card = await ScryfallApiInstance.getRandomCard(search, {
-      includeExtras: query.includeExtras,
-    });
-    const print = await ScryfallApiInstance.getRandomArt(card.oracle_id, search);
-    return print;
+  async function fetchNextCard(previousOracleId?: string) {
+    if (!query.value.search) {
+      return;
+    }
+    nextCardStatus.value = LoadingStatus.Pending;
+    previousCard.value = card.value;
+
+    const search = constructSearch(query.value, previousOracleId);
+
+    try {
+      const newCard = await ScryfallApiInstance.getRandomCard(search, {
+        includeExtras: query.value.includeExtras,
+      });
+      card.value = await ScryfallApiInstance.getRandomArt(newCard.oracle_id, search);
+      nextCardStatus.value = LoadingStatus.Success;
+    } catch (err) {
+      nextCardStatus.value = LoadingStatus.Failed;
+      throw err;
+    }
+
+    return card.value;
   }
-);
 
-export const gameSlice = createSlice({
-  name: "game",
-  initialState,
-  reducers: {
-    setGuess(state, action: PayloadAction<{ name: string; outcome: Outcome }>) {
-      const guess = action.payload;
-      state.guess = guess;
-      if (guess.outcome === Outcome.Correct) {
-        state.score++;
-      }
-    },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(startGame.pending, (state, action) => {
-      state.status = LoadingStatus.Pending;
-      state.query = action.meta.arg;
-      state.score = 0;
-      state.guess = undefined;
-      state.previousCard = undefined;
-      state.card = undefined;
-    });
+  async function startGame(startGameQuery: GameQuery) {
+    query.value = startGameQuery;
+    status.value = LoadingStatus.Pending;
+    score.value = 0;
+    guess.value = undefined;
+    previousCard.value = undefined;
+    card.value = undefined;
 
-    builder.addCase(startGame.fulfilled, (state) => {
-      state.status = LoadingStatus.Success;
-    });
+    try {
+      await fetchNextCard();
+      status.value = LoadingStatus.Success;
+    } catch {
+      status.value = LoadingStatus.Failed;
+    }
+  }
 
-    builder.addCase(startGame.rejected, (state) => {
-      state.status = LoadingStatus.Failed;
-    });
+  function setGuess(usersGuess: GameGuess) {
+    guess.value = usersGuess;
+    if (usersGuess.outcome === Outcome.Correct) {
+      score.value++;
+    }
+  }
 
-    builder.addCase(fetchNextCard.pending, (state) => {
-      state.nextCardStatus = LoadingStatus.Pending;
-      state.previousCard = state.card;
-    });
+  return {
+    status,
+    nextCardStatus,
+    query,
+    score,
+    guess,
+    card,
+    previousCard,
+    // methods
 
-    builder.addCase(fetchNextCard.fulfilled, (state, action) => {
-      state.nextCardStatus = LoadingStatus.Success;
-      state.card = action.payload;
-    });
-
-    builder.addCase(fetchNextCard.rejected, (state) => {
-      state.nextCardStatus = LoadingStatus.Failed;
-    });
-  },
+    fetchNextCard,
+    startGame,
+    setGuess,
+  };
 });
 
-export const { setGuess } = gameSlice.actions;
+export function useGameRefs() {
+  const game = useGameStore();
+  return storeToRefs(game);
+}

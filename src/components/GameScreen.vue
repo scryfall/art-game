@@ -1,31 +1,34 @@
 <script setup lang="ts">
 import { Outcome } from "../models/outcome";
-import { fetchNextCard, LoadingStatus, setGuess, useAppDispatch, useAppSelector } from "../store";
+import { LoadingStatus } from "../store";
 import CardArt from "./CardArt.vue";
 import GuessInput from "./GuessInput.vue";
 import { isGuessOk } from "../utils/guess";
 import GuessFeedback from "./GuessFeedback.vue";
 import LoadingHammer from "./LoadingHammer.vue";
+import { useGameRefs, useGameStore } from "../store/game";
 
-const dispatch = useAppDispatch();
-const nextCardStatus = useAppSelector((state) => state.game.nextCardStatus);
-const card = useAppSelector((state) => state.game.card);
-const score = useAppSelector((state) => state.game.score);
-const prevCard = useAppSelector((state) => state.game.previousCard);
-const prevGuess = useAppSelector((state) => state.game.guess);
-const query = useAppSelector((state) => state.game.query);
-const gameLoadStatus = useAppSelector((state) => state.game.status);
+const {
+  nextCardStatus,
+  card,
+  score,
+  previousCard: prevCard,
+  guess: prevGuess,
+  query,
+  status: gameLoadStatus,
+} = useGameRefs();
+const { fetchNextCard, setGuess } = useGameStore();
 
 const loadNextCard = () => {
   if (!query.value) {
     throw Error("Somehow, no game query is loaded.");
   }
 
-  dispatch(fetchNextCard({ query: query.value, previousOracleId: card.value?.oracle_id }));
+  fetchNextCard(card.value?.oracle_id);
 };
 
 const skip = () => {
-  dispatch(setGuess({ name: "", outcome: Outcome.Skip }));
+  setGuess({ name: "", outcome: Outcome.Skip });
   loadNextCard();
 };
 
@@ -40,7 +43,7 @@ const submitGuess = (guess: string) => {
   }
 
   const outcome = isGuessOk(guess, card.value) ? Outcome.Correct : Outcome.Incorrect;
-  dispatch(setGuess({ name: guess, outcome }));
+  setGuess({ name: guess, outcome });
   loadNextCard();
 };
 </script>
