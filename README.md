@@ -23,7 +23,7 @@ This project uses the following dependencies:
 - [TypeScript](https://www.typescriptlang.org/), rather than vanilla JavaScript.
 - [Vite](https://vite.dev/) for local development and building.
 - [Vitest](https://vitest.dev/) for unit tests.
-- [Vue Redux](https://vue-redux.js.org/) for state management.
+- [Pinia](https://pinia.vuejs.org/) for state management.
 - [Sass](https://sass-lang.com/) (via the [sass](https://www.npmjs.com/package/sass) package) for styling. Specifically, we use SCSS files.
 - [ESLint](https://eslint.org) and [Vue ESLint](https://eslint.vuejs.org/user-guide/) for linting.
 

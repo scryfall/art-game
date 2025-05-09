@@ -36,8 +36,6 @@
   },
   "devDependencies": {
     "@pinia/testing": "^1.0.1",
-    "@reduxjs/toolkit": "^2.6.1",
-    "@reduxjs/vue-redux": "^1.0.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/vue": "^8.1.0",
     "@types/js-levenshtein": "^1.1.3",
