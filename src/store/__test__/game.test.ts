@@ -86,6 +86,7 @@ describe("Game Store", () => {
         "Search Query -oracle_id:abc-123"
       );
     });
+
     it("passes along includeExtras value to getRandomCard", async () => {
       const game = useGameStore();
       game.query = {
