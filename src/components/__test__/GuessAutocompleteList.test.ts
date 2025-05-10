@@ -1,10 +1,10 @@
-import { render, screen } from "@testing-library/vue";
+import { fireEvent, render, screen } from "@testing-library/vue";
 import GuessAutocompleteList from "../GuessAutocompleteList.vue";
 
 describe("GuessAutoompleteList", () => {
   beforeEach(() => {
     // not available in JSDom
-    Element.prototype.scrollIntoView = vi.fn();
+    Element.prototype.scrollIntoView = () => {};
   });
 
   it("only displays if there are options", async () => {
@@ -81,5 +81,39 @@ describe("GuessAutoompleteList", () => {
     expect(options[0]).not.toHaveClass("active");
     expect(options[1]).not.toHaveClass("active");
     expect(options[2]).toHaveClass("active");
+  });
+
+  it("emits option when clicked", async () => {
+    const { emitted } = render(GuessAutocompleteList, {
+      props: {
+        options: ["one", "two", "three"],
+        keyboardFocusIndex: -1,
+      },
+    });
+
+    await fireEvent.click(screen.getByText("two"));
+
+    expect(emitted().pick.length).toBe(1);
+    expect(emitted().pick[0]).toEqual(["two"]);
+  });
+
+  it("scrolls to element when navigated to", async () => {
+    const { rerender } = render(GuessAutocompleteList, {
+      props: {
+        options: ["one", "two", "three"],
+        keyboardFocusIndex: -1,
+      },
+    });
+    const options = screen.getAllByRole("button");
+    vi.spyOn(options[0], "scrollIntoView");
+    vi.spyOn(options[1], "scrollIntoView");
+    vi.spyOn(options[2], "scrollIntoView");
+
+    await rerender({
+      keyboardFocusIndex: 1,
+    });
+    expect(options[0].scrollIntoView).not.toBeCalled();
+    expect(options[1].scrollIntoView).toBeCalledTimes(1);
+    expect(options[2].scrollIntoView).not.toBeCalled();
   });
 });
