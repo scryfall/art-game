@@ -31,7 +31,12 @@ const vScrollIntoView: Directive<HTMLElement, boolean> = {
 </script>
 
 <template>
-  <div v-if="options.length > 0" class="options-list" :class="{ active: keyboardFocusIndex >= 0 }">
+  <div
+    v-if="options.length > 0"
+    class="options-list"
+    :class="{ active: keyboardFocusIndex >= 0 }"
+    data-testid="options-wrapper"
+  >
     <button
       v-for="(option, index) of options"
       :key="option"
