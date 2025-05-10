@@ -138,4 +138,20 @@ describe("CardArt", () => {
       expectedSecondFaceArtCrop
     );
   });
+
+  it("provides a flavor mask for cards that have a flavor name", async () => {
+    const { rerender } = render(CardArt, {
+      props: {
+        card: CardBank.ArborElf,
+        loadingNext: LoadingStatus.Success,
+      },
+    });
+
+    expect(screen.queryByText("Hint: this print has a flavor name.")).not.toBeInTheDocument();
+
+    await rerender({
+      card: CardBank.Eleven,
+    });
+    expect(screen.queryByText("Hint: this print has a flavor name.")).toBeInTheDocument();
+  });
 });
