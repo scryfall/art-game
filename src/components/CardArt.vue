@@ -42,12 +42,12 @@ const showErrorOverlay = computed(() => {
     <div v-if="showErrorOverlay" class="overlay error">
       <div>
         <div class="shape-x"></div>
-        <p>There was an error loading the card art.</p>
+        <p>There was an error loading the next card. You should skip this one.</p>
       </div>
     </div>
     <div v-else-if="showLoadingOverlay" class="overlay loading">
       <LoadingPulser class="pulser" />
-      <p class="vh">Loading next card art...</p>
+      <p class="vh">Loading next card</p>
     </div>
     <div class="flavor-mask" v-if="card.flavor_name">Hint: this print has a flavor name.</div>
     <img

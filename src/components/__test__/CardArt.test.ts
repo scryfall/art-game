@@ -11,12 +11,16 @@ describe("CardArt", () => {
         loadingNext: LoadingStatus.Success,
       },
     });
-    expect(screen.queryByText("There was an error loading the card art.")).not.toBeInTheDocument();
+    expect(
+      screen.queryByText("There was an error loading the next card. You should skip this one.")
+    ).not.toBeInTheDocument();
 
     await rerender({
       loadingNext: LoadingStatus.Failed,
     });
-    expect(screen.queryByText("There was an error loading the card art.")).toBeInTheDocument();
+    expect(
+      screen.queryByText("There was an error loading the next card. You should skip this one.")
+    ).toBeInTheDocument();
   });
 
   it("shows an error overlay if the card image fails to load", async () => {
@@ -26,11 +30,15 @@ describe("CardArt", () => {
         loadingNext: LoadingStatus.Success,
       },
     });
-    expect(screen.queryByText("There was an error loading the card art.")).not.toBeInTheDocument();
+    expect(
+      screen.queryByText("There was an error loading the next card. You should skip this one.")
+    ).not.toBeInTheDocument();
 
     await fireEvent.error(screen.getByTestId("card-art-preload"));
 
-    expect(screen.queryByText("There was an error loading the card art.")).toBeInTheDocument();
+    expect(
+      screen.queryByText("There was an error loading the next card. You should skip this one.")
+    ).toBeInTheDocument();
   });
 
   it("starts out with a loading overlay until image loads", async () => {
@@ -41,10 +49,10 @@ describe("CardArt", () => {
       },
     });
 
-    expect(screen.queryByText("Loading next card art...")).toBeInTheDocument();
+    expect(screen.queryByText("Loading next card")).toBeInTheDocument();
 
     await fireEvent.load(screen.getByTestId("card-art-preload"));
-    expect(screen.queryByText("Loading next card art...")).not.toBeInTheDocument();
+    expect(screen.queryByText("Loading next card")).not.toBeInTheDocument();
   });
 
   it("shows a loading overlay if loadingNext prop is Pending", async () => {
@@ -56,12 +64,12 @@ describe("CardArt", () => {
     });
     await fireEvent.load(screen.getByTestId("card-art-preload"));
 
-    expect(screen.queryByText("Loading next card art...")).not.toBeInTheDocument();
+    expect(screen.queryByText("Loading next card")).not.toBeInTheDocument();
 
     await rerender({
       loadingNext: LoadingStatus.Pending,
     });
-    expect(screen.queryByText("Loading next card art...")).toBeInTheDocument();
+    expect(screen.queryByText("Loading next card")).toBeInTheDocument();
   });
 
   it("shows a loading overlay when the card image uri changes", async () => {
@@ -73,12 +81,12 @@ describe("CardArt", () => {
     });
     await fireEvent.load(screen.getByTestId("card-art-preload"));
 
-    expect(screen.queryByText("Loading next card art...")).not.toBeInTheDocument();
+    expect(screen.queryByText("Loading next card")).not.toBeInTheDocument();
 
     await rerender({
       card: CardBank.Alesha,
     });
-    expect(screen.getByText("Loading next card art...")).toBeInTheDocument();
+    expect(screen.getByText("Loading next card")).toBeInTheDocument();
   });
 
   it("prefers error overlay over loading overlay if both would apply", async () => {
@@ -90,8 +98,10 @@ describe("CardArt", () => {
     });
     await fireEvent.error(screen.getByTestId("card-art-preload"));
 
-    expect(screen.queryByText("Loading next card art...")).not.toBeInTheDocument();
-    expect(screen.queryByText("There was an error loading the card art.")).toBeInTheDocument();
+    expect(screen.queryByText("Loading next card")).not.toBeInTheDocument();
+    expect(
+      screen.queryByText("There was an error loading the next card. You should skip this one.")
+    ).toBeInTheDocument();
   });
 
   it("uses art crop for a card with a top level image uris object", async () => {
