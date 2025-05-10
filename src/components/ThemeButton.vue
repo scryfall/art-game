@@ -17,7 +17,6 @@ const toggle = () => {
     type="button"
     :class="{ light: theme === Theme.Light, dark: theme === Theme.Dark }"
     @click="toggle"
-    @keypress.enter="toggle"
   >
     <div class="icon sun" aria-hidden="true">
       <SunOutlineSvg />
