@@ -93,4 +93,49 @@ describe("CardArt", () => {
     expect(screen.queryByText("Loading next card art...")).not.toBeInTheDocument();
     expect(screen.queryByText("There was an error loading the card art.")).toBeInTheDocument();
   });
+
+  it("uses art crop for a card with a top level image uris object", async () => {
+    render(CardArt, {
+      props: {
+        card: CardBank.ArborElf,
+        loadingNext: LoadingStatus.Success,
+      },
+    });
+
+    // just a double check that this card does have an art crop
+    expect(CardBank.ArborElf.image_uris?.art_crop).toBeTruthy();
+    expect(screen.getByTestId("card-art-preload")).toHaveAttribute(
+      "src",
+      CardBank.ArborElf.image_uris?.art_crop
+    );
+  });
+
+  it("uses a random face from a double sided card", async () => {
+    const mathSpy = vi.spyOn(Math, "random").mockReturnValue(0.3);
+    const { rerender } = render(CardArt, {
+      props: {
+        card: CardBank.HeartOfTheExplorer,
+        loadingNext: LoadingStatus.Success,
+      },
+    });
+
+    // just a double check that this card does have an art crop
+    const expectedFirstFaceArtCrop = CardBank.HeartOfTheExplorer.card_faces[0].image_uris?.art_crop;
+    expect(expectedFirstFaceArtCrop).toBeTruthy();
+    expect(screen.getByTestId("card-art-preload")).toHaveAttribute("src", expectedFirstFaceArtCrop);
+
+    mathSpy.mockReturnValue(0.7);
+    await rerender({
+      card: CardBank.DraculaLordOfBlood,
+    });
+
+    // just a double check that this card does have an art crop
+    const expectedSecondFaceArtCrop =
+      CardBank.HeartOfTheExplorer.card_faces[1].image_uris?.art_crop;
+    expect(expectedSecondFaceArtCrop).toBeTruthy();
+    expect(screen.getByTestId("card-art-preload")).toHaveAttribute(
+      "src",
+      expectedSecondFaceArtCrop
+    );
+  });
 });
