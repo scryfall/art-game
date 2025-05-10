@@ -13,8 +13,7 @@ const { theme } = useConfigRefs();
   <button
     type="button"
     :class="{ light: theme === Theme.Light, dark: theme === Theme.Dark }"
-    @click="toggleTheme"
-    @keypress.enter="toggleTheme"
+    @click="toggle"
   >
     <div class="icon sun" aria-hidden="true">
       <SunOutlineSvg />
