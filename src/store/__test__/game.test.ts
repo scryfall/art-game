@@ -235,7 +235,6 @@ describe("Game Store", () => {
 
     it("updates score when outcome is correct", () => {
       const game = useGameStore();
-      const newGuess = {};
 
       game.setGuess({
         name: "foo",
