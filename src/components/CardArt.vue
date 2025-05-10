@@ -40,13 +40,23 @@ const showErrorOverlay = computed(() => {
 <template>
   <div class="art-frame">
     <div v-if="showErrorOverlay" class="overlay error">
-      <div class="shape-x"></div>
+      <div>
+        <div class="shape-x"></div>
+        <p>There was an error loading the card art.</p>
+      </div>
     </div>
     <div v-else-if="showLoadingOverlay" class="overlay loading">
       <LoadingPulser class="pulser" />
     </div>
     <div class="flavor-mask" v-if="card.flavor_name">Hint: this print has a flavor name.</div>
-    <img alt="" class="vh preload" :src="imageUri" :onload="onLoad" :onerror="onError" />
+    <img
+      alt=""
+      class="vh preload"
+      :src="imageUri"
+      :onload="onLoad"
+      :onerror="onError"
+      data-testid="card-art-preload"
+    />
     <img :src="imageUri" />
   </div>
 </template>
@@ -74,12 +84,14 @@ $default-art-width: 626px;
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
 
   background: rgba(0 0 0 / 0.5);
 }
 
 .shape-x {
   color: var(--c-salmon);
+  margin: auto;
 }
 
 img {
