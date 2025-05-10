@@ -66,7 +66,6 @@ const submitGuess = (guess: string) => {
         class="skip link"
         :disabled="nextCardStatus === LoadingStatus.Pending"
         @click.prevent="skip"
-        @keypress.enter="skip"
       >
         skip</button
       >)
