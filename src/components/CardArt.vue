@@ -86,6 +86,7 @@ $default-art-width: 626px;
   align-items: center;
   justify-content: center;
   text-align: center;
+  padding: 1rem;
 
   background: rgba(0 0 0 / 0.5);
 }
