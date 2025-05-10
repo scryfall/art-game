@@ -29,7 +29,7 @@ export function makeCard<T extends ScryfallCard>(overrides: Partial<T> = {}): T 
     scryfall_uri: "<scryfall uri>",
     type_line: "<type line>",
     set: "<set code>",
-    image_uris: makeImageUris(),
+    image_uris: makeImageUris(overrides.name),
     ...overrides,
   };
   return card as T;
