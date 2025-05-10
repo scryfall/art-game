@@ -55,9 +55,7 @@ const submitGuess = (guess: string) => {
 
     <p class="error-loading" v-if="nextCardStatus === LoadingStatus.Failed">
       There was an error loading the next card. Check your internet connection and
-      <button type="button" class="retry link" @click.prevent="retry" @keypress.enter="retry">
-        retry</button
-      >.
+      <button type="button" class="retry link" @click.prevent="retry">retry</button>.
     </p>
 
     <p>
@@ -66,7 +64,6 @@ const submitGuess = (guess: string) => {
         class="skip link"
         :disabled="nextCardStatus === LoadingStatus.Pending"
         @click.prevent="skip"
-        @keypress.enter="skip"
       >
         skip</button
       >)
