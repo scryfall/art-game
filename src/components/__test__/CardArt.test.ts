@@ -80,4 +80,17 @@ describe("CardArt", () => {
     });
     expect(screen.getByText("Loading next card art...")).toBeInTheDocument();
   });
+
+  it("prefers error overlay over loading overlay if both would apply", async () => {
+    render(CardArt, {
+      props: {
+        card: CardBank.ArborElf,
+        loadingNext: LoadingStatus.Pending,
+      },
+    });
+    await fireEvent.error(screen.getByTestId("card-art-preload"));
+
+    expect(screen.queryByText("Loading next card art...")).not.toBeInTheDocument();
+    expect(screen.queryByText("There was an error loading the card art.")).toBeInTheDocument();
+  });
 });
