@@ -1,12 +1,19 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import type { ScryfallCard } from "../models/scryfall-card";
+import { useAppSelector } from "../store";
 
 const props = defineProps<{
   card: ScryfallCard;
 }>();
 
 const activeClue = ref<"cmc" | "set" | "type" | "oracle" | null>(null);
+const storeCard = useAppSelector((state) => state.game.card);
+
+// Dismiss the active clue when the card changes
+watch(storeCard, () => {
+  activeClue.value = null;
+});
 
 const clues = [
   {
