@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { Outcome } from "../models/outcome";
 import { fetchNextCard, LoadingStatus, setGuess, useAppDispatch, useAppSelector } from "../store";
-import CardArt from "./CardArt.vue";
-import GuessInput from "./GuessInput.vue";
 import { isGuessOk } from "../utils/guess";
+import CardArt from "./CardArt.vue";
+import CardClues from "./CardClues.vue";
 import GuessFeedback from "./GuessFeedback.vue";
+import GuessInput from "./GuessInput.vue";
 import LoadingHammer from "./LoadingHammer.vue";
 
 const dispatch = useAppDispatch();
@@ -35,7 +36,6 @@ const retry = () => {
 
 const submitGuess = (guess: string) => {
   if (!card.value) {
-    console.debug("Guess was submitted somehow, but no card is loaded.");
     return;
   }
 
@@ -75,6 +75,8 @@ const submitGuess = (guess: string) => {
     />
 
     <p class="score">Score: {{ score }}</p>
+
+    <CardClues v-if="card" :card="card" />
 
     <GuessFeedback v-if="prevGuess && prevCard" :guess="prevGuess" :card="prevCard" />
   </div>
