@@ -66,6 +66,7 @@ const vScrollIntoView: Directive<HTMLElement, boolean> = {
   align-items: stretch;
   max-height: calc((var(--count) + 0.6) * (1em + var(--v-padding) * 2));
   overflow-y: scroll;
+  z-index: 10;
 
   @include mixins.bp-large {
     --count: 4;
