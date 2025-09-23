@@ -1,6 +1,6 @@
 #  How to contribute
 
-*Scryfall Art Game* is not currently actively seeking contributions. It is considered essentially complete. It is made avaiable as an [X11 licensed](https://en.wikipedia.org/wiki/MIT_License#X11_License) public repository primarily to enable people to study and reference it for their own code. “How do they do this thing?” Well, here's how.
+*Scryfall Art Game* is not currently actively seeking contributions. It is considered essentially complete. It is made available as an [X11 licensed](https://en.wikipedia.org/wiki/MIT_License#X11_License) public repository to let people study and reference it for their own code. “How do they do this thing?” Well, here's how.
 
 If you do wish to contribute:
 
