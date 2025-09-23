@@ -145,7 +145,7 @@ const onSubmit = async () => {
             <span>Exclude extras</span>
           </label>
           <div class="desc">
-            Extras are tokens, planechase, memorabilia, playtest cards,and other things that
+            Extras are tokens, planechase, memorabilia, playtest cards, and other things that
             normally do not go in a constructed deck.
           </div>
         </li>
