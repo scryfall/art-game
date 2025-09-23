@@ -7,7 +7,6 @@ import { isGuessOk } from "../utils/guess";
 import GuessFeedback from "./GuessFeedback.vue";
 import LoadingHammer from "./LoadingHammer.vue";
 import { getCardImages } from "../utils/card-image";
-import PreloadImage from "./PreloadImage.vue";
 
 const dispatch = useAppDispatch();
 const nextCardStatus = useAppSelector((state) => state.game.nextCardStatus);
@@ -57,10 +56,12 @@ const submitGuess = (guess: string) => {
       <CardArt :card="card" :loading="nextCardStatus" />
 
       <!-- Preload each normal image for the feedback area. -->
-      <PreloadImage
+      <img
         v-for="imageUri in getCardImages(card)"
         :key="imageUri.normal"
-        :uri="imageUri.normal"
+        alt=""
+        class="vh preload"
+        :src="imageUri.normal"
       />
     </template>
 

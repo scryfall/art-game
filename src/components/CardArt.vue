@@ -3,7 +3,6 @@ import { computed, ref, watch } from "vue";
 import type { ScryfallCard } from "../models/scryfall-card";
 import { LoadingStatus } from "../store";
 import LoadingPulser from "./LoadingPulser.vue";
-import PreloadImage from "./PreloadImage.vue";
 import { getCardImages } from "../utils/card-image";
 import { pickRandomItem } from "../utils/math";
 
@@ -37,12 +36,10 @@ watch(imageUri, () => {
 });
 
 const onLoad = () => {
-  console.debug("PreloadImage: Image error");
   status.value = LoadingStatus.Success;
 };
 
 const onError = () => {
-  console.debug("PreloadImage: Image error");
   status.value = LoadingStatus.Failed;
 };
 
@@ -64,7 +61,7 @@ const showErrorOverlay = computed(() => {
       <LoadingPulser class="pulser" />
     </div>
     <div class="flavor-mask" v-if="card.flavor_name">Hint: this print has a flavor name.</div>
-    <PreloadImage :uri="imageUri" :load="onLoad" :error="onError" />
+    <img alt="" class="vh preload" :src="imageUri" :onload="onLoad" :onerror="onError" />
     <img :src="imageUri" />
   </div>
 </template>
