@@ -37,10 +37,12 @@ watch(imageUri, () => {
 });
 
 const onLoad = () => {
+  console.debug("PreloadImage: Image error");
   status.value = LoadingStatus.Success;
 };
 
 const onError = () => {
+  console.debug("PreloadImage: Image error");
   status.value = LoadingStatus.Failed;
 };
 

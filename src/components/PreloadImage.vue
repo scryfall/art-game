@@ -8,10 +8,12 @@ defineProps<Props>();
 const emit = defineEmits(["load", "error"]);
 
 const onLoad = () => {
+  console.debug("PreloadImage: Image loaded");
   emit("load");
 };
 
 const onError = () => {
+  console.debug("PreloadImage: Image error");
   emit("error");
 };
 </script>
