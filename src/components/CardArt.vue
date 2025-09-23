@@ -4,6 +4,8 @@ import type { ScryfallCard } from "../models/scryfall-card";
 import { LoadingStatus } from "../store";
 import LoadingPulser from "./LoadingPulser.vue";
 import PreloadImage from "./PreloadImage.vue";
+import { getCardImages } from "../utils/card-image";
+import { pickRandomItem } from "../utils/math";
 
 type Props = {
   /** The card to show art for. */
@@ -14,12 +16,18 @@ type Props = {
 
 const props = defineProps<Props>();
 const imageUri = computed(() => {
-  if (props.card.image_uris) {
-    return props.card.image_uris.art_crop;
+  const imageUris = getCardImages(props.card);
+
+  if (imageUris.length === 0) {
+    return undefined;
   }
-  const randomIndex = Math.floor(Math.random() * props.card.card_faces.length);
-  const randomFace = props.card.card_faces[randomIndex];
-  return randomFace.image_uris?.art_crop;
+
+  if (imageUris.length === 1) {
+    return imageUris[0].art_crop;
+  }
+
+  const randomImageUri = pickRandomItem(imageUris);
+  return randomImageUri.art_crop;
 });
 
 const status = ref(LoadingStatus.Pending);
