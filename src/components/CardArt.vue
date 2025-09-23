@@ -3,6 +3,7 @@ import { computed, ref, watch } from "vue";
 import type { ScryfallCard } from "../models/scryfall-card";
 import { LoadingStatus } from "../store";
 import LoadingPulser from "./LoadingPulser.vue";
+import PreloadImage from "./PreloadImage.vue";
 
 type Props = {
   /** The card to show art for. */
@@ -53,7 +54,7 @@ const showErrorOverlay = computed(() => {
       <LoadingPulser class="pulser" />
     </div>
     <div class="flavor-mask" v-if="card.flavor_name">Hint: this print has a flavor name.</div>
-    <img alt="" class="vh preload" :src="imageUri" :onload="onLoad" :onerror="onError" />
+    <PreloadImage :uri="imageUri" :load="onLoad" :error="onError" />
     <img :src="imageUri" />
   </div>
 </template>
