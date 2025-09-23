@@ -8,4 +8,4 @@ If you do wish to contribute:
 - If there is a serious bug or error in the game's current functions, open an issue reporting the bug.
 - If you have an idea that you think would work well: Open an issue to propose it, and add the _needs vetting_ label. Check the archive to see if it's been proposed before.
 
-Proposals for new things should bear in mind that this game's just meant to be a silly little game about guessing the card seen in an artwork. The game, code, and UI should remain simple, and remain focused on the art and the guess input.
+Proposals for new things should bear in mind that this is just meant to be a silly little game about guessing the card by its artwork. The game, code, and UI should remain simple, and remain focused on the art and the guess input.
