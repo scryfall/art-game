@@ -2,21 +2,18 @@
 import { Theme } from "../models/theme";
 import MoonSolidSvg from "./Svg/MoonSolidSvg.vue";
 import SunOutlineSvg from "./Svg/SunOutlineSvg.vue";
-import { useAppDispatch, useAppSelector, toggleTheme } from "../store";
+import { useConfigRefs, useConfigStore } from "../store";
 import { capitalize } from "../utils/string";
 
-const dispatch = useAppDispatch();
-const theme = useAppSelector((state) => state.config.theme);
-const toggle = () => {
-  dispatch(toggleTheme(theme.value));
-};
+const { toggleTheme } = useConfigStore();
+const { theme } = useConfigRefs();
 </script>
 
 <template>
   <button
     type="button"
     :class="{ light: theme === Theme.Light, dark: theme === Theme.Dark }"
-    @click="toggle"
+    @click="toggleTheme"
   >
     <div class="icon sun" aria-hidden="true">
       <SunOutlineSvg />

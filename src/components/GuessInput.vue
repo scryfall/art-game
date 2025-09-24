@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, useId, useTemplateRef, watch, type Directive } from "vue";
-import { useAppSelector } from "../store";
+import { useConfigRefs } from "../store";
 import GuessAutocompleteList from "./GuessAutocompleteList.vue";
 import { KeyCode } from "../utils/keyboard";
 import { getActiveDescendent } from "./GuessAutocompleteConfig";
@@ -16,6 +16,7 @@ type Emits = {
   submit: [value: string];
 };
 
+const { autocomplete: acEnabled } = useConfigRefs();
 const { disabled } = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
@@ -27,7 +28,6 @@ const form = useTemplateRef("form");
 const input = useTemplateRef("input");
 const guess = ref("");
 const focused = ref(false);
-const acEnabled = useAppSelector((state) => state.config.autocomplete);
 const acOptions = useAutocomplete(guess);
 const acKeyboardFocusIndex = ref(AC_NO_SELECTION);
 

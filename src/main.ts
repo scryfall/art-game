@@ -1,11 +1,8 @@
-import { createApp } from "vue";
 import "./styles/main.scss";
+import { createApp } from "vue";
+import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
-import { provideStoreToApp } from "@reduxjs/vue-redux";
-import { loadConfig, store } from "./store";
 
-const app = createApp(App).use(router);
-store.dispatch(loadConfig());
-provideStoreToApp(app, { store });
+const app = createApp(App).use(createPinia()).use(router);
 app.mount("#app");

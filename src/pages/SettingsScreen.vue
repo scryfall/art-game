@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, useId } from "vue";
-import { useAppDispatch, useAppSelector, toggleAutocomplete } from "../store";
+import { useConfigRefs, useConfigStore } from "../store";
 import { KeyCode } from "../utils/keyboard";
 import router from "../router";
 
-const dispatch = useAppDispatch();
-const autocomplete = useAppSelector((state) => state.config.autocomplete);
-
 const autocompleteId = useId();
 const autocompleteDescId = useId();
+const { toggleAutocomplete } = useConfigStore();
+const { autocomplete } = useConfigRefs();
 
 const onKeydown = (event: KeyboardEvent) => {
   if (event.code === KeyCode.Escape) {
@@ -47,7 +46,7 @@ onBeforeUnmount(() => {
             :aria-describedby="autocompleteId"
             type="button"
             class="btn btn-small"
-            @click="() => dispatch(toggleAutocomplete(autocomplete))"
+            @click="toggleAutocomplete"
           >
             {{ autocomplete ? "On" : "Off" }}
           </button>

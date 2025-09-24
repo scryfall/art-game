@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import CogOutlineSvg from "./Svg/CogOutlineSvg.vue";
 import CogSolidSvg from "./Svg/CogSolidSvg.vue";
-import { setViewConfigScreen, useAppDispatch, useAppSelector } from "../store";
+import { useConfigRefs } from "../store";
 
-const dispatch = useAppDispatch();
-const isViewingSettings = useAppSelector((state) => state.config.viewConfigScreen);
-
+const { viewConfigScreen: isViewingSettings } = useConfigRefs();
 const click = () => {
-  dispatch(setViewConfigScreen(!isViewingSettings.value));
+  isViewingSettings.value = !isViewingSettings.value;
 };
 </script>
 

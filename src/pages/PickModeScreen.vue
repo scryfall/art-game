@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { useAppSelector } from "../store/hooks";
-import { LoadingStatus } from "../store/common";
+import { LoadingStatus, useGameRefs } from "../store";
 
 type Preset = {
   id: string;
@@ -9,7 +8,7 @@ type Preset = {
   link: string;
 };
 
-const gameLoadStatus = useAppSelector((state) => state.game.status);
+const { status: gameLoadStatus } = useGameRefs();
 
 /**
  * The supported formats in the art game.
