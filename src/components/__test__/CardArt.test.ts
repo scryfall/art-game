@@ -4,11 +4,11 @@ import { LoadingStatus } from "../../store";
 import { CardBank } from "../../models/__test__/card-bank.util";
 
 describe("CardArt", () => {
-  it("shows an error overlay if loadingNext prop is Failed", async () => {
+  it("shows an error overlay if loading prop is Failed", async () => {
     const { rerender } = render(CardArt, {
       props: {
         card: CardBank.ArborElf,
-        loadingNext: LoadingStatus.Success,
+        loading: LoadingStatus.Success,
       },
     });
     expect(
@@ -16,7 +16,7 @@ describe("CardArt", () => {
     ).not.toBeInTheDocument();
 
     await rerender({
-      loadingNext: LoadingStatus.Failed,
+      loading: LoadingStatus.Failed,
     });
     expect(
       screen.queryByText("There was an error loading the next card. You should skip this one.")
@@ -27,7 +27,7 @@ describe("CardArt", () => {
     render(CardArt, {
       props: {
         card: CardBank.ArborElf,
-        loadingNext: LoadingStatus.Success,
+        loading: LoadingStatus.Success,
       },
     });
     expect(
@@ -45,7 +45,7 @@ describe("CardArt", () => {
     render(CardArt, {
       props: {
         card: CardBank.ArborElf,
-        loadingNext: LoadingStatus.Success,
+        loading: LoadingStatus.Success,
       },
     });
 
@@ -55,11 +55,11 @@ describe("CardArt", () => {
     expect(screen.queryByText("Loading next card")).not.toBeInTheDocument();
   });
 
-  it("shows a loading overlay if loadingNext prop is Pending", async () => {
+  it("shows a loading overlay if loading prop is Pending", async () => {
     const { rerender } = render(CardArt, {
       props: {
         card: CardBank.ArborElf,
-        loadingNext: LoadingStatus.Success,
+        loading: LoadingStatus.Success,
       },
     });
     await fireEvent.load(screen.getByTestId("card-art-preload"));
@@ -67,7 +67,7 @@ describe("CardArt", () => {
     expect(screen.queryByText("Loading next card")).not.toBeInTheDocument();
 
     await rerender({
-      loadingNext: LoadingStatus.Pending,
+      loading: LoadingStatus.Pending,
     });
     expect(screen.queryByText("Loading next card")).toBeInTheDocument();
   });
@@ -76,7 +76,7 @@ describe("CardArt", () => {
     const { rerender } = render(CardArt, {
       props: {
         card: CardBank.ArborElf,
-        loadingNext: LoadingStatus.Success,
+        loading: LoadingStatus.Success,
       },
     });
     await fireEvent.load(screen.getByTestId("card-art-preload"));
@@ -93,7 +93,7 @@ describe("CardArt", () => {
     render(CardArt, {
       props: {
         card: CardBank.ArborElf,
-        loadingNext: LoadingStatus.Pending,
+        loading: LoadingStatus.Pending,
       },
     });
     await fireEvent.error(screen.getByTestId("card-art-preload"));
@@ -108,7 +108,7 @@ describe("CardArt", () => {
     render(CardArt, {
       props: {
         card: CardBank.ArborElf,
-        loadingNext: LoadingStatus.Success,
+        loading: LoadingStatus.Success,
       },
     });
 
@@ -125,7 +125,7 @@ describe("CardArt", () => {
     const { rerender } = render(CardArt, {
       props: {
         card: CardBank.HeartOfTheExplorer,
-        loadingNext: LoadingStatus.Success,
+        loading: LoadingStatus.Success,
       },
     });
 
@@ -153,7 +153,7 @@ describe("CardArt", () => {
     const { rerender } = render(CardArt, {
       props: {
         card: CardBank.ArborElf,
-        loadingNext: LoadingStatus.Success,
+        loading: LoadingStatus.Success,
       },
     });
 
