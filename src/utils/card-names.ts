@@ -52,11 +52,16 @@ function getValidNames(face: {
   const legendary = face.type_line.toLowerCase().includes("legendary");
   if (!legendary) return names;
 
+  // Now we do title detection, which is any card with names of these forms:
+  // Name, Thing
+  // Name, the Thing
+  // Name of the Thing
   const comma = ",";
   const ofThe = " of the ";
   const the = " the ";
 
-  const pushLegendaryName = (properName: string, title: string) => {
+  /** Add a “titled” name to the list, along with all the variants on its title. */
+  const pushTitles = (properName: string, title: string) => {
     properName = properName.trim();
     title = title
       .trim()
@@ -70,13 +75,13 @@ function getValidNames(face: {
     const name = names[i];
     if (name.indexOf(comma) > 0) {
       const [properName, title] = name.split(comma);
-      pushLegendaryName(properName, title);
+      pushTitles(properName, title);
     } else if (name.indexOf(ofThe) > 0) {
       const [properName, title] = name.split(ofThe);
-      pushLegendaryName(properName, title);
+      pushTitles(properName, title);
     } else if (name.indexOf(the) > 0) {
       const [properName, title] = name.split(the);
-      pushLegendaryName(properName, title);
+      pushTitles(properName, title);
     }
   }
 
