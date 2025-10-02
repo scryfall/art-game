@@ -17,6 +17,9 @@ describe("isGuessOk", () => {
 
     [CardBank.Jolene, "Joeline"], // mis-spelling her name *just* within the acceptable threshold
 
+    [CardBank.LivelyLeap, CardBank.LivelyLeap.name], // oracle name
+    [CardBank.LivelyLeap, CardBank.LivelyLeap.printed_name!], // printed name
+
     [CardBank.Fleem, CardBank.Fleem.card_faces[0].name], // oracle name
     [CardBank.Fleem, CardBank.Fleem.card_faces[1].name!], // oracle name
     [CardBank.Fleem, CardBank.Fleem.card_faces[0].printed_name!], // printed name

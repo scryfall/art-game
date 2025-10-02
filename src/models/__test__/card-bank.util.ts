@@ -94,6 +94,13 @@ export const CardBank = {
     }
   ),
 
+  /** Lively Leap (Thwip!): Single-faced card with printed names. */
+  LivelyLeap: makeCard({
+    name: "Thwip!",
+    printed_name: "Lively Leap",
+    type_line: "Instant",
+  }),
+
   /** Fleem: DFC with printed names. */
   Fleem: makeDfcCard(
     {
