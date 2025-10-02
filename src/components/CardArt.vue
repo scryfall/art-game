@@ -18,7 +18,7 @@ const imageUri = computed(() => {
   const imageUris = getCardImages(props.card);
 
   if (imageUris.length === 0) {
-    return undefined;
+    return;
   }
 
   if (imageUris.length === 1) {
