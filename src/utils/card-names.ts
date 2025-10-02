@@ -36,10 +36,18 @@ export function getCardNames(card: ScryfallCard) {
  * @param face A face of a card
  * @returns The face's names
  */
-function getValidNames(face: { name: string; type_line: string; flavor_name?: string }) {
+function getValidNames(face: {
+  name: string;
+  type_line: string;
+  flavor_name?: string;
+  printed_name?: string;
+}) {
   const names = [face.name];
   if (face.flavor_name) {
     names.push(face.flavor_name);
+  }
+  if (face.printed_name) {
+    names.push(face.printed_name);
   }
   const legendary = face.type_line.toLowerCase().includes("legendary");
   if (!legendary) return names;
