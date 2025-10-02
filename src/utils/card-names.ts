@@ -56,7 +56,7 @@ function getValidNames(face: {
   const ofThe = " of the ";
   const the = " the ";
 
-  const push = (properName: string, title: string) => {
+  const pushLegendaryName = (properName: string, title: string) => {
     properName = properName.trim();
     title = title
       .trim()
@@ -70,13 +70,13 @@ function getValidNames(face: {
     const name = names[i];
     if (name.indexOf(comma) > 0) {
       const [properName, title] = name.split(comma);
-      push(properName, title);
+      pushLegendaryName(properName, title);
     } else if (name.indexOf(ofThe) > 0) {
       const [properName, title] = name.split(ofThe);
-      push(properName, title);
+      pushLegendaryName(properName, title);
     } else if (name.indexOf(the) > 0) {
       const [properName, title] = name.split(the);
-      push(properName, title);
+      pushLegendaryName(properName, title);
     }
   }
 
