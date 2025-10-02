@@ -160,7 +160,7 @@ describe("CardArt", () => {
     expect(screen.queryByText("Hint: this print has a flavor name.")).not.toBeInTheDocument();
 
     await rerender({
-      card: CardBank.Eleven,
+      card: CardBank.Patrick,
     });
     expect(screen.queryByText("Hint: this print has a flavor name.")).toBeInTheDocument();
   });
