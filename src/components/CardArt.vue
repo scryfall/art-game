@@ -16,17 +16,8 @@ type Props = {
 const props = defineProps<Props>();
 const imageUri = computed(() => {
   const imageUris = getCardImages(props.card);
-
-  if (imageUris.length === 0) {
-    return;
-  }
-
-  if (imageUris.length === 1) {
-    return imageUris[0].art_crop;
-  }
-
   const randomImageUri = pickRandomItem(imageUris);
-  return randomImageUri.art_crop;
+  return randomImageUri?.art_crop;
 });
 
 const status = ref(LoadingStatus.Pending);
