@@ -1,15 +1,17 @@
 export type ScryfallDFCCardFace = {
   name: string;
   flavor_name?: string;
+  printed_name?: string;
   type_line: string;
   image_uris: ScryfallImageUris;
 };
 
 export type ScryfallSplitCardFace = {
   name: string;
+  flavor_name?: string;
+  printed_name?: string;
   type_line: string;
   image_uris?: never;
-  flavor_name?: never;
 };
 
 export type ScryfallCardFace = ScryfallDFCCardFace | ScryfallSplitCardFace;
@@ -28,6 +30,7 @@ export type DefaultScryfallCard = {
   oracle_id: string;
   name: string;
   flavor_name?: string;
+  printed_name?: string;
   scryfall_uri: string;
   type_line: string;
   set: string;
@@ -41,6 +44,7 @@ export type SplitScryfallCard = {
   oracle_id: string;
   name: string;
   flavor_name?: string;
+  printed_name?: string;
   scryfall_uri: string;
   type_line: string;
   set: string;
@@ -59,6 +63,7 @@ export type DfcScryfallCard = {
   card_faces: ScryfallCardFace[];
   image_uris?: never;
   flavor_name?: never;
+  printed_name?: never;
 };
 
 export type ScryfallCard = DefaultScryfallCard | SplitScryfallCard | DfcScryfallCard;

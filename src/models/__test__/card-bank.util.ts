@@ -59,11 +59,11 @@ export const CardBank = {
     flavor_name: "Touchdown!",
   }),
 
-  /** Eleven: a legendary card with a flavor name */
-  Eleven: makeCard({
-    name: "Cecily, Haunted Mage",
-    flavor_name: "Eleven, the Mage",
-    type_line: "Legendary Creature - Human Wizard",
+  /** Patrick: a legendary card with a flavor name */
+  Patrick: makeCard({
+    name: "Barktooth Warbeard",
+    flavor_name: "Patrick Star",
+    type_line: "Legendary Creature - Human Warrior",
   }),
 
   /** Dracula, Lord of Blood: DFC (not legendary, but has comma in flavor name) with flavor names on both sides */
@@ -91,6 +91,27 @@ export const CardBank = {
       name: "Azcanta, the Sunken Ruin",
       type_line: "Legendary Land",
       flavor_name: "The Lost Valley",
+    }
+  ),
+
+  /** Lively Leap (Thwip!): Single-faced card with printed names. */
+  LivelyLeap: makeCard({
+    name: "Thwip!",
+    printed_name: "Lively Leap",
+    type_line: "Instant",
+  }),
+
+  /** Fleem: DFC with printed names. */
+  Fleem: makeDfcCard(
+    {
+      name: "Norman Osborn",
+      printed_name: "Goben, Gene-Splice Savant",
+      type_line: "Legendary Creature — Human Scientist Villain",
+    },
+    {
+      name: "Green Goblin",
+      printed_name: "Fleem, Goben's Creation",
+      type_line: "Legendary Creature — Goblin Human Villain",
     }
   ),
 };

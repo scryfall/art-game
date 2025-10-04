@@ -1,4 +1,5 @@
 import { CardBank } from "../../models/__test__/card-bank.util";
+import { makeCard } from "../../models/__test__/card.util";
 import type { ScryfallCard } from "../../models/scryfall-card";
 import { getCardNames } from "../card-names";
 
@@ -78,18 +79,22 @@ describe("getCardNames", () => {
       ["basic cards", CardBank.Touchdown, ["Approach of the Second Sun", "Touchdown!"]],
       [
         "legendary card",
-        CardBank.Eleven,
+        makeCard({
+          name: "Foo, Bar",
+          printed_name: "Fleem, the Tester",
+          type_line: "Legendary Creature - Human Warrior",
+        }),
         [
-          "Cecily, Haunted Mage",
-          "Eleven, the Mage",
-          "Eleven",
-          "Mage",
-          "the Mage",
-          "of the Mage",
-          "Cecily",
-          "Haunted Mage",
-          "of the Haunted Mage",
-          "the Haunted Mage",
+          "Foo, Bar",
+          "Fleem, the Tester",
+          "Foo",
+          "Bar",
+          "the Bar",
+          "of the Bar",
+          "Fleem",
+          "Tester",
+          "the Tester",
+          "of the Tester",
         ],
       ],
       [

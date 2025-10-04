@@ -36,19 +36,32 @@ export function getCardNames(card: ScryfallCard) {
  * @param face A face of a card
  * @returns The face's names
  */
-function getValidNames(face: { name: string; type_line: string; flavor_name?: string }) {
+function getValidNames(face: {
+  name: string;
+  type_line: string;
+  flavor_name?: string;
+  printed_name?: string;
+}) {
   const names = [face.name];
   if (face.flavor_name) {
     names.push(face.flavor_name);
   }
+  if (face.printed_name) {
+    names.push(face.printed_name);
+  }
   const legendary = face.type_line.toLowerCase().includes("legendary");
   if (!legendary) return names;
 
+  // Now we do title detection, which is any card with names of these forms:
+  // Name, Thing
+  // Name, the Thing
+  // Name of the Thing
   const comma = ",";
   const ofThe = " of the ";
   const the = " the ";
 
-  const push = (properName: string, title: string) => {
+  /** Add a “titled” name to the list, along with all the variants on its title. */
+  const pushTitles = (properName: string, title: string) => {
     properName = properName.trim();
     title = title
       .trim()
@@ -62,13 +75,13 @@ function getValidNames(face: { name: string; type_line: string; flavor_name?: st
     const name = names[i];
     if (name.indexOf(comma) > 0) {
       const [properName, title] = name.split(comma);
-      push(properName, title);
+      pushTitles(properName, title);
     } else if (name.indexOf(ofThe) > 0) {
       const [properName, title] = name.split(ofThe);
-      push(properName, title);
+      pushTitles(properName, title);
     } else if (name.indexOf(the) > 0) {
       const [properName, title] = name.split(the);
-      push(properName, title);
+      pushTitles(properName, title);
     }
   }
 
