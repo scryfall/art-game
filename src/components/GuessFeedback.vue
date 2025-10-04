@@ -73,7 +73,8 @@ watch(props, (p) => {
 }
 
 .card-image {
-  width: 120px;
+  height: 167px;
+  min-width: 119px;
 }
 
 .outcome {

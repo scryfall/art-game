@@ -3,15 +3,21 @@ import { computed, ref, watch } from "vue";
 import type { ScryfallCard } from "../models/scryfall-card";
 import { LoadingStatus } from "../store";
 import LoadingPulser from "./LoadingPulser.vue";
+import { getCardImages } from "../utils/card-image";
+import { pickRandomItem } from "../utils/math";
 
-const props = defineProps<{ card: ScryfallCard; loadingNext: LoadingStatus }>();
+type Props = {
+  /** The card to show art for. */
+  card: ScryfallCard;
+  /** Whether the next card is currently being loaded in. This activates a loading overlay. */
+  loading: LoadingStatus;
+};
+
+const props = defineProps<Props>();
 const imageUri = computed(() => {
-  if (props.card.image_uris) {
-    return props.card.image_uris.art_crop;
-  }
-  const randomIndex = Math.floor(Math.random() * props.card.card_faces.length);
-  const randomFace = props.card.card_faces[randomIndex];
-  return randomFace.image_uris?.art_crop;
+  const imageUris = getCardImages(props.card);
+  const randomImageUri = pickRandomItem(imageUris);
+  return randomImageUri?.art_crop;
 });
 
 const status = ref(LoadingStatus.Pending);
@@ -29,11 +35,11 @@ const onError = () => {
 };
 
 const showLoadingOverlay = computed(() => {
-  return props.loadingNext === LoadingStatus.Pending || status.value === LoadingStatus.Pending;
+  return props.loading === LoadingStatus.Pending || status.value === LoadingStatus.Pending;
 });
 
 const showErrorOverlay = computed(() => {
-  return props.loadingNext === LoadingStatus.Failed || status.value === LoadingStatus.Failed;
+  return props.loading === LoadingStatus.Failed || status.value === LoadingStatus.Failed;
 });
 </script>
 

@@ -6,6 +6,7 @@ import GuessInput from "./GuessInput.vue";
 import { isGuessOk } from "../utils/guess";
 import GuessFeedback from "./GuessFeedback.vue";
 import LoadingHammer from "./LoadingHammer.vue";
+import { getCardImages } from "../utils/card-image";
 
 const dispatch = useAppDispatch();
 const nextCardStatus = useAppSelector((state) => state.game.nextCardStatus);
@@ -51,7 +52,18 @@ const submitGuess = (guess: string) => {
     <span> Getting your game ready... </span>
   </p>
   <div class="screen" :data-answer="card?.name" v-else>
-    <CardArt v-if="card" :card="card" :loading-next="nextCardStatus" />
+    <template v-if="card">
+      <CardArt :card="card" :loading="nextCardStatus" />
+
+      <!-- Preload each normal image for the feedback area. -->
+      <img
+        v-for="imageUri in getCardImages(card)"
+        :key="imageUri.normal"
+        alt=""
+        class="vh preload"
+        :src="imageUri.normal"
+      />
+    </template>
 
     <p class="error-loading" v-if="nextCardStatus === LoadingStatus.Failed">
       There was an error loading the next card. Check your internet connection and
